@@ -1,0 +1,14 @@
+add_newline = false
+
+[character]
+error_symbol = '[\$](bold fg:1)'
+success_symbol = '[\$](bold fg:13)'
+
+[directory]
+style = 'bold fg:2'
+
+[line_break]
+disabled = true
+
+[package]
+disabled = true

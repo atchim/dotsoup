@@ -1,0 +1,60 @@
+color-schemes:
+  underworld: &underworld-colors
+    bright:
+      black: '#252525'
+      blue: '#729abc'
+      cyan: '#58a38b'
+      green: '#5ea55b'
+      magenta: '#c47bc7'
+      red: '#cb7f95'
+      white: '#959595'
+      yellow: '#8d9c55'
+
+    cursor:
+      cursor: '#383838'
+      text: '#080808'
+
+    normal:
+      black: '#080808'
+      blue: '#729abc'
+      cyan: '#58a38b'
+      green: '#5ea55b'
+      magenta: '#9a8ad7'
+      red: '#cb7f95'
+      white: '#383838'
+      yellow: '#b58e6c'
+
+    primary:
+      background: '#080808'
+      bright_foreground: '#252525'
+      foreground: '#959595'
+
+    search:
+      bar:
+        background: '#080808'
+        foreground: '#959595'
+
+      matches:
+        background: '#373737'
+        foreground: '#8d9c55'
+
+    selection: { background: '#252525' }
+
+font:
+  normal: { family: FiraMono Nerd Font }
+  size: 8
+
+mouse:
+  double_click: { threshold: 256 }
+  triple_click: { threshold: 512 }
+
+window:
+  dimensions:
+    columns: 128
+    lines: 32
+
+  decorations: none
+
+colors: *underworld-colors
+scrolling: { history: 16384 }
+shell: { program: '/usr/local/bin/fish' }

@@ -1,0 +1,32 @@
+#!/usr/bin/env fish
+
+bspc monitor -d code browse art chat media game fold conf misc quick
+
+bspc config borderless_monocle true
+bspc config focus_follows_pointer false
+bspc config gapless_monocle true
+bspc config paddingless_monocle true
+bspc config single_monocle true
+
+bspc config border_width 2
+bspc config split_ratio 0.5
+bspc config window_gap 8
+
+bspc config active_border_color '#5a5a5a'
+bspc config focused_border_color '#5a5a5a'
+bspc config normal_border_color '#252525'
+bspc config presel_feedback_color '#080808'
+
+bspc rule -r '*:*'
+bspc rule -a '*:floating' state=floating
+bspc rule -a Aseprite desktop='^3'
+bspc rule -a Dwarf_Fortress desktop='^6'
+bspc rule -a dwarftherapist desktop='^6'
+bspc rule -a Firefox desktop='^2'
+bspc rule -a Gimp desktop='^3' follow=on
+bspc rule -a krita desktop='^3'
+bspc rule -a qutebrowser desktop='^2'
+bspc rule -a TelegramDesktop desktop='^4'
+bspc rule -a Vivaldi-stable desktop='^2'
+bspc rule -a vlc state=floating
+bspc rule -a Zathura desktop='^5' state=tiled

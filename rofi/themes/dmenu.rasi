@@ -1,0 +1,44 @@
+@theme "themes/palette"
+
+* {
+  background-color: @palette-00;
+  highlight: bold #8d9c55;
+  text-color: @palette-07;
+}
+
+#element {
+  padding: 0 0.5ch;
+}
+
+#element selected {
+  background-color: @palette-02;
+  text-color: @palette-13;
+}
+
+#entry {
+  expand: false;
+  text-color: @palette-10;
+  width: 12em;
+}
+
+#horibox {
+  children: [prompt, entry, listview];
+  orientation: horizontal;
+  spacing: 1ch;
+}
+
+#listview {
+  layout: horizontal;
+  lines: 100;
+}
+
+#prompt {
+  text-color: @palette-14;
+}
+
+#window {
+  anchor: south;
+  children: [horibox];
+  location: south;
+  width: 100%;
+}

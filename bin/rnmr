@@ -1,0 +1,159 @@
+#!/usr/bin/env python3
+
+import argparse
+import os
+
+import stringcase
+
+
+def walk_dirs_case(path, case_function):
+    for dir_ in os.listdir(path):
+        old_path = os.path.join(path, dir_)
+
+        if os.path.isdir(old_path):
+            new_path = os.path.join(path, case_function(dir_))
+
+            os.rename(os.path.join(path, dir_), new_path)
+            walk_dirs_case(new_path, case_function)
+
+
+def run(args):
+    if args.mode == 'capital':
+        case_function = stringcase.capitalcase
+    elif args.mode == 'kebab':
+        case_function = stringcase.spinalcase
+    elif args.mode == 'lower':
+        case_function = stringcase.lowercase
+    elif args.mode == 'snake':
+        case_function = stringcase.snakecase
+    elif args.mode == 'title':
+        case_function = stringcase.titlecase
+    elif args.mode == 'upper':
+        case_function = stringcase.uppercase
+
+    if args.dir is False:
+        for root, _, files in os.walk(args.path):
+            for filename in files:
+                path = os.path.join(root, filename)
+                name, format_ = os.path.splitext(filename)
+
+                if args.mode == 'match':
+                    for target in args.targets:
+                        if args.name is True:
+                            if target in name:
+                                os.rename(
+                                    path, os.path.join(root,
+                                    name.replace(target, args.replace) +
+                                    format_))
+                        elif args.format is True:
+                            if target == format_:
+                                os.rename(
+                                    path, os.path.join(root, name +
+                                    format_.replace(target, args.replace)))
+                        else:
+                            if target in filename:
+                                os.rename(
+                                    path, os.path.join(root,
+                                    filename.replace(target, args.replace)))
+                else:
+                    if args.name is True:
+                        os.rename(
+                            path, os.path.join(root, case_function(name) +
+                            format_))
+                    elif args.format is True:
+                        os.rename(
+                            path, os.path.join(root, name +
+                            case_function(format_)))
+                    else:
+                        os.rename(
+                            path, os.path.join(root, case_function(filename)))
+
+            if args.tree is False: break
+
+    if args.file is False:
+        if args.mode == 'match':
+            def walk_dirs_match(path):
+                for dir_ in os.listdir(path):
+                    old_path = os.path.join(path, dir_)
+                    path_to_run = old_path
+
+                    if os.path.isdir(old_path):
+                        for target in args.targets:
+                            if target in dir_:
+                                new_path = os.path.join(
+                                    path, dir_.replace(target, args.replace))
+
+                                os.rename(old_path, new_path)
+                                path_to_run = new_path
+                        walk_dirs_match(path_to_run)
+
+                    if args.tree is False: break
+
+            walk_dirs_match(args.path)
+        else:
+            walk_dirs_case(args.path, case_function)
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='rename things')
+
+    parser.add_argument(
+        '-p', default=os.getcwd(), dest='path', help='path to directory',
+        metavar='path', type=str)
+
+    parser.add_argument(
+        '-t', action='store_true', dest='tree',
+        help='rename files from subdirectory tree')
+
+    file_xor_dir = parser.add_mutually_exclusive_group()
+
+    file_xor_dir.add_argument(
+        '-d', action='store_true', dest='dir', help='only rename directories')
+
+    file_xor_dir.add_argument(
+        '-f', action='store_true', dest='file', help='only rename files')
+
+    name_xor_format = parser.add_mutually_exclusive_group()
+
+    name_xor_format.add_argument(
+        '-m', action='store_true', dest='format',
+        help='rename only file format')
+
+    name_xor_format.add_argument(
+        '-n', action='store_true', dest='name', help='rename only file name')
+
+    modes = parser.add_subparsers(metavar='mode', title='modes')
+
+    match_mode = modes.add_parser(
+        'match', aliases='m', help='match strings and replace it')
+
+    match_mode.set_defaults(mode='match')
+
+    match_mode.add_argument(
+        '-r', default='', dest='replace', help='string to replace',
+        metavar='replace', type=str)
+
+    match_mode.add_argument(
+        'targets', help='target string', metavar='targets', nargs='*',
+        type=str)
+
+    capital_mode = modes.add_parser(
+        'capital', aliases='c', help='use capital case')
+    capital_mode.set_defaults(mode='capital')
+
+    kebab_mode = modes.add_parser('kebab', aliases='k', help='use kebab case')
+    kebab_mode.set_defaults(mode='kebab')
+
+    lower_mode = modes.add_parser('lower', aliases='l', help='use lower case')
+    lower_mode.set_defaults(mode='lower')
+
+    snake_mode = modes.add_parser('snake', aliases='s', help='use snake case')
+    snake_mode.set_defaults(mode='snake')
+
+    title_mode = modes.add_parser('title', aliases='t', help='use title case')
+    title_mode.set_defaults(mode='title')
+
+    upper_mode = modes.add_parser('upper', aliases='u', help='use upper case')
+    upper_mode.set_defaults(mode='upper')
+
+    run(parser.parse_args())
