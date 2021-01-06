@@ -41,7 +41,7 @@ color-schemes:
     selection: { background: '#252525' }
 
 font:
-  normal: { family: FiraMono Nerd Font }
+  normal: { family: Hack }
   size: 8
 
 mouse:
