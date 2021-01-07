@@ -53,6 +53,7 @@ M.setup = function()
 
   -- Vars
   g.omni_sql_no_default_maps = 1
+  g.python_recommended_style = 0
   g.rust_recommended_style = 0
 
   -- Wrap
