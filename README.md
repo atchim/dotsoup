@@ -1,27 +1,21 @@
 # dotsoup
 
-[atchim's][atchim] configuration files.
+[atchim][atchim]'s configuration files for:
 
-## Programs
-
-| Category            | Program                    |
-|---------------------|----------------------------|
-| Browser             | [qutebrowser][qutebrowser] |
-| Editor              | [Neovim][neovim]           |
-| Hot Key Daemon      | [sxhkd][sxhkd]             |
-| Music Daemon        | [MPD][mpd]                 |
-| Music Player        | [ncmpcpp][ncmpcpp]         |
-| Notification Daemon | [Dunst][dunst]             |
-| PDF Viewer          | [zathura][zathura]         |
-| Shell               | [fish][fish]               |
-| Status Bar          | [Polybar][polybar]         |
-| Terminal Emulator   | [Alacritty][alacritty]     |
-| Window Manager      | [bspwm][bspwm]             |
+- [Alacritty][alacritty]
+- [bspwm][bspwm]
+- [fish][fish]
+- [MPD][mpd]
+- [ncmpcpp][ncmpcpp]
+- [Neovim][neovim]
+- [Polybar][polybar]
+- [qutebrowser][qutebrowser]
+- [sxhkd][sxhkd]
+- [zathura][zathura]
 
 [alacritty]: https://github.com/alacritty/alacritty
 [atchim]: https://github.com/atchim
 [bspwm]: https://github.com/baskerville/bspwm
-[dunst]: https://github.com/dunst-project/dunst
 [fish]: https://github.com/fish-shell/fish-shell
 [mpd]: https://www.musicpd.org/
 [ncmpcpp]: https://github.com/ncmpcpp/ncmpcpp

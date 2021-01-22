@@ -1,0 +1,6 @@
+#!/usr/bin/env python3
+
+import portage
+
+for package in portage.mtimedb.get('resume', {}).get('mergelist'):
+  print(package[2])
