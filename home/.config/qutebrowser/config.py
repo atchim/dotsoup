@@ -101,8 +101,6 @@ c.colors.tabs.selected.even.fg = '#959595'
 c.colors.tabs.selected.odd.bg = '#080808'
 c.colors.tabs.selected.odd.fg = '#959595'
 
-c.colors.webpage.darkmode.enabled = True
-
 #
 # Completion
 #
@@ -157,4 +155,7 @@ c.tabs.width = 64
 c.auto_save.interval = 16384
 c.auto_save.session = True
 c.history_gap_interval = 32
+c.qt.args = ['widevine-path=/usr/lib64/chromium-browser/WidevineCdm/_platform_specific/linux_x64/libwidevinecdm.so']
 c.prompt.radius = 0
+
+config.load_autoconfig(False)

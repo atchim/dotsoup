@@ -13,15 +13,24 @@ M.setup = function()
     on_attach = on_attach,
   }
 
+  lsp.clangd.setup {}
+
   lsp.pyls.setup {
     cmd = { 'pyls' },
     filetypes = { 'python' },
     on_attach = on_attach,
   }
 
-  lsp.rust_analyzer.setup {
-    cmd = { 'rls' },
+  lsp.rls.setup {
+    cmd = { 'rustup', 'run', 'nightly', 'rls' },
     on_attach = on_attach,
+
+    settings = {
+      rust = {
+        unstable_features = true,
+        all_features = true,
+      },
+    },
   }
 
   local sys

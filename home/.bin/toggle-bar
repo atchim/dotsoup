@@ -7,4 +7,4 @@ if test "$argv[1]" = hide
   set cmd hide
 end
 
-echo cmd:$cmd > /tmp/polybar_"$USER"_bspwm
+echo cmd:$cmd > /tmp/polybar-$USER-bspwm

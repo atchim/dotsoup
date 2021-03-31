@@ -16,7 +16,7 @@ super + {_,shift + }q
 
 # Restart status bar.
 super + space ; r ; b
-  echo cmd:restart > /tmp/polybar_"$USER"_bspwm
+  echo cmd:restart >/tmp/polybar-$USER-bspwm
 
 # Restart bspwm.
 super + space ; r ; w
@@ -24,9 +24,9 @@ super + space ; r ; w
 
 # Toggle status bar.
 super + b
-  togbar {hide,_}
+  toggle-bar bspwm {hide,_}
 
-# Toggle monocle layout. 
+# Toggle monocle layout.
 super + m
   bspc desktop --layout next
 

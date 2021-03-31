@@ -32,10 +32,10 @@ playlist_disable_highlight_delay = 2
 #
 
 header_text_scrolling = no
-header_visibility = no
+header_visibility = yes
 progressbar_look = "▒▒░"
-statusbar_visibility = no
-titles_visibility = no
+statusbar_visibility = yes
+titles_visibility = yes
 
 #
 # Formating

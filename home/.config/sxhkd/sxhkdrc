@@ -15,6 +15,16 @@ super + Return
   alacritty
 
 #
+# Keyboard
+#
+
+super + space ; k ; b
+  setxkbmap -model abnt2 -layout br
+
+super + space ; k ; u
+  setxkbmap -layout us
+
+#
 # Launchers
 #
 

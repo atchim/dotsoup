@@ -26,7 +26,7 @@ if not test -f "$HOME/.config/polybar/$argv[1].ini"
   exit 1
 end
 
-set -l BAR polybar_"$USER"_"$argv[1]"
+set -l BAR polybar-$USER-$argv[1]
 set -l MQUEUE (string replace -r '.*\.' '' (readlink "/tmp/$BAR"))
 
 kill $MQUEUE
