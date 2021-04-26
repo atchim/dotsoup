@@ -71,7 +71,7 @@ search_engine_display_mode = columns
 # MPD
 #
 
-mpd_music_dir = ~/mzk
+mpd_music_dir = ~/tune
 
 #
 # Visualizer

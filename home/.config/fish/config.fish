@@ -1,41 +1,9 @@
 status --is-interactive
 or exit
 
-#
-# Login
-#
-
 if status --is-login
-  set -e PATH
-
-  set -a PATH /sbin
-  set -a PATH /bin
-  set -a PATH /opt/bin
-  set -a PATH /usr/sbin
-  set -a PATH /usr/bin
-  set -a PATH /usr/local/sbin
-  set -a PATH /usr/local/bin
-
-  set -p PATH /usr/lib/ccache/bin
-  set -p PATH /usr/lib/llvm/11/bin
-
-  set -e fish_user_paths
-  set -a fish_user_paths ~/.bin
-  set -a fish_user_paths ~/.cargo/bin
-  set -a fish_user_paths ~/.go/bin
-  set -a fish_user_paths ~/.local/bin
+  ~/.local/bin/envsoup fish | source
 end
-
-#
-# Environment Variables
-#
-
-set -gx _JAVA_AWT_WM_NONREPARENTING 1
-set -gx CCACHE_DIR /var/cache/ccache
-set -gx EDITOR nvim
-set -gx GOPATH ~/.go
-set -gx SCREENSHOT_DIR ~/img/shot
-set -gx SUMNEKO_LUA_DIR ~/repo/lua-language-server
 
 #
 # Colors

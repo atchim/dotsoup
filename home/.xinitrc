@@ -1,36 +1,51 @@
-#!/usr/bin/env fish
+#!/usr/bin/env python3
 
-set -l usage '.xinitrc
-Init a X session.
+from argparse import ArgumentParser
+from os import environ, execlp, execvp, path
+from subprocess import Popen, run
 
-Usage
-  startx ~/.xinitrc [-h|--help] [session]
-  xinit [-h|--help] [session]
 
-Flags
-  -h, --help  Print help information and exit.
+def get_parser():
+  """Return the command line argument parser."""
 
-Positional Arguments
-  session  The name of the session to run. It also may be program name.'
+  parser = ArgumentParser(description='init a x session')
+  mode = parser.add_mutually_exclusive_group(required=True)
 
-argparse -n .xinitrc -X 1 h/help -- $argv
-or exit 1
+  mode.add_argument(
+    '-c',
+    '--cmd',
+    help='init session as a command',
+    metavar=('cmd', 'arg'),
+    nargs='+',
+  )
 
-if set -lq _flag_help
-  echo $usage
-  exit
-end
+  mode.add_argument(
+    '-s',
+    '--session',
+    help='init an actual session',
+    metavar='sesh',
+  )
 
-test -z $argv[1]
-and set -l session bspwm
-or set -l session $argv[1]
+  return parser
 
-switch $session
-  case bspwm
-    sxhkd $HOME/.config/sxhkd/bspwm &
-    ~/.config/polybar/launch bspwm &
-    ~/.fehbg &
-    exec bspwm
-  case '*'
-    exec $session
-end
+
+def init_bspwm():
+  """Init X session for bspwm."""
+  environ['_JAVA_AWT_WM_NONREPARENTING'] = '1'
+  environ['SCREENSHOT_DIR'] = path.expanduser('~/pix/shot')
+  environ['SXHKD_SHELL'] = '/bin/bash'
+  Popen(['sxhkd', path.expanduser('~/.config/sxhkd/bspwm.sxhkdrc')])
+  Popen([path.expanduser('~/.config/polybar/launch'), 'bspwm'])
+  Popen([path.expanduser('~/.fehbg')])
+  execlp('bspwm', 'bspwm')
+
+
+if __name__ == '__main__':
+  parser = get_parser()
+  args = parser.parse_args()
+
+  if args.cmd:
+    execvp(args.cmd[0], args.cmd)
+  elif args.session:
+    if args.session == 'bspwm': init_bspwm()
+    else: raise ValueError(f'.xinitrc: invalid session: {args.session}')

@@ -1,0 +1,79 @@
+#!/usr/bin/env python3
+
+from abc import ABC, abstractmethod
+from argparse import ArgumentParser
+from os import path
+
+ENV = {
+  'CCACHE_DIR': '/var/cache/ccache',
+  'EDITOR': 'nvim',
+  'GOPATH': path.expanduser('~/.go'),
+
+  'PATH': [
+    path.expanduser('~/.local/bin'),
+    path.expanduser('~/.cargo/bin'),
+    path.expanduser('~/.go/bin'),
+    '/usr/local/sbin',
+    '/usr/local/bin',
+    '/usr/sbin',
+    '/usr/bin',
+    '/usr/lib/ccache/bin',
+    '/usr/lib/llvm/12/bin',
+    '/opt/bin',
+    '/sbin',
+    '/bin',
+  ],
+
+  'SUMNEKO_LUA_DIR': path.expanduser('~/repo/lua-language-server'),
+}
+
+
+class Shell(ABC):
+  """A shell."""
+
+  @staticmethod
+  @abstractmethod
+  def export(script, var, val):
+    """Export an variable in the script."""
+    pass
+
+
+class Fish(Shell):
+  """The fish shell."""
+
+  @staticmethod
+  def export(script, var, val):
+    if isinstance(val, list): val = ' '.join(val)
+    script.append(f"set --export {var} {val}")
+
+
+class Sh(Shell):
+  """The POSIX compliant shell."""
+
+  @staticmethod
+  def export(script, var, val):
+    if isinstance(val, list): val = ':'.join(val)
+    script.append(f"export {var}={val}")
+
+
+def get_parser():
+  """Return the command line parser."""
+  parser = ArgumentParser(description='print a shell script to set env')
+  parser.add_argument('shell', help='specify the shell', metavar='shell')
+  return parser
+
+
+def get_script(sh):
+  """Return the script string."""
+  script = []
+  for var, val in ENV.items(): sh.export(script, var, val)
+  return '\n'.join(script)
+
+
+if __name__ == '__main__':
+  parser = get_parser()
+  args = parser.parse_args()
+  if args.shell == 'fish': sh = Fish
+  elif args.shell == 'sh': sh = Sh
+  else: raise ValueError(f'envsoup: invalid shell: {args.shell}')
+  print(get_script(sh))

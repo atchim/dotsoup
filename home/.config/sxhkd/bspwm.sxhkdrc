@@ -1,0 +1,116 @@
+#
+# Flags / State
+#
+
+# Set the window state.
+super + {f,p,s,t}
+  bspc node --state {fullscreen,pseudo_tiled,floating,tiled}
+
+# Set node flags.
+super + {x,y,z,apostrophe}
+  bspc node --flag {locked,sticky,private,marked}
+
+#
+# Focus / Swap
+#
+
+# Focus last local desktop or node.
+super + {Tab,grave}
+  bspc {desktop,node} --focus last.local
+
+# Focus desktop or send node to desktop.
+super + {_,shift + }{0-9}
+  bspc {desktop --focus,node --to-desktop} '^{10,1-9}'
+
+# Send node to desktop and focus it.
+super + ctrl + {0-9}
+  desktop='^{10,1-9}'; \
+  bspc node --to-desktop $desktop; \
+  bspc desktop --focus $desktop
+
+# Send the newest marked node to newest preselected node.
+super + bracketright
+  bspc node newest.marked --to-node newest.!automatic
+
+# Swap node with the biggest local node.
+super + g
+  bspc node --swap biggest.window.local
+
+# Focus or swap in the direction.
+super + {_,shift + }{h,j,k,l}
+  bspc node --{focus,swap} {west,south,north,east}
+
+# Focus the newer or older node in the focus history.
+super + {i,o}
+  bspc wm --record-history off; \
+  bspc node {newer,older} --focus; \
+  bspc wm --record-history on
+
+# Focus next or previous local node.
+super + {comma,period}
+  bspc node --focus {prev,next}.local
+
+# Focus next or previous local desktop.
+super + {less,greater}
+  bspc desktop --focus {prev,next}.local
+
+#
+# Misc
+#
+
+# Hide or show the Polybar bar.
+super + b
+  cmd={hide,show}; \
+  [[ $cmd = hide ]] && bspc config bottom_padding 0; \
+  echo cmd:$cmd >/tmp/polybar-$USER-bspwm
+
+# Toggle monocle layout.
+super + m
+  bspc desktop --layout next
+
+# Close or kill node.
+super + {_,shift + }q
+  bspc node --{close,kill}
+
+# Quit bspwm.
+super + alt + q
+  bspc quit
+
+# Restart status bar.
+super + r ; b
+  echo cmd:restart >/tmp/polybar-$USER-bspwm
+
+# Restart bspwm.
+super + r ; w
+  bspc wm --restart
+
+#
+# Preselect
+#
+
+# Preselect direction.
+super + ctrl + {h,j,k,l}
+  bspc node --presel-dir {west,south,north,east}
+
+# Cancel preselection for the focused node.
+super + ctrl + space
+  bspc node --presel-dir cancel
+
+#
+# Resize
+#
+
+# Adjust split ratios of all leafs.
+super + equal
+  bspc node @/ --balance
+
+# Expand or contract a window.
+super + {_,shift + }{Down,Left,Right,Up}
+  n=32; \
+  i={0,1}; \
+  x=({bottom top 0 $n,left right -$n 0,right left $n 0,top bottom 0 -$n}); \
+  bspc node --resize $\{x[$i]\} $\{x[2]\} $\{x[3]\}
+
+# Move a floating window.
+super + ctrl + {Down,Left,Right,Up}
+  bspc node --move {0 20,-20 0,20 0,0 -20}

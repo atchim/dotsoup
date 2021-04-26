@@ -98,11 +98,41 @@ M.setup = function()
   )
 
   local kmap = vim.api.nvim_set_keymap
-  kmap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', { noremap = true })
-  kmap('n', '<Leader>la', '<cmd>lua vim.lsp.buf.code_action()<CR>', { noremap = true })
-  kmap('n', '<Leader>lD', '<cmd>lua vim.lsp.buf.declaration()<CR>', { noremap = true })
-  kmap('n', '<Leader>ld', '<cmd>lua vim.lsp.buf.definition()<CR>', { noremap = true })
-  kmap('n', '<Leader>lr', '<cmd>lua vim.lsp.buf.rename()<CR>', { noremap = true })
+
+  kmap(
+    'n',
+    'K',
+    '<cmd>lua vim.lsp.buf.hover()<CR>',
+    { noremap = true }
+  )
+
+  kmap(
+    'n',
+    '<Leader>la',
+    '<cmd>lua vim.lsp.buf.code_action()<CR>',
+    { noremap = true }
+  )
+
+  kmap(
+    'n',
+    '<Leader>lD',
+    '<cmd>lua vim.lsp.buf.declaration()<CR>',
+    { noremap = true }
+  )
+
+  kmap(
+    'n',
+    '<Leader>ld',
+    '<cmd>lua vim.lsp.buf.definition()<CR>',
+    { noremap = true }
+  )
+
+  kmap(
+    'n',
+    '<Leader>lr',
+    '<cmd>lua vim.lsp.buf.rename()<CR>',
+    { noremap = true }
+  )
 end
 
 return M

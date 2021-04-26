@@ -1,34 +1,43 @@
-#!/usr/bin/env fish
+#!/usr/bin/env python3
 
-set -l usage 'launch
-Launch a polybar bar.
+from argparse import ArgumentParser
+from os import environ, kill, path
+from signal import SIGKILL
+from subprocess import Popen, run
+from sys import stderr
 
-Usage
-  launch [-h|--help] bar
 
-Flags
-  -h, --help  Print help information and exit.
+def get_parser():
+  """Return the command line argument parser."""
+  parser = ArgumentParser(description='launch a polybar bar')
+  parser.add_argument('bar', help='name of the bar', metavar='name')
+  return parser
 
-Positional Arguments
-  bar  The bar name. The name must match a file located at "~/.config/polybar"
-       without the ".ini" extension.'
 
-argparse -n launch -N 1 -X 1 h/help -- $argv
-or exit 1
+def launch(args):
+  """Launch the Polybar bar."""
 
-if set -lq _flag_help
-  echo $usage
-  exit
-end
+  file = path.expanduser(f'~/.config/polybar/{args.bar}.ini')
 
-if not test -f "$HOME/.config/polybar/$argv[1].ini"
-  echo "launch: There is no bar with name '$argv[1]'" >&2
-  exit 1
-end
+  if not path.isfile(file):
+    print("launch: bar file doesn't exist", file=stderr)
+    exit(1)
 
-set -l BAR polybar-$USER-$argv[1]
-set -l MQUEUE (string replace -r '.*\.' '' (readlink "/tmp/$BAR"))
+  tmp = f"/tmp/polybar-{environ['USER']}-{args.bar}"
 
-kill $MQUEUE
-polybar -c "$HOME/.config/polybar/$argv[1].ini" "$argv[1]" &
-ln -fs "/tmp/polybar_mqueue."(jobs -lp) "/tmp/$BAR"
+  if path.exists(tmp):
+    try:
+      mqueue = path.basename(path.realpath(tmp))
+      pid = int(mqueue.split('.')[1])
+      kill(pid, SIGKILL)
+    except:
+      pass
+
+  pid = Popen(['polybar', '-c', file, args.bar]).pid
+  run(['ln', '--force', '--symbolic', f'/tmp/polybar_mqueue.{pid}', tmp])
+
+
+if __name__ == '__main__':
+  parser = get_parser()
+  args = parser.parse_args()
+  launch(args)
