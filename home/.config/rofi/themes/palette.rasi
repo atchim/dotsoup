@@ -1,18 +1,20 @@
 * {
-  palette-00: #080808;
-  palette-01: #0d0d0d;
-  palette-02: #121212;
-  palette-03: #1a1a1a;
-  palette-04: #252525;
-  palette-05: #383838;
-  palette-06: #5a5a5a;
-  palette-07: #959595;
-  palette-08: #b58e6c;
-  palette-09: #8d9c55;
+  palette-0: #080808;
+  palette-1: #0d0d0d;
+  palette-2: #121212;
+  palette-3: #1a1a1a;
+  palette-4: #252525;
+  palette-5: #383838;
+  palette-6: #5a5a5a;
+  palette-7: #959595;
+  palette-8: #b58e6c;
+  palette-9: #8d9c55;
   palette-10: #5ea55b;
   palette-11: #58a38d;
   palette-12: #729abc;
   palette-13: #9a8ad7;
   palette-14: #c47bc7;
   palette-15: #cb7f95;
+
+  palette-highlight: bold #8d9c55;
 }

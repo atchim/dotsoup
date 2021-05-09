@@ -1,16 +1,24 @@
-local api = vim.api
-local g = vim.g
+local function config()
+  local g = vim.g
 
-local M = {}
-
-M.setup = function()
   g.NERDTreeDirArrowCollapsible = '-'
   g.NERDTreeDirArrowExpandable = '+'
   g.NERDTreeMininalMenu = 1
   g.NERDTreeMinimalUI = 1
   g.NERDTreeQuitOnOpen = 1
 
-  api.nvim_set_keymap('n', '<Leader><Space>', ':NERDTreeToggle<CR>', { noremap = true })
+  require 'which-key'.register(
+    {
+      ['<Space>'] = {
+        name = 'NERDTree',
+        ['<Space>'] = { '<Cmd>NERDTreeToggle<CR>', 'Toggle' },
+        ['<CR>'] = { '<Cmd>NERDTreeFocus<CR>', 'Focus' },
+        c = { '<Cmd>NERDTreeClose<CR>', 'Close' },
+      }
+    },
+
+    { prefix = '<Leader>' }
+  )
 end
 
-return M
+return { config = config }

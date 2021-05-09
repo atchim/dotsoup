@@ -1,13 +1,33 @@
-local M = {}
+local function config()
+  require 'which-key'.register(
+    {
+      ['/'] = {
+        name = 'Find',
 
-M.setup = function()
-  require'telescope'.setup {}
+        ['/'] = {
+          '<Cmd>lua require "telescope.builtin".find_files()<CR>',
+          'Files',
+        },
 
-  local kmap = vim.api.nvim_set_keymap
-  kmap('n', '<Leader>/b', '<cmd>lua require"telescope.builtin".buffers()<cr>', { noremap = true })
-  kmap('n', '<Leader>/f', '<cmd>lua require"telescope.builtin".find_files()<cr>', { noremap = true })
-  kmap('n', '<Leader>/g', '<cmd>lua require"telescope.builtin".live_grep()<cr>', { noremap = true })
-  kmap('n', '<Leader>/h', '<cmd>lua require"telescope.builtin".help_tags()<cr>', { noremap = true })
+        b = {
+          '<Cmd>lua require "telescope.builtin".buffers()<CR>',
+          'Buffers',
+        },
+
+        g = {
+          '<Cmd>lua require "telescope.builtin".live_grep()<CR>',
+          'Live grep',
+        },
+
+        h = {
+          '<Cmd>lua require "telescope.builtin".help_tags()<CR>',
+          'Help tags',
+        },
+      }
+    },
+
+    { prefix = '<Leader>' }
+  )
 end
 
-return M
+return { config = config }

@@ -31,7 +31,7 @@ set tabstop=2
 "
 
 nnoremap <Space> <NOP>
-let mapleader=' '
+let mapleader = ' '
 
 "
 " Match
@@ -41,6 +41,23 @@ set gdefault
 set ignorecase
 set showmatch
 set smartcase
+
+"
+" Misc
+"
+
+set clipboard=unnamed
+set concealcursor=i
+set conceallevel=2
+set hidden
+set inccommand=nosplit
+set lazyredraw
+set mouse=a
+set spelllang=en_us
+set timeoutlen=500
+set ttimeoutlen=0
+set undofile
+set updatetime=250
 
 "
 " Scroll
@@ -69,6 +86,8 @@ set visualbell
 " Variables
 "
 
+let g:loaded_netrw = 1
+let g:loaded_netrwPlugin = 1
 let g:omni_sql_no_default_maps = 1
 let g:python_recommended_style = 0
 let g:rust_recommended_style = 0
@@ -82,19 +101,7 @@ set textwidth=79
 set nowrap
 
 "
-" Misc
+" Lua
 "
 
-set clipboard=unnamed
-set concealcursor=i
-set conceallevel=2
-set hidden
-set inccommand=nosplit
-set lazyredraw
-set mouse=a
-set spelllang=en_us
-set ttimeoutlen=0
-set undofile
-set updatetime=250
-
-lua require'dotsoup'.setup()
+lua require 'dotsoup'.setup()

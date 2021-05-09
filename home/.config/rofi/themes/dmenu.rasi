@@ -1,9 +1,9 @@
 @theme "themes/palette"
 
 * {
-  background-color: @palette-00;
-  highlight: bold #8d9c55;
-  text-color: @palette-07;
+  background-color: @palette-0;
+  highlight: @palette-highlight;
+  text-color: @palette-7;
 }
 
 #element {
@@ -11,7 +11,7 @@
 }
 
 #element selected {
-  background-color: @palette-02;
+  background-color: @palette-2;
   text-color: @palette-13;
 }
 
