@@ -14,33 +14,33 @@ super + space ; k ; u
 # Launchers
 #
 
-# Launch calculator.
-super + space ; equal
-  = --dmenu=rofi
-
 # Launch terminal.
 super + Return
   alacritty
 
+# Launch calculator.
+super + space ; equal
+  rofi -modi calc -no-show-match -no-sort -show calc
+
 # Launch mixer.
 super + space ; m
-  alacritty --class floating -e alsamixer -g
+  alacritty --class popup -e alsamixer -g
 
 # Launch music player.
 super + space ; p
-  alacritty --class floating -e ncmpcpp
+  alacritty --class popup -e ncmpcpp
 
 # Launch process manager.
 super + space ; t
-  alacritty --class floating -e bpytop
+  alacritty --class popup -e bpytop
 
 # Launch file manager.
 super + space ; slash
-  alacritty --class floating -e lf
+  alacritty --class popup -e lf
 
 # Launch program launcher.
 super + space ; space
-  rofi -show run -theme dmenu
+  rofi -modi run -show run -theme dmenu
 
 #
 # Misc
@@ -50,6 +50,10 @@ super + space ; space
 super + r ; s
   pkill -USR1 --exact sxhkd
 
+# Launch window selector.
+super + w
+  rofi -modi window -show window
+
 #
 # Screenshot
 #
@@ -57,8 +61,8 @@ super + r ; s
 # Take a screenshot and copy it to clipboard.
 super + space ; s ; c
   maim --window=$(xdotool getactivewindow) \
-  | xclip -selection clipboard -target image/png
+    | xclip -selection clipboard -target image/png
 
 # Take a screenshot from selection / take a normal screenshot.
-super + space ; s ; {shift + s,s}
-  maim {--select,_} $SCREENSHOT_DIR/$(date +%s).png
+super + space ; s ; {s,shift + s}
+  maim {_,--select} "$SCREENSHOT_DIR/$(date +%s).png"

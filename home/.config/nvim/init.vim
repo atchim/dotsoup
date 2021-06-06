@@ -9,7 +9,7 @@ set listchars=extends:>,precedes:<,tab:>\ ,trail:~
 " Completion
 "
 
-set completeopt=menuone,noinsert,noselect
+set completeopt=menuone,noselect
 set shortmess+=c
 
 "
@@ -104,4 +104,4 @@ set nowrap
 " Lua
 "
 
-lua require 'dotsoup'.setup()
+lua require('dotsoup').setup()

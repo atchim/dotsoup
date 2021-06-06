@@ -6,29 +6,17 @@
   text-color: @palette-7;
 }
 
-#element {
-  padding: 0 0.5ch;
-}
-
 #element selected {
   background-color: @palette-2;
   text-color: @palette-14;
 }
 
 #entry {
-  expand: false;
   text-color: @palette-11;
-  width: 24ch;
 }
 
-#horibox {
-  children: [prompt, entry, listview];
-  orientation: horizontal;
+#inputbar {
   spacing: 1ch;
-}
-
-#listview {
-  layout: horizontal;
 }
 
 #prompt {
@@ -36,8 +24,7 @@
 }
 
 #window {
-  anchor: south;
-  children: [horibox];
-  location: south;
-  width: 100%;
+  background-color: @palette-0;
+  border: 2px;
+  border-color: @palette-6;
 }

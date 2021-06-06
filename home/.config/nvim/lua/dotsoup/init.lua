@@ -1,1 +1,1 @@
-return { setup = require 'dotsoup.packer'.setup }
+return {setup = require('dotsoup.packer').setup}

@@ -7,14 +7,13 @@
   palette-5: #383838;
   palette-6: #5a5a5a;
   palette-7: #959595;
-  palette-8: #b58e6c;
-  palette-9: #8d9c55;
-  palette-10: #5ea55b;
-  palette-11: #58a38d;
-  palette-12: #729abc;
-  palette-13: #9a8ad7;
-  palette-14: #c47bc7;
-  palette-15: #cb7f95;
-
-  palette-highlight: bold #8d9c55;
+  palette-8: #e27575;
+  palette-9: #ad9346;
+  palette-10: #70a33e;
+  palette-11: #43a95d;
+  palette-12: #3ea4a4;
+  palette-13: #7993de;
+  palette-14: #b27fe4;
+  palette-15: #d772be;
+  palette-highlight: bold #70a33e;
 }

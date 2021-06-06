@@ -1,6 +1,5 @@
 status --is-interactive
 or exit
-
 if status --is-login; ~/.local/bin/envsoup fish | source; end
 
 #
@@ -31,8 +30,19 @@ set fish_pager_color_prefix white
 set fish_pager_color_progress --background=brblack --bold brwhite
 
 #
+# Cursor
+#
+
+set fish_cursor_default block
+set fish_cursor_insert line
+set fish_cursor_replace underscore
+set fish_cursor_replace_one underscore
+set fish_cursor_visual block
+
+#
 # Fancy Stuff
 #
 
-set fish_greeting
+function fish_greeting; fortune | cowsay; end
+function fish_user_key_bindings; fish_vi_key_bindings; end
 starship init fish | source

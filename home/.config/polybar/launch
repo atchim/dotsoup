@@ -23,7 +23,7 @@ def launch(args):
     print("launch: bar file doesn't exist", file=stderr)
     exit(1)
 
-  tmp = f"/tmp/polybar-{environ['USER']}-{args.bar}"
+  tmp = f'/tmp/polybar-{environ["USER"]}-{args.bar}'
 
   if path.exists(tmp):
     try:

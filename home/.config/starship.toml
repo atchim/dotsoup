@@ -2,7 +2,8 @@ add_newline = false
 
 [character]
 error_symbol = '[\$](bold fg:1)'
-success_symbol = '[\$](bold fg:13)'
+success_symbol = '[\$](bold fg:2)'
+vicmd_symbol = '[\$](bold fg:6)'
 
 [directory]
 style = 'bold fg:2'

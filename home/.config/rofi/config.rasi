@@ -1,3 +1,4 @@
 configuration {
   font: "Hack 9";
+  theme: "list";
 }

@@ -7,12 +7,14 @@ from os import environ, path
 ENV = {
   'CCACHE_DIR': '/var/cache/ccache',
   'EDITOR': 'nvim',
+  'GHCUP_INSTALL_BASE_PREFIX': path.expanduser('~'),
   'GOPATH': path.expanduser('~/.go'),
-  'MANPATH': f"{path.expanduser('~/.local/share/man')}:{environ['MANPATH']}",
-
+  'MANPATH': f'{path.expanduser("~/.local/share/man")}:{environ["MANPATH"]}',
   'PATH': [
     path.expanduser('~/.local/bin'),
+    path.expanduser('~/.cabal/bin'),
     path.expanduser('~/.cargo/bin'),
+    path.expanduser('~/.ghcup/bin'),
     path.expanduser('~/.go/bin'),
     '/usr/local/sbin',
     '/usr/local/bin',
@@ -24,7 +26,6 @@ ENV = {
     '/sbin',
     '/bin',
   ],
-
   'SUMNEKO_LUA_DIR': path.expanduser('~/repo/lua-language-server'),
 }
 

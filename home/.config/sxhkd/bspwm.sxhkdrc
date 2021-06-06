@@ -14,9 +14,9 @@ super + {x,y,z,apostrophe}
 # Focus / Swap
 #
 
-# Focus last local desktop or node.
-super + {Tab,grave}
-  bspc {desktop,node} --focus last.local
+# Focus last local desktop.
+super + Tab
+  bspc desktop --focus last.local
 
 # Focus desktop or send node to desktop.
 super + {_,shift + }{0-9}
@@ -24,13 +24,15 @@ super + {_,shift + }{0-9}
 
 # Send node to desktop and focus it.
 super + ctrl + {0-9}
-  desktop='^{10,1-9}'; \
-  bspc node --to-desktop $desktop; \
-  bspc desktop --focus $desktop
+  bspc node --to-desktop '^{10,1-9}' --follow
 
 # Send the newest marked node to newest preselected node.
 super + bracketright
   bspc node newest.marked --to-node newest.!automatic
+
+# Circulate windows forward or backward.
+super + {_,shift + }c
+  bspc node @/ --circulate {forward,backward}
 
 # Swap node with the biggest local node.
 super + g
@@ -46,9 +48,13 @@ super + {i,o}
   bspc node {newer,older} --focus; \
   bspc wm --record-history on
 
-# Focus next or previous local node.
+# Focus last local window node.
+super + grave
+  bspc node --focus last.local.window
+
+# Focus next or previous local window.
 super + {comma,period}
-  bspc node --focus {prev,next}.local
+  bspc node --focus {prev,next}.local.window
 
 # Focus next or previous local desktop.
 super + {less,greater}
@@ -62,7 +68,7 @@ super + {less,greater}
 super + b
   cmd={hide,show}; \
   [[ $cmd = hide ]] && bspc config bottom_padding 0; \
-  echo cmd:$cmd >/tmp/polybar-$USER-bspwm
+  echo cmd:$cmd >"/tmp/polybar-$USER-bspwm"
 
 # Toggle monocle layout.
 super + m
@@ -78,7 +84,7 @@ super + alt + q
 
 # Restart status bar.
 super + r ; b
-  echo cmd:restart >/tmp/polybar-$USER-bspwm
+  echo cmd:restart >"/tmp/polybar-$USER-bspwm"
 
 # Restart bspwm.
 super + r ; w
@@ -92,7 +98,7 @@ super + r ; w
 super + ctrl + {h,j,k,l}
   bspc node --presel-dir {west,south,north,east}
 
-# Cancel preselection for the focused node.
+# Cancel preselection for focused node.
 super + ctrl + space
   bspc node --presel-dir cancel
 

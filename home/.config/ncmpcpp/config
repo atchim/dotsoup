@@ -28,6 +28,13 @@ message_delay_time = 2
 playlist_disable_highlight_delay = 2
 
 #
+# Dirs
+#
+
+lyrics_directory = ~/lyr
+mpd_music_dir = ~/tune
+
+#
 # Display
 #
 
@@ -66,12 +73,6 @@ song_window_title_format = {%a - %t}|{%f}
 
 browser_display_mode = columns
 search_engine_display_mode = columns
-
-#
-# MPD
-#
-
-mpd_music_dir = ~/tune
 
 #
 # Visualizer
