@@ -1,43 +1,43 @@
 @theme "themes/palette"
 
 * {
-  background-color: @palette-0;
-  highlight: @palette-highlight;
-  text-color: @palette-7;
+	background-color: @palette-0;
+	highlight: @palette-highlight;
+	text-color: @palette-7;
 }
 
 #element {
-  padding: 0 0.5ch;
+	padding: 0 0.5ch;
 }
 
 #element selected {
-  background-color: @palette-2;
-  text-color: @palette-14;
+	background-color: @palette-2;
+	text-color: @palette-14;
 }
 
 #entry {
-  expand: false;
-  text-color: @palette-11;
-  width: 24ch;
+	expand: false;
+	text-color: @palette-11;
+	width: 24ch;
 }
 
 #horibox {
-  children: [prompt, entry, listview];
-  orientation: horizontal;
-  spacing: 1ch;
+	children: [prompt, entry, listview];
+	orientation: horizontal;
+	spacing: 1ch;
 }
 
 #listview {
-  layout: horizontal;
+	layout: horizontal;
 }
 
 #prompt {
-  text-color: @palette-15;
+	text-color: @palette-15;
 }
 
 #window {
-  anchor: south;
-  children: [horibox];
-  location: south;
-  width: 100%;
+	anchor: south;
+	children: [horibox];
+	location: south;
+	width: 100%;
 }

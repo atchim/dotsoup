@@ -1,30 +1,30 @@
 @theme "themes/palette"
 
 * {
-  background-color: @palette-0;
-  highlight: @palette-highlight;
-  text-color: @palette-7;
+	background-color: @palette-0;
+	highlight: @palette-highlight;
+	text-color: @palette-7;
 }
 
 #element selected {
-  background-color: @palette-2;
-  text-color: @palette-14;
+	background-color: @palette-2;
+	text-color: @palette-14;
 }
 
 #entry {
-  text-color: @palette-11;
+	text-color: @palette-11;
 }
 
 #inputbar {
-  spacing: 1ch;
+	spacing: 1ch;
 }
 
 #prompt {
-  text-color: @palette-15;
+	text-color: @palette-15;
 }
 
 #window {
-  background-color: @palette-0;
-  border: 2px;
-  border-color: @palette-6;
+	background-color: @palette-0;
+	border: 2px;
+	border-color: @palette-6;
 }

@@ -1,0 +1,46 @@
+#!/bin/bash
+
+MY_PROG=$(basename $0)
+
+MY_HELP="$MY_PROG
+Launch a Polybar bar.
+
+Usage
+	$MY_PROG [--] [-h] <bar>
+
+Flags
+	  	--    	Treat next arguments as positional arguments.
+	-h	--help	Print help information and exit.
+
+Positional Arguments
+	<bar>	Name of the bar to launch."
+
+bar() { [[ $MY_BAR ]] && die "Invalid trailing argument: $1"; MY_BAR="$1"; }
+die() { (($#)) && err "$@"; exit 1; }
+err() { echo "[$MY_PROG] [ERROR] $@" >&2; }
+
+parse() {
+	while (($#)); do
+		((MY_RAW)) && { bar "$1"; shift 1; continue; }
+		case $1 in
+			--) MY_RAW=1 ;;
+			-h|--help) echo "$MY_HELP"; exit ;;
+			-*) die "Invalid option: $1" >&2 ;;
+			*) bar "$1" ;;
+		esac
+		shift 1
+	done
+	[[ $MY_BAR ]] || die "<bar> not given"
+}
+
+run() {
+	parse "$@"
+	local file="${XDG_CONFIG_HOME:-$HOME/.config}/polybar/$MY_BAR.ini"
+	[[ -f $file ]] || die "Bar file doesn't exist: $file"
+	local tmp=/tmp/polybar-$USER-$MY_BAR
+	[[ -p $tmp ]] && kill $(readlink $tmp | cut -d. -f2)
+	polybar -c "$file" "$MY_BAR" &
+	ln -fs /tmp/polybar_mqueue.$! "$tmp"
+}
+
+run "$@"

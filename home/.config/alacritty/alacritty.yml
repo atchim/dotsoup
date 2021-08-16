@@ -42,7 +42,7 @@ color-schemes:
 cursor: {thickness: 0.33}
 
 font:
-  normal: {family: Hack}
+  normal: {family: Hack Nerd Font}
   size: 8
 
 mouse:

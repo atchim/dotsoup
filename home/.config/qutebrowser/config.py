@@ -1,31 +1,24 @@
 #
-# Imports
-#
-
-from glob import glob
-from os import path
-
-#
 # Underworld Palette
 #
 
 p = [
-  '#080808',
-  '#0d0d0d',
-  '#121212',
-  '#1a1a1a',
-  '#252525',
-  '#383838',
-  '#5a5a5a',
-  '#959595',
-  '#e27575',
-  '#ad9346',
-  '#70a33e',
-  '#43a95d',
-  '#3ea4a4',
-  '#7993de',
-  '#b27fe4',
-  '#d772be',
+	'#080808',
+	'#0d0d0d',
+	'#121212',
+	'#1a1a1a',
+	'#252525',
+	'#383838',
+	'#5a5a5a',
+	'#959595',
+	'#e27575',
+	'#ad9346',
+	'#70a33e',
+	'#43a95d',
+	'#3ea4a4',
+	'#7993de',
+	'#b27fe4',
+	'#d772be',
 ]
 
 #
@@ -175,11 +168,7 @@ c.fonts.default_family = 'Hack'
 c.history_gap_interval = 32
 c.prompt.radius = 0
 
-widevine_path = path.expanduser('~/.config/chromium/WidevineCdm')
-widevine_path = f'{widevine_path}/*/_platform_specific/*/libwidevinecdm.so'
-widevine_path, = glob(widevine_path)
-
-c.qt.args = [f'widevine-path={widevine_path}']
+c.qt.args = ["widevine-path=/opt/google/chrome/WidevineCdm/_platform_specific/linux_x64/libwidevinecdm.so"]
 
 #
 # Tabs

@@ -1,6 +1,5 @@
 status --is-interactive
 or exit
-if status --is-login; ~/.local/bin/envsoup fish | source; end
 
 #
 # Colors
