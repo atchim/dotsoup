@@ -1,4 +1,6 @@
-local function setup()
+local M = {}
+
+M.setup = function()
 	local g = vim.g
 
 	-- Disable Things
@@ -14,4 +16,4 @@ local function setup()
 	g.rust_recommended_style = 0
 end
 
-return {setup = setup}
+return M

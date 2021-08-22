@@ -1,20 +1,22 @@
-local function config()
+local M = {}
+
+M.config = function()
 	local g = vim.g
-	g.NERDTreeQuitOnOpen = 1
-	g.NERDTreeMinimalUI = 1
-	g.NERDTreeMinimalMenu = 1
+
+	g.nvim_tree_hide_dotfiles = 1
+	g.nvim_tree_ignore = {'.git', 'node_modules'}
 
 	require'which-key'.register(
 		{
 			['<Space>'] = {
 				name = 'tree',
-				['<CR>'] = {'<Cmd>NERDTreeFocus<CR>', 'Focus'},
-				['<Space>'] = {'<Cmd>NERDTreeToggle<CR>', 'Toggle'},
-				c = {'<Cmd>NERDTreeClose<CR>', 'Close'},
-			}
+				c = {'<Cmd>NvimTreeClose<CR>', 'Close'},
+				['<CR>'] = {'<Cmd>NvimTreeFocus<CR>', 'Focus'},
+				['<Space>'] = {'<Cmd>NvimTreeToggle<CR>', 'Toggle'},
+			},
 		},
 		{prefix = '<Leader>'}
 	)
 end
 
-return {config = config}
+return M

@@ -1,4 +1,6 @@
-local function setup()
+local M = {}
+
+M.setup = function()
 	require'which-key'.register(
 		{
 			['.'] = {':setlocal list!<CR>', "Locally toggle 'list'"},
@@ -8,4 +10,4 @@ local function setup()
 	)
 end
 
-return {setup = setup}
+return M

@@ -1,4 +1,6 @@
-local function setup()
+local M  ={}
+
+M.setup = function()
 	local o = vim.opt
 
 	-- Case
@@ -52,6 +54,8 @@ local function setup()
 
 	-- UI
 	o.cmdheight = 2
+	o.cursorline = true
+	o.cursorlineopt = {'number'}
 	o.number = true
 	o.relativenumber = true
 	o.signcolumn = 'yes'
@@ -63,4 +67,4 @@ local function setup()
 	o.textwidth = 79
 end
 
-return {setup = setup}
+return M

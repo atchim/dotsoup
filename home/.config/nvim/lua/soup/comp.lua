@@ -1,7 +1,10 @@
-local function config()
+local M = {}
+
+M.config = function()
 	require'compe'.setup{
 		source = {
 			buffer = {true, kind = '﬘'},
+			luasnip = {true, kind = '﬌'},
 			nvim_lsp = true,
 			path = {true, kind = ''},
 		},
@@ -17,4 +20,4 @@ local function config()
 	map('i', '<C-u>', 'compe#scroll({"delta": -4})', opts)
 end
 
-return {config = config}
+return M
