@@ -6,25 +6,25 @@ or exit
 #
 
 set fish_color_autosuggestion white
-set fish_color_cancel --background=black --bold red
+set fish_color_cancel --background=black --bold brred
 set fish_color_command --bold magenta
 set fish_color_comment white
-set fish_color_end cyan
-set fish_color_error --bold red
-set fish_color_escape cyan
+set fish_color_end brcyan
+set fish_color_error --bold brred
+set fish_color_escape brcyan
 set fish_color_history_current --bold brwhite
 set fish_color_match --background=brblack
 set fish_color_normal normal
-set fish_color_operator cyan
-set fish_color_param blue
-set fish_color_quote green
-set fish_color_redirection cyan
+set fish_color_operator brcyan
+set fish_color_param brblue
+set fish_color_quote brgreen
+set fish_color_redirection brcyan
 set fish_color_search_match --background=brblack
 set fish_color_selection --background=brblack
-set fish_color_status red
+set fish_color_status brred
 set fish_color_valid_path --underline brwhite
 set fish_pager_color_completion brwhite
-set fish_pager_color_description green
+set fish_pager_color_description brgreen
 set fish_pager_color_prefix white
 set fish_pager_color_progress --background=brblack --bold brwhite
 

@@ -1,143 +1,108 @@
 local M = {}
 
 M.config = function()
-	do
-		local lsp = vim.lsp
-		lsp.handlers['textDocument/publishDiagnostics'] = lsp.with(
-			lsp.diagnostic.on_publish_diagnostics,
-			{underline = false, virtual_text = false}
-		)
-	end
+  do
+    local lsp = vim.lsp
+    lsp.handlers['textDocument/publishDiagnostics'] = lsp.with(
+      lsp.diagnostic.on_publish_diagnostics,
+      {underline = false, virtual_text = false}
+    )
+  end
 
-	local caps = vim.lsp.protocol.make_client_capabilities()
-	caps.textDocument.completion.completionItem.snippetSupport = true
-	caps.textDocument.completion.completionItem.resolveSupport = {
-		properties = {'documentation', 'detail', 'additionlTextEdits'}
-	}
+  do
+    local function defsign(name, icon)
+      vim.fn.sign_define(
+        'LspDiagnosticsSign'..name,
+        {text = icon, numhl = 'LspDiagnosticsDefaul'..name}
+      )
+    end
 
-	local function sym(name, icon)
-		vim.fn.sign_define(
-			'LspDiagnosticsSign'..name,
-			{text = icon, numhl = 'LspDiagnosticsDefaul'..name}
-		)
-	end
+    defsign('Error', '')
+    defsign('Hint', '')
+    defsign('Information', '')
+    defsign('Warning', '')
+  end
 
-	sym('Error', '')
-	sym('Hint', '')
-	sym('Information', '')
-	sym('Warning', '')
+  local caps = vim.lsp.protocol.make_client_capabilities()
+  caps = require'cmp_nvim_lsp'.update_capabilities(caps)
 
-	local function oat(cli, bufnr)
-		local map = require'which-key'.register
+  local oat = function(cli, bufnr)
+    local map = vim.api.nvim_buf_set_keymap
+    local opts = {noremap = true, silent = true}
 
-		map(
-			{
-				['[d'] = {
-					'<Cmd>lua vim.lsp.diagnostic.goto_prev()<CR>',
-					'Move to previous LSP diagnostic',
-				},
-				['[D'] = {
-					'<Cmd>lua vim.lsp.buf.document_symbol()<CR>',
-					'List LSP symbols',
-				},
-				[']d'] = {
-					'<Cmd>lua vim.lsp.diagnostic.goto_next()<CR>',
-					'Move to next LSP diagnostic',
-				},
-				[']D'] = {
-					'<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>',
-					'List LSP symbols'},
-				['<C-]>'] = {
-					'<Cmd>lua vim.lsp.buf.definition()<CR>',
-					'Jump to LSP definition',
-				},
-				cr = {'<Cmd>lua vim.lsp.buf.rename()<CR>', 'Rename LSP symbol'},
-				gD = {
-					'<Cmd>lua vim.lsp.buf.type_definition()<CR>',
-					'Jump to LSP type definition',
-				},
-				gI = {
-					'<Cmd>lua vim.lsp.buf.implementation()<CR>',
-					'List LSP implementations',
-				},
-				ga = {
-					'<Cmd>lua vim.lsp.buf.code_action()<CR>',
-					'Select LSP code action',
-				},
-				gd = {
-					'<Cmd>lua vim.lsp.buf.declaration()<CR>',
-					'Jump to LSP declaration',
-				},
-				gr = {'<Cmd>lua vim.lsp.buf.references()<CR>', 'List LSP references'},
-				['<C-h>'] = {
-					'<Cmd>lua vim.lsp.buf.signature_help()<CR>',
-					'Display LSP signature help',
-				},
-				K = {'<Cmd>lua vim.lsp.buf.hover()<CR>', 'Display LSP hover help'},
-				['<C-k>'] = {
-					'<Cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>',
-					'Display LSP line diagnostics',
-				},
-			},
-			{buffer = bufnr}
-		)
+    map(bufnr, 'n', '[d', '<Cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+    map(bufnr, 'n', '[D', '<Cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
+    map(bufnr, 'n', ']D', '<Cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+    map(bufnr, 'n', '[D', '<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>', opts)
+    map(bufnr, 'n', '<C-]>', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+    map(bufnr, 'n', 'cr', '<Cmd>lua vim.lsp.buf.rename()<CR>', opts)
+    map(bufnr, 'n', 'gD', '<Cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+    map(bufnr, 'n', 'gI', '<Cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+    map(bufnr, 'n', 'ga', '<Cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+    map(bufnr, 'n', 'gd', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+    map(bufnr, 'n', 'gr', '<Cmd>lua vim.lsp.buf.references()<CR>', opts)
+    map(bufnr, 'n', '<C-h>', '<Cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+    map(bufnr, 'n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+    map(
+      bufnr,
+      'n',
+      '<C-k>',
+      '<Cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>',
+      opts
+    )
 
-		if cli.resolved_capabilities.document_formatting then
-			map(
-				{gF = {'<Cmd>lua vim.lsp.buf.formatting()<CR>', 'LSP formatting'}},
-				{buffer = bufnr}
-			)
-		elseif cli.resolved_capabilities.document_range_formatting then
-			map(
-				{
-					gF = {
-						'<Cmd>lua vim.lsp.buf.range_formatting()<CR>',
-						'LSP range formatting',
-					}
-				},
-				{buffer = bufnr}
-			)
-		end
-	end
+    if cli.resolved_capabilities.document_formatting then
+      map(bufnr, 'n', 'gF', '<Cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+    elseif cli.resolved_capabilities.document_range_formatting then
+      map(
+        bufnr,
+        'n',
+        'gF',
+        '<Cmd>lua vim.lsp.buf.range_formatting()<CR>',
+        opts
+      )
+    end
+  end
 
-	require'lspinstall'.setup()
-	local cfg = require'lspconfig'
+  local cfg = {
+    {capabilities = caps, on_attach = oat},
+    lua = {
+      capabilities = caps,
+      on_attach = oat,
+      root_dir = vim.loop.cwd,
+      settings = {
+        Lua = {
+          diagnostics = {globals = {'vim'}},
+          workspace = {
+            library = {
+              [vim.fn.expand'$VIMRUNTIME/lua'] = true,
+              [vim.fn.expand'$VIMRUNTIME/lua/vim/lsp'] = true,
+            }
+          },
+        },
+      },
+    },
+    rust = {
+      capabilities = caps,
+      on_attach = oat,
+      settings = {
+        ['rust-analyzer'] = {
+          assist = {importGranurality = 'module', importPrefix = 'by_self'},
+          cargo = {loadOutDirsFromCheck = true},
+          procMacro = {enable = true},
+        },
+      },
+    },
+  }
 
-	for _, lang in pairs(require'lspinstall'.installed_servers()) do
-		if lang == 'lua' then
-			local xp = vim.fn.expand
-			cfg[lang].setup{
-				capabilities = caps,
-				on_attach = oat,
-				root_dir = vim.loop.cwd,
-				settings = {
-					Lua = {
-						diagnostics = {globals = {'vim'}},
-						workspace = {
-							library = {
-								[xp'$VIMRUNTIME/lua'] = true,
-								[xp'$VIMRUNTIME/lua/vim/lsp'] = true,
-							}
-						},
-					},
-				},
-			}
-		elseif lang == 'rust' then
-			cfg[lang].setup{
-				capabilities = caps,
-				on_attach = oat,
-				settings = {
-					['rust-analyzer'] = {
-						assist = {importGranurality = 'module', importPrefix = 'by_self'},
-						cargo = {loadOutDirsFromCheck = true},
-						procMacro = {enable = true},
-					},
-				},
-			}
-		else
-			cfg[lang].setup{capabilities = caps, on_attach = oat}
-		end
-	end
+  local ins = require'lspinstall'
+  local lsp = require'lspconfig'
+  ins.setup()
+  for _, lang in pairs(ins.installed_servers()) do
+    if cfg[lang] then lsp[lang].setup(cfg[lang])
+    else lsp[lang].setup(cfg[1])
+    end
+  end
 end
 
 return M

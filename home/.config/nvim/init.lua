@@ -1,5 +1,2 @@
-local cmd = vim.cmd
-cmd'nnoremap <Space> <NOP>'
-vim.g.mapleader = ' '
-require'soup'.startup()
-cmd'colorscheme sopa'
+require'soup'.setup()
+vim.cmd'colorscheme sopa'

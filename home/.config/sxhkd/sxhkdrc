@@ -4,11 +4,11 @@
 
 # Set brazilian keyboard layout.
 super + space ; k ; b
-	setxkbmap -model abnt2 -layout br
+  setxkbmap -model abnt2 -layout br
 
 # Set north american keyboard layout.
 super + space ; k ; u
-	setxkbmap -layout us
+  setxkbmap -layout us
 
 #
 # Launchers
@@ -16,31 +16,31 @@ super + space ; k ; u
 
 # Launch terminal.
 super + Return
-	alacritty
+  alacritty
 
 # Launch calculator.
 super + space ; equal
-	rofi -modi calc -no-show-match -no-sort -show calc
+  rofi -modi calc -no-show-match -no-sort -show calc
 
 # Launch mixer.
 super + space ; m
-	alacritty --class popup -e alsamixer -g
+  alacritty --class popup -e alsamixer -g
 
 # Launch music player.
 super + space ; p
-	alacritty --class popup -e ncmpcpp
+  alacritty --class popup -e ncmpcpp
 
 # Launch process manager.
 super + space ; t
-	alacritty --class popup -e bpytop
+  alacritty --class popup -e bpytop
 
 # Launch file manager.
 super + space ; slash
-	alacritty --class popup -e xplr
+  alacritty --class popup -e fff
 
 # Launch program launcher.
 super + space ; space
-	rofi -modi run -show run -theme dmenu
+  rofi -modi run -show run -theme dmenu
 
 #
 # Misc
@@ -48,11 +48,11 @@ super + space ; space
 
 # Reload sxhkd.
 super + r ; s
-	pkill -USR1 --exact sxhkd
+  pkill -USR1 --exact sxhkd
 
 # Launch window selector.
 super + w
-	rofi -modi window -show window -show-icons -window-format '\{w\}  \{c\}	\{t\}'
+  rofi -modi window -show window -show-icons -window-format '\{w\}  \{c\} \{t\}'
 
 #
 # Screenshot
@@ -60,9 +60,9 @@ super + w
 
 # Take a screenshot and copy it to clipboard.
 super + space ; s ; c
-	maim --window=$(xdotool getactivewindow) \
-		| xclip -selection clipboard -target image/png
+  maim --window=$(xdotool getactivewindow) \
+    | xclip -selection clipboard -target image/png
 
 # Take a screenshot from selection / take a normal screenshot.
 super + space ; s ; {s,shift + s}
-	maim {_,--select} "$SHOT_DIR/$(date +%s).png"
+  maim {_,--select} "$SHOT_DIR/$(date +%s).png"

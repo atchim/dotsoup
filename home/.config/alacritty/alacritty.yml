@@ -1,12 +1,12 @@
 color-schemes:
-  underworld: &underworld-colors
+  sopa: &sopa-colors
     bright:
-      black: '#252525'
+      black: '#121212'
       red: '#e27575'
       green: '#43a95d'
-      yellow: '#ad9346'
+      yellow: '#70a33e'
       blue: '#7993de'
-      magenta: '#b27fe4'
+      magenta: '#d772be'
       cyan: '#3ea4a4'
       white: '#959595'
 
@@ -14,9 +14,9 @@ color-schemes:
       black: '#080808'
       red: '#e27575'
       green: '#43a95d'
-      yellow: '#70a33e'
+      yellow: '#ad9346'
       blue: '#7993de'
-      magenta: '#d772be'
+      magenta: '#b27fe4'
       cyan: '#3ea4a4'
       white: '#383838'
 
@@ -56,6 +56,6 @@ window:
 
   decorations: none
 
-colors: *underworld-colors
+colors: *sopa-colors
 scrolling: {history: 16384}
 shell: {program: '/bin/fish'}

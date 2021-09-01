@@ -40,6 +40,7 @@ bspc rule --add Vivaldi-stable desktop='^2'
 bspc rule --add Aseprite desktop='^3'
 bspc rule --add Darktable desktop='^3' follow=on
 bspc rule --add Gimp desktop='^3' follow=on
+bspc rule --add Inkscape desktop='^3' follow=on
 bspc rule --add krita desktop='^3'
 bspc rule --add TelegramDesktop desktop='^4'
 bspc rule --add Zathura desktop='^5' state=tiled
