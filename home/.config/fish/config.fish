@@ -39,6 +39,16 @@ set fish_cursor_replace_one underscore
 set fish_cursor_visual block
 
 #
+# Functions
+#
+
+function f -d 'fff with cd on exit'
+  fff $argv
+  set -q XDG_CACHE_HOME; or set XDG_CACHE_HOME $HOME/.cache
+  pushd (cat $XDG_CACHE_HOME/fff/.fff_d)
+end
+
+#
 # Fancy Stuff
 #
 

@@ -2,22 +2,22 @@ color-schemes:
   sopa: &sopa-colors
     bright:
       black: '#121212'
-      red: '#e27575'
-      green: '#43a95d'
-      yellow: '#70a33e'
-      blue: '#7993de'
-      magenta: '#d772be'
-      cyan: '#3ea4a4'
+      red: '#ff5b5b'
+      green: '#00ad2b'
+      yellow: '#bc8f05'
+      blue: '#6b90ff'
+      magenta: '#fc4ad0'
+      cyan: '#00a7a7'
       white: '#959595'
 
     normal:
       black: '#080808'
-      red: '#e27575'
-      green: '#43a95d'
-      yellow: '#ad9346'
-      blue: '#7993de'
-      magenta: '#b27fe4'
-      cyan: '#3ea4a4'
+      red: '#ff5b5b'
+      green: '#00ad2b'
+      yellow: '#bc8f05'
+      blue: '#6b90ff'
+      magenta: '#ba74ff'
+      cyan: '#00a7a7'
       white: '#383838'
 
     primary:
@@ -30,14 +30,14 @@ color-schemes:
         foreground: '#959595'
 
       focused_match:
-        background: '#b27fe4'
+        background: '#ba74ff'
         foreground: '#383838'
 
       matches:
         background: '#383838'
-        foreground: '#70a33e'
+        foreground: '#bc8f05'
 
-    selection: {background: '#252525'}
+    selection: {background: '#1a1a1a'}
 
 cursor: {thickness: 0.33}
 

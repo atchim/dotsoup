@@ -1,19 +1,19 @@
 * {
   pal-0: #080808;
-  pal-1: #0d0d0d;
+  pal-1: #0c0c0c;
   pal-2: #121212;
   pal-3: #1a1a1a;
   pal-4: #252525;
   pal-5: #383838;
   pal-6: #5a5a5a;
   pal-7: #959595;
-  pal-8: #e27575;
-  pal-9: #ad9346;
-  pal-10: #70a33e;
-  pal-11: #43a95d;
-  pal-12: #3ea4a4;
-  pal-13: #7993de;
-  pal-14: #b27fe4;
-  pal-15: #d772be;
-  pal-hi: bold #70a33e;
+  pal-8: #ff5b5b;
+  pal-9: #bc8f05;
+  pal-10: #54a900;
+  pal-11: #00ad2b;
+  pal-12: #00a7a7;
+  pal-13: #6b90ff;
+  pal-14: #ba74ff;
+  pal-15: #fc4ad0;
+  pal-hi: bold #54a900;
 }
