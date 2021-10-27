@@ -31,7 +31,6 @@ playlist_disable_highlight_delay = 2
 # Dirs
 #
 
-lyrics_directory = ~/lyr
 mpd_music_dir = ~/tune
 
 #

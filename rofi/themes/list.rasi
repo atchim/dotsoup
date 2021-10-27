@@ -6,24 +6,29 @@
   text-color: @pal-7;
 }
 
-#element selected {
+element selected {
   background-color: @pal-2;
   text-color: @pal-14;
 }
 
-#entry {
+element-text {
+  background-color: inherit;
+  text-color: inherit;
+}
+
+entry {
   text-color: @pal-11;
 }
 
-#inputbar {
+inputbar {
   spacing: 1ch;
 }
 
-#prompt {
+prompt {
   text-color: @pal-15;
 }
 
-#window {
+window {
   background-color: @pal-0;
   border: 2px;
   border-color: @pal-6;

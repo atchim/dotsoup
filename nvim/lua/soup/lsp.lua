@@ -32,7 +32,7 @@ M.config = function()
 
     map(bufnr, 'n', '[d', '<Cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
     map(bufnr, 'n', '[D', '<Cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
-    map(bufnr, 'n', ']D', '<Cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+    map(bufnr, 'n', ']d', '<Cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
     map(bufnr, 'n', '[D', '<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>', opts)
     map(bufnr, 'n', '<C-]>', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
     map(bufnr, 'n', 'cr', '<Cmd>lua vim.lsp.buf.rename()<CR>', opts)

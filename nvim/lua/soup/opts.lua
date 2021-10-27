@@ -54,7 +54,6 @@ M.setup = function()
   o.updatetime = 250
 
   -- UI
-  o.cmdheight = 2
   o.cursorline = true
   o.cursorlineopt = {'number'}
   o.number = true

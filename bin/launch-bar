@@ -1,12 +1,10 @@
 #!/bin/bash
 
-MY_PROG=$(basename $0)
-
-MY_HELP="$MY_PROG
+MY_HELP="launch-bar
 Launch a Polybar bar.
 
 Usage
-  $MY_PROG [--] [-h] <bar>
+  launch-bar [--] [-h] <bar>
 
 Flags
       --      Treat next arguments as positional arguments.
@@ -17,7 +15,7 @@ Positional Arguments
 
 bar() { [[ $MY_BAR ]] && die "Invalid trailing argument: $1"; MY_BAR="$1"; }
 die() { (($#)) && err "$@"; exit 1; }
-err() { echo "[$MY_PROG] [ERROR] $@" >&2; }
+err() { echo "[launch-bar] [ERROR] $@" >&2; }
 
 parse() {
   while (($#)); do

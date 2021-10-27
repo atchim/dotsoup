@@ -7,8 +7,8 @@ super + {f,p,s,t}
   bspc node --state {fullscreen,pseudo_tiled,floating,tiled}
 
 # Set node flags.
-super + {x,y,z,apostrophe}
-  bspc node --flag {locked,sticky,private,marked}
+super + {a,x,y,z,apostrophe}
+  bspc node --flag {hidden,locked,sticky,private,marked}
 
 #
 # Focus / Swap
@@ -90,6 +90,11 @@ super + r ; b
 # Restart bspwm.
 super + r ; w
   bspc wm --restart
+
+# Launch Tchpad.
+super + w
+  rofi -modi tchpad -show tchpad -show-icons \
+    -tchpad-cmd 'bspc node $TCHPAD_WIN --flag hidden'
 
 #
 # Preselect

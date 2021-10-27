@@ -50,10 +50,6 @@ super + space ; space
 super + r ; s
   pkill -USR1 --exact sxhkd
 
-# Launch window selector.
-super + w
-  rofi -modi window -show window -show-icons -window-format '\{w\}  \{c\} \{t\}'
-
 #
 # Screenshot
 #
