@@ -1,6 +1,8 @@
 local M = {}
 
-M.setup = function()
+--- Define autocommands.
+M.init = function()
+  -- Don't tell me or my son how to write ebuild files ever again!
   vim.cmd[[
     augroup soup_gentoo
       autocmd!

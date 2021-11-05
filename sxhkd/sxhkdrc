@@ -16,7 +16,7 @@ super + space ; k ; u
 
 # Launch terminal.
 super + Return
-  alacritty
+  alacritty msg create-window || alacritty
 
 # Launch calculator.
 super + space ; equal

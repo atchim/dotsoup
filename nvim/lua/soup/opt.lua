@@ -1,6 +1,7 @@
 local M = {}
 
-M.setup = function()
+--- Set options.
+M.init = function()
   local o = vim.opt
 
   -- Case

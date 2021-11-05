@@ -1,5 +1,6 @@
 local M = {}
 
+--- Configure `telescope.nvim`, the fuzzy finder.
 M.config = function()
   require'telescope'.setup{
     extensions = {
@@ -13,12 +14,22 @@ M.config = function()
 
   require'telescope'.load_extension'fzf'
 
-  local map = vim.api.nvim_set_keymap
-  local opts = {noremap = true, silent = true}
+  --- Define a mapping to `telescope.nvim` which is equivalent to
+  --- `nnoremap <silent> ...`.
+  --- @param seq string The key sequence.
+  --- @param cmd string The `telescope.nvim` command.
+  local function map(seq, cmd)
+    vim.api.nvim_set_keymap(
+      'n',
+      seq,
+      '<Cmd>lua require"telescope.builtin".'..cmd..'()<CR>',
+      {noremap = true, silent = true}
+    )
+  end
 
-  map('n', ']g', '<Cmd>lua require"telescope.builtin".live_grep()<CR>', opts)
-  map('n', ']f', '<Cmd>lua require"telescope.builtin".find_files()<CR>', opts)
-  map('n', ']h', '<Cmd>lua require"telescope.builtin".help_tags()<CR>', opts)
+  map('<Leader>ff', 'find_files')
+  map('<Leader>fh', 'help_tags')
+  map('<Leader>f<Space>', 'live_grep')
 end
 
 return M

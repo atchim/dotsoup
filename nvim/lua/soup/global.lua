@@ -1,6 +1,7 @@
 local M = {}
 
-M.setup = function()
+--- Define globals.
+M.init = function()
   local g = vim.g
 
   -- Disable Things

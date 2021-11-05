@@ -1,0 +1,22 @@
+depth = 0
+ignore = ['\.unsafe$']
+rage = 1
+
+[dots]
+alacritty = '~/.config/alacritty'
+bash = '~'
+bin = '~/.local/bin'
+bspwm = '~/.config/bspwm'
+fish = '~/.config/fish'
+mopidy = '~/.config/mopidy'
+mpd = '~/.config/mpd'
+ncmpcpp = '~/.config/ncmpcpp'
+nvim = '~/.config/nvim'
+polybar = '~/.config/polybar'
+qutebrowser = '~/.config/qutebrowser'
+rofi = '~/.config/rofi'
+starship = '~/.config'
+sx = '~/.config/sx'
+sxhkd = '~/.config/sxhkd'
+tmux = '~'
+zathura = '~/.config/zathura'

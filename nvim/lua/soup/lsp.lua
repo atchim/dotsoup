@@ -1,74 +1,36 @@
 local M = {}
 
+--- Configure the LSP.
 M.config = function()
-  do
-    local lsp = vim.lsp
-    lsp.handlers['textDocument/publishDiagnostics'] = lsp.with(
-      lsp.diagnostic.on_publish_diagnostics,
-      {underline = false, virtual_text = false}
+  -- Set how diagnostics will be shown in the screen.
+  local lsp = vim.lsp
+  lsp.handlers['textDocument/publishDiagnostics'] = lsp.with(
+    lsp.diagnostic.on_publish_diagnostics,
+    {underline = false, virtual_text = false}
+  )
+
+  local function set_sign(name, icon)
+    vim.fn.sign_define(
+      'LspDiagnosticsSign'..name,
+      {text = icon, numhl = 'LspDiagnosticsDefaul'..name}
     )
   end
 
-  do
-    local function defsign(name, icon)
-      vim.fn.sign_define(
-        'LspDiagnosticsSign'..name,
-        {text = icon, numhl = 'LspDiagnosticsDefaul'..name}
-      )
-    end
-
-    defsign('Error', '')
-    defsign('Hint', '')
-    defsign('Information', '')
-    defsign('Warning', '')
-  end
+  -- Set LSP signs.
+  set_sign('Error', '')
+  set_sign('Hint', '')
+  set_sign('Information', '')
+  set_sign('Warning', '')
 
   local caps = vim.lsp.protocol.make_client_capabilities()
   caps = require'cmp_nvim_lsp'.update_capabilities(caps)
 
-  local oat = function(cli, bufnr)
-    local map = vim.api.nvim_buf_set_keymap
-    local opts = {noremap = true, silent = true}
-
-    map(bufnr, 'n', '[d', '<Cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-    map(bufnr, 'n', '[D', '<Cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
-    map(bufnr, 'n', ']d', '<Cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-    map(bufnr, 'n', '[D', '<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>', opts)
-    map(bufnr, 'n', '<C-]>', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-    map(bufnr, 'n', 'cr', '<Cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    map(bufnr, 'n', 'gD', '<Cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-    map(bufnr, 'n', 'gI', '<Cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-    map(bufnr, 'n', 'ga', '<Cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-    map(bufnr, 'n', 'gd', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-    map(bufnr, 'n', 'gr', '<Cmd>lua vim.lsp.buf.references()<CR>', opts)
-    map(bufnr, 'n', '<C-h>', '<Cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-    map(bufnr, 'n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-    map(
-      bufnr,
-      'n',
-      '<C-k>',
-      '<Cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>',
-      opts
-    )
-
-    if cli.resolved_capabilities.document_formatting then
-      map(bufnr, 'n', 'gF', '<Cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-    elseif cli.resolved_capabilities.document_range_formatting then
-      map(
-        bufnr,
-        'n',
-        'gF',
-        '<Cmd>lua vim.lsp.buf.range_formatting()<CR>',
-        opts
-      )
-    end
-  end
-
   local cfg = {
-    {capabilities = caps, on_attach = oat},
+    {capabilities = caps, on_attach = require'soup.lsp'.oat},
+
     lua = {
       capabilities = caps,
-      on_attach = oat,
+      on_attach = require'soup.lsp'.oat,
       root_dir = vim.loop.cwd,
       settings = {
         Lua = {
@@ -82,9 +44,10 @@ M.config = function()
         },
       },
     },
+
     rust = {
       capabilities = caps,
-      on_attach = oat,
+      on_attach = require'soup.lsp'.oat,
       settings = {
         ['rust-analyzer'] = {
           assist = {importGranurality = 'module', importPrefix = 'by_self'},
@@ -97,11 +60,56 @@ M.config = function()
 
   local ins = require'lspinstall'
   local lsp = require'lspconfig'
+
   ins.setup()
+
   for _, lang in pairs(ins.installed_servers()) do
     if cfg[lang] then lsp[lang].setup(cfg[lang])
     else lsp[lang].setup(cfg[1])
     end
+  end
+end
+
+--- Setup LSP to the buffer on attachment.
+--- @param client table The LSP client.
+--- @param bufnr number The buffer number.
+M.oat = function(client, bufnr)
+  --- Define a LSP mapping to a buffer equivalent to `nnoremap <silent> ...`.
+  --- @param seq string The key sequence.
+  --- @param cmd string The LSP command to call.
+  local function map(seq, cmd)
+    vim.api.nvim_buf_set_keymap(
+      bufnr,
+      'n',
+      seq,
+      '<Cmd>lua vim.lsp.'..cmd..'()<CR>',
+      {noremap = true, silent = true}
+    )
+  end
+
+  -- General Mappings
+  map('cr', 'buf.rename')
+  map('ga', 'buf.code_action')
+  map('gd', 'buf.declaration')
+  map('gD', 'buf.type_definition')
+  map('gI', 'buf.implementation')
+  map('gr', 'buf.references')
+  map('<C-h>', 'buf.signature_help')
+  map('<C-k>', 'diagnostic.show_line_diagnostics')
+  map('K', 'buf.hover')
+
+  -- Square Brackets Mappings
+  map('[d', 'diagnostic.goto_prev')
+  map(']d', 'diagnostic.goto_next')
+  map(']q', 'buf.document_symbol')
+  map(']w', 'buf.workspace_symbol')
+  map('<C-]>', 'buf.definition')
+
+  -- Formatting Mappings
+  if client.resolved_capabilities.document_formatting then
+    map('<Leader>lf', 'buf.formatting')
+  elseif client.resolved_capabilities.document_range_formatting then
+    map('<Leader>lf', 'buf.range_formatting')
   end
 end
 

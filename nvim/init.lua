@@ -1,2 +1,1 @@
-require'soup'.setup()
-vim.cmd'colorscheme sopa'
+require'soup'.init()

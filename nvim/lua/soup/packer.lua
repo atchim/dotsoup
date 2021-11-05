@@ -1,12 +1,12 @@
 local M = {}
 
-M.setup = function()
+--- Startup `packer.nvim`.
+M.init = function()
   require'packer'.startup{
     {
-      '/home/atchim/repo/sopa.nvim',
-      {'akinsho/bufferline.nvim', config = require'soup.buf'.config},
+      'atchim/sopa.nvim',
+      {'akinsho/bufferline.nvim', config = require'soup.bufferline'.config},
       {'baskerville/vim-sxhkdrc', ft = 'sxhkdrc'},
-      'dylanaraps/fff.vim',
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-nvim-lsp',
       {'hrsh7th/cmp-nvim-lua', ft = 'lua'},
@@ -19,10 +19,16 @@ M.setup = function()
       'nvim-lua/plenary.nvim',
       {'nvim-telescope/telescope.nvim', config = require'soup.fzf'.config},
       {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'},
-      {'nvim-treesitter/nvim-treesitter', config = require'soup.ts'.config},
+
+      {
+        'nvim-treesitter/nvim-treesitter',
+        config = require'soup.tree-sitter'.config,
+      },
+
       'rafamadriz/friendly-snippets',
       'saadparwaiz1/cmp_luasnip',
-      {'terrortylor/nvim-comment', config = require'soup.comm'.config},
+      {'terrortylor/nvim-comment', config = require'soup.comment'.config},
+      {'ThePrimeagen/harpoon', config = require'soup.harpoon'.config},
       'tpope/vim-surround',
       'wbthomason/packer.nvim',
     },

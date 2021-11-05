@@ -1,5 +1,6 @@
 local M = {}
 
+--- Configure `bufferline.nvim`.
 M.config = function()
   require'bufferline'.setup{
     highlights = require'sopa.buf',
@@ -13,6 +14,13 @@ M.config = function()
       separator_style = {'', ''},
     },
   }
+
+  vim.api.nvim_set_keymap(
+    'n',
+    'gb',
+    ':BufferLinePick<CR>',
+    {noremap = true, silent = true}
+  )
 end
 
 return M
