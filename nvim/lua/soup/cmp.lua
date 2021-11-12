@@ -28,10 +28,7 @@ M.config = function()
     mapping = {
       ['<C-d>'] = map.scroll_docs(-4),
       ['<C-f>'] = map.scroll_docs(4),
-      ['<CR>'] = cmp.mapping.confirm{
-        behavior = cmp.ConfirmBehavior.Replace,
-        select = true,
-      },
+      ['<CR>'] = cmp.mapping.confirm{select = true},
       ['<C-Space>'] = map.complete(),
     },
 

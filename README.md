@@ -1,4 +1,4 @@
-# dotsoup
+# Dot Soup
 
 > Atchim's dotfiles.
 

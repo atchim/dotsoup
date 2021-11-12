@@ -7,6 +7,7 @@ M.init = function()
       'atchim/sopa.nvim',
       {'akinsho/bufferline.nvim', config = require'soup.bufferline'.config},
       {'baskerville/vim-sxhkdrc', ft = 'sxhkdrc'},
+      'editorconfig/editorconfig-vim',
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-nvim-lsp',
       {'hrsh7th/cmp-nvim-lua', ft = 'lua'},
@@ -17,7 +18,12 @@ M.init = function()
       'L3MON4D3/LuaSnip',
       {'neovim/nvim-lspconfig', config = require'soup.lsp'.config},
       'nvim-lua/plenary.nvim',
-      {'nvim-telescope/telescope.nvim', config = require'soup.fzf'.config},
+
+      {
+        'nvim-telescope/telescope.nvim',
+        config = require'soup.telescope'.config,
+      },
+
       {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'},
 
       {

@@ -28,8 +28,8 @@ M.config = function()
   end
 
   map('<Leader>ff', 'find_files')
+  map('<Leader>fg', 'live_grep')
   map('<Leader>fh', 'help_tags')
-  map('<Leader>f<Space>', 'live_grep')
 end
 
 return M

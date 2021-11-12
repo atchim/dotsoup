@@ -11,7 +11,7 @@ M.init = function()
   require'soup.global'.init()
   require'soup.packer'.init()
   require'soup.autocmd'.init()
-  require'soup.func'.init()
+  require'soup.cmd'.init()
   require'soup.map'.init()
   require'soup.color'.init()
 end
