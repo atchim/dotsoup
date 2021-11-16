@@ -1,6 +1,7 @@
+--- Configurations for the `telescope.nvim` plugin.
 local M = {}
 
---- Configure `telescope.nvim`, the fuzzy finder.
+--- Configure `telescope.nvim`.
 M.config = function()
   require'telescope'.setup{
     extensions = {
@@ -14,22 +15,12 @@ M.config = function()
 
   require'telescope'.load_extension'fzf'
 
-  --- Define a mapping to `telescope.nvim` which is equivalent to
-  --- `nnoremap <silent> ...`.
-  --- @param seq string The key sequence.
-  --- @param cmd string The `telescope.nvim` command.
-  local function map(seq, cmd)
-    vim.api.nvim_set_keymap(
-      'n',
-      seq,
-      '<Cmd>lua require"telescope.builtin".'..cmd..'()<CR>',
-      {noremap = true, silent = true}
-    )
-  end
+  local opts = {noremap = true, silent = true}
+  local map = require'soup.map'.lua_wrapper('n', opts)
 
-  map('<Leader>ff', 'find_files')
-  map('<Leader>fg', 'live_grep')
-  map('<Leader>fh', 'help_tags')
+  map('<Leader>ff', 'telescope.builtin', 'find_files()')
+  map('<Leader>fg', 'telescope.builtin', 'live_grep()')
+  map('<Leader>fh', 'telescope.builtin', 'help_tags()')
 end
 
 return M

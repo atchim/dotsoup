@@ -1,3 +1,4 @@
+--- Configurations for the `nvim-comment` plugin.
 local M = {}
 
 --- Configure `nvim-comment`.

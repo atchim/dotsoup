@@ -1,4 +1,4 @@
---- Configurations for `nvim-treesitter`.
+--- Configurations for the `nvim-treesitter` plugin.
 local M = {}
 
 --- Configure `nvim-treesitter`.
@@ -12,7 +12,7 @@ M.config = function()
   cmd'set foldmethod=expr'
 
   -- Set highlight groups from `sopa.nvim`.
-  require'sopa.tree-sitter'.init()
+  require'sopa.treesitter'.init()
 end
 
 return M

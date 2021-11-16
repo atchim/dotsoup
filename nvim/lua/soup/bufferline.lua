@@ -1,3 +1,4 @@
+--- Configurations for the `bufferline.nvim` plugin.
 local M = {}
 
 --- Configure `bufferline.nvim`.

@@ -1,3 +1,4 @@
+--- Configurations for the `nvim-cmp` plugin.
 local M = {}
 
 --- Configure `nvim-cmp`.
@@ -10,7 +11,7 @@ M.config = function()
       format = function (entry, vimitem)
         vimitem.kind = string.format(
           '%s %s',
-          require'soup.kind'[vimitem.kind],
+          require'soup.cmp'.kinds[vimitem.kind],
           vimitem.kind
         )
 
@@ -45,5 +46,34 @@ M.config = function()
     },
   }
 end
+
+--- Icons that represent the completion item kind.
+M.kinds = {
+  Class = 'ﴯ',
+  Color = '',
+  Constant = '',
+  Constructor = '',
+  Enum = '',
+  EnumMember = '',
+  Event = '',
+  Field = 'ﰠ',
+  File = '',
+  Folder = '',
+  Function = '',
+  Interface = '',
+  Keyword = '',
+  Method = '',
+  Module = '',
+  Operator = '',
+  Property = 'ﰠ',
+  Reference = '',
+  Snippet = '',
+  Struct = 'פּ',
+  Text = '',
+  TypeParameter = '',
+  Unit = '塞',
+  Value = '',
+  Variable = '',
+}
 
 return M

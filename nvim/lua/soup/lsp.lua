@@ -1,6 +1,7 @@
+--- Configurations for the LSP.
 local M = {}
 
---- Configure the LSP.
+--- Configure LSP.
 M.config = function()
   -- Set how diagnostics will be shown in the screen.
   local lsp = vim.lsp
@@ -59,7 +60,9 @@ M.config = function()
   }
 
   local ins = require'lspinstall'
-  local lsp = require'lspconfig'
+
+  -- NOTE: Now `lsp` is another thing...
+  lsp = require'lspconfig'
 
   ins.setup()
 

@@ -1,37 +1,38 @@
+--- Configurations for commands.
 local M = {}
 
---- If `v:count` is 0, calls `cmd` with no arguments, otherwise calls `cmd`
---- with the count itself.
+--- Call the command `cmd` with no arguments if `v:count` is 0, otherwise call
+--- `cmd` with the value of `v:count` as argument.
 --- @param cmd string The command to be called.
-M.count_or_none = function(cmd)
+M.call_cmd_count = function(cmd)
   local count = vim.v.count
   if count == 0 then vim.api.nvim_exec(cmd, false)
   else vim.api.nvim_exec(cmd..' '..count, false)
   end
 end
 
---- Define commands.
-M.init = function()
-  M.with_count('SoupBufGoto', 'buffer')
-  M.with_count('SoupBufNext', 'bnext')
-  M.with_count('SoupBufPrev', 'bprevious')
-  M.with_count('SoupTabNext', 'tabnext')
-  M.with_count('SoupTabPrev', 'tabprevious')
-end
-
---- Define a wrapper command to the function `count_or_none` with `repl` as
---- argument.
---- @param cmd string The name of the command.
---- @param repl string The replacement for the command.
-M.with_count = function(cmd, repl)
+--- Workaround function to define command which calls other command that
+--- normally would struggle with count.
+--- @param name string The name of the command to create.
+--- @param cmd string The command that this should call.
+M.count_cmd = function(name, cmd)
   vim.api.nvim_exec(
     'command! -count '
+      ..name
+      ..' lua require"soup.cmd".call_cmd_count"'
       ..cmd
-      ..' lua require"soup.cmd".count_or_none"'
-      ..repl
       ..'"',
     false
   )
+end
+
+--- Define generic commands.
+M.init = function()
+  M.count_cmd('SoupBufGoto', 'buffer')
+  M.count_cmd('SoupBufNext', 'bnext')
+  M.count_cmd('SoupBufPrev', 'bprevious')
+  M.count_cmd('SoupTabNext', 'tabnext')
+  M.count_cmd('SoupTabPrev', 'tabprevious')
 end
 
 return M

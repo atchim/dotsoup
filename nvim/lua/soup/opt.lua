@@ -1,3 +1,4 @@
+--- Configurations for the editor options.
 local M = {}
 
 --- Set options.
