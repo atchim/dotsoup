@@ -1,7 +1,5 @@
---- Configurations for the `telescope.nvim` plugin.
 local M = {}
 
---- Configure `telescope.nvim`.
 M.config = function()
   require'telescope'.setup{
     extensions = {
@@ -15,12 +13,27 @@ M.config = function()
 
   require'telescope'.load_extension'fzf'
 
-  local opts = {noremap = true, silent = true}
-  local map = require'soup.map'.lua_wrapper('n', opts)
-
-  map('<Leader>ff', 'telescope.builtin', 'find_files()')
-  map('<Leader>fg', 'telescope.builtin', 'live_grep()')
-  map('<Leader>fh', 'telescope.builtin', 'help_tags()')
+  require'which-key'.register({
+    f = {
+      name = 'Telescope',
+      b = {
+        '<Cmd>lua require"telescope.builtin".buffers()<CR>',
+        'Telescope buffers',
+      },
+      f = {
+        '<Cmd>lua require"telescope.builtin".find_files()<CR>',
+        'Telescope files',
+      },
+      g = {
+        '<Cmd>lua require"telescope.builtin".live_grep()<CR>',
+        'Telescope grep',
+      },
+      h = {
+        '<Cmd>lua require"telescope.builtin".help_tags()<CR>',
+        'Telescope help tags',
+      },
+    },
+  }, {prefix = '<Leader>'})
 end
 
 return M

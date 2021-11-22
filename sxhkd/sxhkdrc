@@ -32,7 +32,7 @@ super + space ; p
 
 # Launch process manager.
 super + space ; t
-  alacritty --class popup -e bpytop
+  alacritty --class popup -e htop
 
 # Launch file manager.
 super + space ; slash

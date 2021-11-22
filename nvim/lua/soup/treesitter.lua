@@ -1,7 +1,5 @@
---- Configurations for the `nvim-treesitter` plugin.
 local M = {}
 
---- Configure `nvim-treesitter`.
 M.config = function()
   -- Enable highlighting with `nvim-treesitter`.
   require'nvim-treesitter.configs'.setup{highlight = {enable = true}}

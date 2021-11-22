@@ -1,20 +1,23 @@
---- Configurations for the `packer.nvim` plugin.
 local M = {}
 
---- Startup `packer.nvim`.
 M.init = function()
   require'packer'.startup{{
     'atchim/sopa.nvim',
     {'akinsho/bufferline.nvim', config = require'soup.bufferline'.config},
     {'baskerville/vim-sxhkdrc', ft = 'sxhkdrc'},
     'editorconfig/editorconfig-vim',
+    {'folke/which-key.nvim', config = require'soup.which-key'.config},
     'hrsh7th/cmp-buffer',
     'hrsh7th/cmp-nvim-lsp',
     {'hrsh7th/cmp-nvim-lua', ft = 'lua'},
     'hrsh7th/cmp-path',
     {'hrsh7th/nvim-cmp', config = require'soup.cmp'.config},
     'kabouzeid/nvim-lspinstall',
-    {'kyazdani42/nvim-tree.lua', config = require'soup.tree'.config},
+    {
+      'kyazdani42/nvim-tree.lua',
+      config = require'soup.tree'.config,
+      setup = require'soup.tree'.setup,
+    },
     'kyazdani42/nvim-web-devicons',
     'L3MON4D3/LuaSnip',
     {'neovim/nvim-lspconfig', config = require'soup.lsp'.config},

@@ -1,7 +1,5 @@
---- Configurations for the LSP.
 local M = {}
 
---- Configure LSP.
 M.config = function()
   -- Set how diagnostics will be shown in the screen.
   local lsp = vim.lsp
@@ -73,46 +71,68 @@ M.config = function()
   end
 end
 
---- Setup LSP to the buffer on attachment.
---- @param client table The LSP client.
---- @param bufnr number The buffer number.
 M.oat = function(client, bufnr)
-  --- Define a LSP mapping to a buffer equivalent to `nnoremap <silent> ...`.
-  --- @param seq string The key sequence.
-  --- @param cmd string The LSP command to call.
-  local function map(seq, cmd)
-    vim.api.nvim_buf_set_keymap(
-      bufnr,
-      'n',
-      seq,
-      '<Cmd>lua vim.lsp.'..cmd..'()<CR>',
-      {noremap = true, silent = true}
-    )
-  end
+  local wk_reg = require'which-key'.register
 
-  -- General Mappings
-  map('cr', 'buf.rename')
-  map('ga', 'buf.code_action')
-  map('gd', 'buf.declaration')
-  map('gD', 'buf.type_definition')
-  map('gI', 'buf.implementation')
-  map('gr', 'buf.references')
-  map('<C-h>', 'buf.signature_help')
-  map('<C-k>', 'diagnostic.show_line_diagnostics')
-  map('K', 'buf.hover')
-
-  -- Square Brackets Mappings
-  map('[d', 'diagnostic.goto_prev')
-  map(']d', 'diagnostic.goto_next')
-  map(']q', 'buf.document_symbol')
-  map(']w', 'buf.workspace_symbol')
-  map('<C-]>', 'buf.definition')
+  wk_reg({
+    ['<C-]>'] = {
+      '<Cmd>lua vim.lsp.buf.definition()<CR>',
+      'LSP go to symbol definition',
+    },
+    cr = {'<Cmd>lua vim.lsp.buf.rename()<CR>', 'LSP symbol rename'},
+    ['[d'] = {
+      '<Cmd>lua vim.lsp.diagnostic.goto_prev()<CR>',
+      'LSP go to previous diagnostic',
+    },
+    [']d'] = {
+      '<Cmd>lua vim.lsp.diagnostic.goto_next()<CR>',
+      'LSP go to next diagnostic',
+    },
+    ga = {'<Cmd>lua vim.lsp.buf.code_action()<CR>', 'LSP code action'},
+    gd = {'<Cmd>lua vim.lsp.buf.declaration()<CR>', 'LSP symbol declaration'},
+    gD = {'<Cmd>lua vim.lsp.buf.type_definition()<CR>', 'LSP type definition'},
+    gI = {
+      '<Cmd>lua vim.lsp.buf.implementation()<CR>',
+      'LSP list implementations',
+    },
+    gr = {'<Cmd>lua vim.lsp.buf.references()<CR>', 'LSP list references'},
+    ['<C-h>'] = {
+      '<Cmd>lua vim.lsp.buf.signature_help()<CR>',
+      'LSP signature help',
+    },
+    ['<C-k>'] = {
+      '<Cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>',
+      'LSP show line diagnostics',
+    },
+    K = {'<Cmd>lua vim.lsp.buf.hover()<CR>', 'LSP hover information'},
+    ['<Leader>l'] = {
+      name = 'LSP',
+      s = {
+        name = 'LSP symbols',
+        s = {
+          '<Cmd>lua vim.lsp.buf.document_symbol()<CR>',
+          'LSP list document symbol',
+        },
+        w = {
+          '<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>',
+          'LSP list workspace symbol',
+        },
+      },
+    },
+  }, {buffer = bufnr})
 
   -- Formatting Mappings
   if client.resolved_capabilities.document_formatting then
-    map('<Leader>lf', 'buf.formatting')
+    wk_reg({
+      f = {'<Cmd>lua vim.lsp.buf.formatting()<CR>', 'LSP formatting'},
+    }, {buffer = bufnr, prefix = '<Leader>l'})
   elseif client.resolved_capabilities.document_range_formatting then
-    map('<Leader>lf', 'buf.range_formatting')
+    wk_reg({
+      f = {
+        '<Cmd>lua vim.lsp.buf.rage_formatting()<CR>',
+        'LSP range formatting',
+      },
+    }, {buffer = bufnr, mode = 'v', prefix = '<Leader>l'})
   end
 end
 

@@ -1,7 +1,5 @@
---- Configurations for the `nvim-cmp` plugin.
 local M = {}
 
---- Configure `nvim-cmp`.
 M.config = function()
   local cmp = require'cmp'
   local map = cmp.mapping
@@ -47,7 +45,6 @@ M.config = function()
   }
 end
 
---- Icons that represent the completion item kind.
 M.kinds = {
   Class = 'ﴯ',
   Color = '',

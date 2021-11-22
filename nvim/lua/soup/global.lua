@@ -1,7 +1,5 @@
---- Configurations for global variables.
 local M = {}
 
---- Define generic globals.
 M.init = function()
   local g = vim.g
 

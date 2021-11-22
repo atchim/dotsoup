@@ -1,7 +1,5 @@
---- Configurations for automatic commands.
 local M = {}
 
---- Define generic `autocmd`s.
 M.init = function()
   -- Don't tell me or my son how to write ebuild files ever again!
   vim.cmd[[

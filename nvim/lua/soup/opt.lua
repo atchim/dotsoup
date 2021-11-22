@@ -1,7 +1,5 @@
---- Configurations for the editor options.
 local M = {}
 
---- Set options.
 M.init = function()
   local o = vim.opt
 
@@ -59,6 +57,7 @@ M.init = function()
   o.cursorline = true
   o.cursorlineopt = {'number'}
   o.number = true
+  o.pumblend = 15
   o.relativenumber = true
   o.termguicolors = true
   o.title = true
