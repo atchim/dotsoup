@@ -34,6 +34,9 @@ super + space ; p
 super + space ; t
   alacritty --class popup -e htop
 
+super + space ; z
+  zathura
+
 # Launch file manager.
 super + space ; slash
   alacritty --class popup -e fff
@@ -56,8 +59,7 @@ super + r ; s
 
 # Take a screenshot and copy it to clipboard.
 super + space ; s ; c
-  maim --window=$(xdotool getactivewindow) \
-    | xclip -selection clipboard -target image/png
+  maim | xclip -selection clipboard -target image/png
 
 # Take a screenshot from selection / take a normal screenshot.
 super + space ; s ; {s,shift + s}

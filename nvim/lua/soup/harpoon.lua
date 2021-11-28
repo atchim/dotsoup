@@ -7,6 +7,11 @@ M.config = function()
     },
   }
 
+  local term = 'term'
+  if vim.fn.exists'$TMUX' then
+    term = 'tmux'
+  end
+
   require'which-key'.register({
     j = {
       name = 'Harpoon',
@@ -59,49 +64,49 @@ M.config = function()
         "Togle Harpoon's quick menu",
       },
       t = {
-        '<Cmd>lua require"harpoon.term".gotoTerminal(1)<CR>',
+        '<Cmd>lua require"harpoon.'..term..'".gotoTerminal(1)<CR>',
         "Go to Harpoon's 1st terminal",
       },
       c = {
         name = "Harpoon's commands",
         ['0'] = {
-          '<Cmd>lua require"harpoon.term".sendCommand(1, 10)<CR>',
+          '<Cmd>lua require"harpoon.'..term..'".sendCommand(1, 10)<CR>',
           "Send 10th entry of the Harpoon's command list",
         },
         ['1'] = {
-          '<Cmd>lua require"harpoon.term".sendCommand(1, 1)<CR>',
+          '<Cmd>lua require"harpoon.'..term..'".sendCommand(1, 1)<CR>',
           "Send 1st entry of the Harpoon's command list",
         },
         ['2'] = {
-          '<Cmd>lua require"harpoon.term".sendCommand(1, 2)<CR>',
+          '<Cmd>lua require"harpoon.'..term..'".sendCommand(1, 2)<CR>',
           "Send 2nd entry of the Harpoon's command list",
         },
         ['3'] = {
-          '<Cmd>lua require"harpoon.term".sendCommand(1, 3)<CR>',
+          '<Cmd>lua require"harpoon.'..term..'".sendCommand(1, 3)<CR>',
           "Send 3rd entry of the Harpoon's command list",
         },
         ['4'] = {
-          '<Cmd>lua require"harpoon.term".sendCommand(1, 4)<CR>',
+          '<Cmd>lua require"harpoon.'..term..'".sendCommand(1, 4)<CR>',
           "Send 4th entry of the Harpoon's command list",
         },
         ['5'] = {
-          '<Cmd>lua require"harpoon.term".sendCommand(1, 5)<CR>',
+          '<Cmd>lua require"harpoon.'..term..'".sendCommand(1, 5)<CR>',
           "Send 5th entry of the Harpoon's command list",
         },
         ['6'] = {
-          '<Cmd>lua require"harpoon.term".sendCommand(1, 6)<CR>',
+          '<Cmd>lua require"harpoon.'..term..'".sendCommand(1, 6)<CR>',
           "Send 6th entry of the Harpoon's command list",
         },
         ['7'] = {
-          '<Cmd>lua require"harpoon.term".sendCommand(1, 7)<CR>',
+          '<Cmd>lua require"harpoon.'..term..'".sendCommand(1, 7)<CR>',
           "Send 7th entry of the Harpoon's command list",
         },
         ['8'] = {
-          '<Cmd>lua require"harpoon.term".sendCommand(1, 8)<CR>',
+          '<Cmd>lua require"harpoon.'..term..'".sendCommand(1, 8)<CR>',
           "Send 8th entry of the Harpoon's command list",
         },
         ['9'] = {
-          '<Cmd>lua require"harpoon.term".sendCommand(1, 9)<CR>',
+          '<Cmd>lua require"harpoon.'..term..'".sendCommand(1, 9)<CR>',
           "Send 9th entry of the Harpoon's command list",
         },
         c = {

@@ -12,7 +12,6 @@ M.init = function()
     {'hrsh7th/cmp-nvim-lua', ft = 'lua'},
     'hrsh7th/cmp-path',
     {'hrsh7th/nvim-cmp', config = require'soup.cmp'.config},
-    'kabouzeid/nvim-lspinstall',
     {
       'kyazdani42/nvim-tree.lua',
       config = require'soup.tree'.config,
@@ -34,6 +33,7 @@ M.init = function()
     {'ThePrimeagen/harpoon', config = require'soup.harpoon'.config},
     'tpope/vim-surround',
     'wbthomason/packer.nvim',
+    'williamboman/nvim-lsp-installer',
   }, {}}
 end
 

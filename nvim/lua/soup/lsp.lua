@@ -21,17 +21,26 @@ M.config = function()
   set_sign('Information', '')
   set_sign('Warning', '')
 
-  local caps = vim.lsp.protocol.make_client_capabilities()
-  caps = require'cmp_nvim_lsp'.update_capabilities(caps)
+  require'nvim-lsp-installer'.on_server_ready(function(server)
+    local caps = vim.lsp.protocol.make_client_capabilities()
+    caps = require'cmp_nvim_lsp'.update_capabilities(caps)
 
-  local cfg = {
-    {capabilities = caps, on_attach = require'soup.lsp'.oat},
-
-    lua = {
+    local opts = {
       capabilities = caps,
       on_attach = require'soup.lsp'.oat,
-      root_dir = vim.loop.cwd,
-      settings = {
+    }
+
+    if server.name == 'rust_analyzer' then
+      opts.settings = {
+        ['rust-analyzer'] = {
+          assist = {importGranurality = 'module', importPrefix = 'by_self'},
+          cargo = {loadOutDirsFromCheck = true},
+          procMacro = {enable = true},
+        },
+      }
+    elseif server.name == 'sumneko_lua' then
+      opts.root_dir = vim.loop.cwd
+      opts.settings = {
         Lua = {
           diagnostics = {globals = {'vim'}},
           workspace = {
@@ -41,34 +50,11 @@ M.config = function()
             }
           },
         },
-      },
-    },
-
-    rust = {
-      capabilities = caps,
-      on_attach = require'soup.lsp'.oat,
-      settings = {
-        ['rust-analyzer'] = {
-          assist = {importGranurality = 'module', importPrefix = 'by_self'},
-          cargo = {loadOutDirsFromCheck = true},
-          procMacro = {enable = true},
-        },
-      },
-    },
-  }
-
-  local ins = require'lspinstall'
-
-  -- NOTE: Now `lsp` is another thing...
-  lsp = require'lspconfig'
-
-  ins.setup()
-
-  for _, lang in pairs(ins.installed_servers()) do
-    if cfg[lang] then lsp[lang].setup(cfg[lang])
-    else lsp[lang].setup(cfg[1])
+      }
     end
-  end
+
+    server:setup(opts)
+  end)
 end
 
 M.oat = function(client, bufnr)
@@ -109,13 +95,13 @@ M.oat = function(client, bufnr)
       name = 'LSP',
       s = {
         name = 'LSP symbols',
+        q = {
+          '<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>',
+          'LSP list workspace symbol',
+        },
         s = {
           '<Cmd>lua vim.lsp.buf.document_symbol()<CR>',
           'LSP list document symbol',
-        },
-        w = {
-          '<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>',
-          'LSP list workspace symbol',
         },
       },
     },
