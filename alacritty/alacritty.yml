@@ -1,7 +1,7 @@
 color-schemes:
   sopa: &sopa-colors
     bright:
-      black: '#121212'
+      black: '#1a1a1a'
       red: '#ff5b5b'
       green: '#00ad2b'
       yellow: '#bc8f05'

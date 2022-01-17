@@ -12,12 +12,12 @@ M.init = function()
     ['<Leader>'] = {
       c = {
         name = 'Quickfix',
+        ['<Space>'] = {'<Cmd>cclose<CR>', 'Quickfix close'},
         c = {'<Cmd>copen<CR>', 'Quickfix open'},
         j = {'<Cmd>cbelow<CR>', 'Quickfix go to below'},
         k = {'<Cmd>cabove<CR>', 'Quickfix go to above'},
         n = {'<Cmd>cnext<CR>', 'Quickfix go to next'},
         p = {'<Cmd>cprevious<CR>', 'Quickfix go to previous'},
-        q = {'<Cmd>cclose<CR>', 'Quickfix close'},
       },
       [','] = {'<Cmd>setlocal spell!<CR>', 'Toggle local spelling'},
       ['.'] = {'<Cmd>setlocal list!<CR>', 'Toggle local listing'},

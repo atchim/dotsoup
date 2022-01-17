@@ -34,9 +34,6 @@ super + space ; p
 super + space ; t
   alacritty --class popup -e htop
 
-super + space ; z
-  zathura
-
 # Launch file manager.
 super + space ; slash
   alacritty --class popup -e fff

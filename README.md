@@ -1,6 +1,6 @@
 # Dot Soup
 
-> Atchim's dotfiles.
+> Atchim's dotfiles
 
 ## Dots
 

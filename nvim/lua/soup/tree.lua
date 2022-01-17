@@ -1,12 +1,17 @@
 local M = {}
 
 M.config = function()
-  require'nvim-tree'.setup{}
+  require'nvim-tree'.setup{
+    diagnostics = {
+      enable = true,
+    },
+  }
+
+  require'sopa.tree'.hi()
 
   require'which-key'.register({
     ['<Space>'] = {
       name = 'Tree',
-      c = {'<Cmd>NvimTreeClose<CR>', 'Close Tree'},
       ['<Space>'] = {'<Cmd>NvimTreeToggle<CR>', 'Toggle Tree'},
       ['<CR>'] = {'<Cmd>NvimTreeFocus<CR>', 'Focus Tree'},
     },

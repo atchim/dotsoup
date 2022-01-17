@@ -1,5 +1,5 @@
 #
-# Underworld Palette
+# Sopa de Mamaco's Palette
 #
 
 p = [
@@ -167,6 +167,17 @@ c.auto_save.session = True
 c.fonts.default_family = 'Hack'
 c.history_gap_interval = 32
 c.prompt.radius = 0
+
+c.url.default_page = 'https://www.google.com'
+c.url.searchengines = {
+  'DEFAULT': 'https://google.com/search?q={}',
+  'd': 'https://duckduckgo.com/?q={}',
+  'g': 'https://www.google.com/search?q={}',
+  'gh': 'https://github.com/search?q={}',
+  'gt': 'https://translate.google.com/?text={}',
+  'y': 'https://www.youtube.com/results?search_query={}',
+}
+c.url.start_pages = 'https://www.google.com'
 
 #
 # Tabs

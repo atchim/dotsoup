@@ -14,6 +14,13 @@ super + {a,x,y,z,apostrophe}
 # Focus / Swap
 #
 
+# Show, focus and unstick any hidden sticky window or hide and stick current
+# window.
+super + shift + Return
+  id=$(bspc query --nodes --node any.window.hidden.sticky); \
+  bspc node $id --flag hidden --flag sticky=on; \
+  [[ $id ]] && bspc node $id --flag sticky --focus $id
+
 # Focus last local desktop.
 super + Tab
   bspc desktop --focus last.local

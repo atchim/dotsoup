@@ -10,7 +10,7 @@ M.config = function()
   cmd'set foldmethod=expr'
 
   -- Set highlight groups from `sopa.nvim`.
-  require'sopa.treesitter'.init()
+  require'sopa.treesitter'.hi()
 end
 
 return M

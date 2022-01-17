@@ -28,13 +28,14 @@ M.init = function()
       config = require'soup.treesitter'.config,
     },
     'rafamadriz/friendly-snippets',
+    {'rebelot/heirline.nvim', config = require'soup.heirline'.config},
     'saadparwaiz1/cmp_luasnip',
     {'terrortylor/nvim-comment', config = require'soup.comment'.config},
     {'ThePrimeagen/harpoon', config = require'soup.harpoon'.config},
     'tpope/vim-surround',
     'wbthomason/packer.nvim',
     'williamboman/nvim-lsp-installer',
-  }, {}}
+  }, config = {}}
 end
 
 return M
