@@ -1,6 +1,6 @@
 local M = {}
 
-M.init = function()
+M.setup = function()
   require'packer'.startup{{
     'atchim/sopa.nvim',
     {'akinsho/bufferline.nvim', config = require'soup.bufferline'.config},
