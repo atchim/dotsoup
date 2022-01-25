@@ -66,14 +66,6 @@ M.oat = function(client, bufnr)
       'LSP go to symbol definition',
     },
     cr = {'<Cmd>lua vim.lsp.buf.rename()<CR>', 'LSP symbol rename'},
-    ['[d'] = {
-      '<Cmd>lua vim.lsp.diagnostic.goto_prev()<CR>',
-      'LSP go to previous diagnostic',
-    },
-    [']d'] = {
-      '<Cmd>lua vim.lsp.diagnostic.goto_next()<CR>',
-      'LSP go to next diagnostic',
-    },
     ga = {'<Cmd>lua vim.lsp.buf.code_action()<CR>', 'LSP code action'},
     gd = {'<Cmd>lua vim.lsp.buf.declaration()<CR>', 'LSP symbol declaration'},
     gD = {'<Cmd>lua vim.lsp.buf.type_definition()<CR>', 'LSP type definition'},
@@ -85,10 +77,6 @@ M.oat = function(client, bufnr)
     ['<C-h>'] = {
       '<Cmd>lua vim.lsp.buf.signature_help()<CR>',
       'LSP signature help',
-    },
-    ['<C-k>'] = {
-      '<Cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>',
-      'LSP show line diagnostics',
     },
     K = {'<Cmd>lua vim.lsp.buf.hover()<CR>', 'LSP hover information'},
     ['<Leader>l'] = {

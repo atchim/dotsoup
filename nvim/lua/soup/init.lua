@@ -1,18 +1,10 @@
 local M = {}
 
-M.init = function()
-  -- Set the leader key.
-  vim.api.nvim_set_keymap('n', '<Space>', '<NOP>', {noremap = true})
-  vim.g.mapleader = ' '
-
-  require'soup.opt'.init()
-  require'soup.global'.init()
-  require'soup.packer'.init()
-  require'soup.autocmd'.init()
-  require'soup.cmd'.init()
-  require'soup.map'.init()
-
+M.setup = function()
+  require'soup.vanilla'.setup()
   vim.cmd'colorscheme sopa'
+  require'soup.hack'.setup()
+  require'soup.packer'.init()
 end
 
 return M
