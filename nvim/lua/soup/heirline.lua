@@ -228,7 +228,7 @@ M.config = function()
       return hl
     end,
 
-    stop_at_first = true,
+    init = utils.pick_child_on_condition,
   }
 
   require'heirline'.setup(statusline)

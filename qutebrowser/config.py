@@ -152,32 +152,13 @@ c.hints.border = '0px solid'
 c.hints.radius = 0
 
 #
-# Keyhints
-#
-
-c.keyhint.delay = 512
-c.keyhint.radius = 0
-
-#
 # Misc
 #
 
-c.auto_save.interval = 16384
 c.auto_save.session = True
 c.fonts.default_family = 'Hack'
-c.history_gap_interval = 32
+c.keyhint.radius = 0
 c.prompt.radius = 0
-
-c.url.default_page = 'https://www.google.com'
-c.url.searchengines = {
-  'DEFAULT': 'https://google.com/search?q={}',
-  'd': 'https://duckduckgo.com/?q={}',
-  'g': 'https://www.google.com/search?q={}',
-  'gh': 'https://github.com/search?q={}',
-  'gt': 'https://translate.google.com/?text={}',
-  'y': 'https://www.youtube.com/results?search_query={}',
-}
-c.url.start_pages = 'https://www.google.com'
 
 #
 # Tabs
@@ -188,9 +169,25 @@ c.tabs.padding = {'bottom': 0, 'left': 0, 'right': 0, 'top': 0}
 c.tabs.position = 'left'
 c.tabs.select_on_remove = 'last-used'
 c.tabs.show = 'never'
-c.tabs.show_switching_delay = 512
+c.tabs.show_switching_delay = 500
 c.tabs.title.format = '{audio}{index} {current_title}'
 c.tabs.width = 64
+
+#
+# URL
+#
+
+c.url.default_page = 'https://www.google.com'
+c.url.searchengines = {
+  'DEFAULT': 'https://google.com/search?q={}',
+  'd': 'https://duckduckgo.com/?q={}',
+  'g': 'https://www.google.com/search?q={}',
+  'gh': 'https://github.com/search?q={}',
+  'gt': 'https://translate.google.com/?text={}',
+  'y': 'https://www.youtube.com/results?search_query={}',
+  'zu': 'http://gpo.zugaina.org/Search?search={}',
+}
+c.url.start_pages = 'https://www.google.com'
 
 #
 # Bottom
