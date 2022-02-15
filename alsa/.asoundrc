@@ -1,0 +1,6 @@
+pcm.mpd {
+  type softvol
+  slave.pcm "default"
+  control.name "MPD Playback Volume"
+  control.card 0
+}

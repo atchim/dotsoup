@@ -3,6 +3,7 @@ rage = 1
 
 [dots]
 alacritty = '~/.config/alacritty'
+alsa = '~'
 bash = '~'
 bin = '~/.local/bin'
 bspwm = '~/.config/bspwm'
