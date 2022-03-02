@@ -180,10 +180,12 @@ c.tabs.width = 64
 c.url.default_page = 'https://www.google.com'
 c.url.searchengines = {
   'DEFAULT': 'https://google.com/search?q={}',
+  'a': 'https://wiki.archlinux.org/index.php?search={}',
   'd': 'https://duckduckgo.com/?q={}',
   'g': 'https://www.google.com/search?q={}',
   'gh': 'https://github.com/search?q={}',
   'gt': 'https://translate.google.com/?text={}',
+  'w': 'https://wikipedia.org/w/index.php?search={}',
   'y': 'https://www.youtube.com/results?search_query={}',
   'zu': 'http://gpo.zugaina.org/Search?search={}',
 }
