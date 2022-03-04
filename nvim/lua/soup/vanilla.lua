@@ -1,17 +1,38 @@
 local M = {}
 
 M.set_autocmd = function()
-  -- Don't tell me or my son how to write ebuild files ever again!
-  vim.cmd[[
-    augroup soup_gentoo
-      autocmd!
-      autocmd BufRead,BufNewFile *.e{build,class} setl et sw=2 ts=2
-    augroup END
-  ]]
+  local api = vim.api
+  local group = 'soup_vanilla'
+
+  api.nvim_create_augroup(group, {})
+
+  api.nvim_create_autocmd('BufRead,BufNewFile', {
+    group = group,
+    pattern = '*.e{build,class}',
+    desc = "Don't tell me or my son how to write ebuild files ever again!",
+    callback = function()
+      local bo = vim.bo
+      bo.expandtab = true
+      bo.shiftwidth = 2
+      bo.tabstop = 2
+    end,
+  })
+
+  api.nvim_create_autocmd('TextYankPost', {
+    group = group,
+    desc = 'Highlight selection on yank',
+    callback = function()
+      vim.highlight.on_yank{}
+    end,
+  })
 end
 
 M.set_g = function()
   local g = vim.g
+
+  -- Disable Netrw
+	g.loaded_netrw = 1
+	g.loaded_netrwPlugin = 1
 
   -- Misc
   g.omni_sql_no_default_maps = 1
@@ -34,13 +55,15 @@ M.set_map = function()
   -- Diagnostics
   map('n', '[d', '<Cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
   map('n', ']d', '<Cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-  map('n', '<C-K>', '<Cmd>lua vim.diagnostic.open_float()<CR>', opts)
+  map('n', '<Leader>k', '<Cmd>lua vim.diagnostic.open_float()<CR>', opts)
 
   -- Misc
-  map('n', '<Leader>,', '<Cmd>setlocal spell!<CR>', opts)
-  map('n', '<Leader>.', '<Cmd>setlocal list!<CR>', opts)
-  map('n', '<Leader>/', '<Cmd>nohlsearch<CR>', opts)
+  map('n', '<Leader>,', '<Cmd>setl spell!<CR>', opts)
+  map('n', '<Leader>.', '<Cmd>setl list!<CR>', opts)
+  map('n', '<Leader>/', '<Cmd>noh<CR>', opts)
   map('v', '<Leader>y', '"+y', opts)
+
+  -- TODO: Map <C-D> and <C-F> to scroll through popup menus.
 end
 
 M.set_opt = function()

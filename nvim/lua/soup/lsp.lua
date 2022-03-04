@@ -43,12 +43,7 @@ M.config = function()
       opts.settings = {
         Lua = {
           diagnostics = {globals = {'vim'}},
-          workspace = {
-            library = {
-              [vim.fn.expand'$VIMRUNTIME/lua'] = true,
-              [vim.fn.expand'$VIMRUNTIME/lua/vim/lsp'] = true,
-            }
-          },
+          workspace = {library = vim.api.nvim_get_runtime_file("", true)},
         },
       }
     end
@@ -58,23 +53,20 @@ M.config = function()
 end
 
 M.oat = function(client, bufnr)
-  local wk_reg = require'which-key'.register
+  local map = require'which-key'.register
 
-  wk_reg({
+  map({
     ['<C-]>'] = {
       '<Cmd>lua vim.lsp.buf.definition()<CR>',
       'LSP go to symbol definition',
     },
     cr = {'<Cmd>lua vim.lsp.buf.rename()<CR>', 'LSP symbol rename'},
-    ga = {'<Cmd>lua vim.lsp.buf.code_action()<CR>', 'LSP code action'},
     gd = {'<Cmd>lua vim.lsp.buf.declaration()<CR>', 'LSP symbol declaration'},
     gD = {'<Cmd>lua vim.lsp.buf.type_definition()<CR>', 'LSP type definition'},
-    gI = {
-      '<Cmd>lua vim.lsp.buf.implementation()<CR>',
-      'LSP list implementations',
-    },
-    gr = {'<Cmd>lua vim.lsp.buf.references()<CR>', 'LSP list references'},
-    ['<C-h>'] = {
+    gm = {'<Cmd>lua vim.lsp.buf.implementation()<CR>', 'LSP implementations'},
+    go = {'<Cmd>lua vim.lsp.buf.code_action()<CR>', 'LSP code action'},
+    gr = {'<Cmd>lua vim.lsp.buf.references()<CR>', 'LSP references'},
+    ['<C-H>'] = {
       '<Cmd>lua vim.lsp.buf.signature_help()<CR>',
       'LSP signature help',
     },
@@ -82,30 +74,25 @@ M.oat = function(client, bufnr)
     ['<Leader>l'] = {
       name = 'LSP',
       s = {
-        name = 'LSP symbols',
-        q = {
-          '<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>',
-          'LSP list workspace symbol',
-        },
-        s = {
-          '<Cmd>lua vim.lsp.buf.document_symbol()<CR>',
-          'LSP list document symbol',
-        },
+        '<Cmd>lua vim.lsp.buf.document_symbol()<CR>',
+        'LSP document symbols',
+      },
+      S = {
+        '<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>',
+        'LSP workspace symbols',
       },
     },
   }, {buffer = bufnr})
 
   -- Formatting Mappings
   if client.resolved_capabilities.document_formatting then
-    wk_reg({
+    map({
       f = {'<Cmd>lua vim.lsp.buf.formatting()<CR>', 'LSP formatting'},
     }, {buffer = bufnr, prefix = '<Leader>l'})
-  elseif client.resolved_capabilities.document_range_formatting then
-    wk_reg({
-      f = {
-        '<Cmd>lua vim.lsp.buf.rage_formatting()<CR>',
-        'LSP range formatting',
-      },
+  end
+  if client.resolved_capabilities.document_range_formatting then
+    map({
+      f = {'<Cmd>lua vim.lsp.buf.range_formatting()<CR>', 'LSP formatting'},
     }, {buffer = bufnr, mode = 'v', prefix = '<Leader>l'})
   end
 end

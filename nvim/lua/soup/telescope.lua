@@ -14,26 +14,24 @@ M.config = function()
   require'telescope'.load_extension'fzf'
 
   require'which-key'.register({
-    f = {
-      name = 'Telescope',
-      b = {
-        '<Cmd>lua require"telescope.builtin".buffers()<CR>',
-        'Telescope buffers',
-      },
-      f = {
-        '<Cmd>lua require"telescope.builtin".find_files()<CR>',
-        'Telescope files',
-      },
-      g = {
-        '<Cmd>lua require"telescope.builtin".live_grep()<CR>',
-        'Telescope grep',
-      },
-      h = {
-        '<Cmd>lua require"telescope.builtin".help_tags()<CR>',
-        'Telescope help tags',
-      },
+    name = 'Telescope',
+    b = {
+      '<Cmd>lua require"telescope.builtin".buffers()<CR>',
+      'Telescope buffers',
     },
-  }, {prefix = '<Leader>'})
+    f = {
+      '<Cmd>lua require"telescope.builtin".find_files()<CR>',
+      'Telescope files',
+    },
+    g = {
+      '<Cmd>lua require"telescope.builtin".live_grep()<CR>',
+      'Telescope grep',
+    },
+    h = {
+      '<Cmd>lua require"telescope.builtin".help_tags()<CR>',
+      'Telescope help tags',
+    },
+  }, {prefix = '<Leader>f'})
 end
 
 return M

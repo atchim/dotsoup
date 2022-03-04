@@ -25,10 +25,10 @@ M.config = function()
 
     -- TODO: Add mappings for snippet completions.
     mapping = {
-      ['<C-d>'] = map.scroll_docs(-4),
-      ['<C-f>'] = map.scroll_docs(4),
-      ['<CR>'] = cmp.mapping.confirm{select = true},
-      ['<C-Space>'] = map.complete(),
+      ['<C-D>'] = map(map.scroll_docs(-4), {'i', 'c'}),
+      ['<C-F>'] = map(map.scroll_docs(4), {'i', 'c'}),
+      ['<CR>'] = map.confirm{select = true},
+      ['<C-Space>'] = map(map.complete(), {'i', 'c'}),
     },
 
     snippet = {

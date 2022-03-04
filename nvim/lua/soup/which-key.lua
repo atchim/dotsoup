@@ -2,9 +2,9 @@ local M = {}
 
 M.config = function()
   require'which-key'.setup{}
-  local soup_wk = require'soup.which-key'
-  soup_wk.vanilla_doc()
-  soup_wk.hack_doc()
+  local soup_whichkey = require'soup.which-key'
+  soup_whichkey.vanilla_doc()
+  soup_whichkey.hack_doc()
 end
 
 M.hack_doc = function()
@@ -18,20 +18,20 @@ M.hack_doc = function()
 end
 
 M.vanilla_doc = function()
-  local wkreg = require'which-key'.register
+  local map = require'which-key'.register
 
-  wkreg({
+  map({
     ['[d'] = 'Diagnostic go to previous',
     [']d'] = 'Diagnostic go to next',
-    ['<C-K>'] = 'Diagnostic show from line',
     ['<Leader>'] = {
+      k = 'Diagnostic show from line',
       [','] = 'Toggle local spelling',
       ['.'] = 'Toggle local listing',
       ['/'] = 'Toggle search highlighting',
     },
   }, {})
 
-  wkreg({
+  map({
     y = 'CTRL-C-like yank to clipboard',
   }, {mode = 'v', prefix = '<Leader>'})
 end

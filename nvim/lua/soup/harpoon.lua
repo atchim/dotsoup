@@ -12,106 +12,60 @@ M.config = function()
     term = 'tmux'
   end
 
+  local function cmd(i)
+    return {
+      '<Cmd>lua require"harpoon.'..term..'".sendCommand(1, '..i..')<CR>',
+      'Harpoon send command #'..i,
+    }
+  end
+
+  local function go_to(i)
+    return {
+      '<Cmd>lua require"harpoon.ui".nav_file('..i..')<CR>',
+      'Harpoon go to entry #'..i,
+    }
+  end
+
   require'which-key'.register({
     j = {
       name = 'Harpoon',
-      ['0'] = {
-        '<Cmd>lua require"harpoon.ui".nav_file(10)<CR>',
-        "Go to 10th entry of the Harpoon's list",
-      },
-      ['1'] = {
-        '<Cmd>lua require"harpoon.ui".nav_file(1)<CR>',
-        "Go to 1st entry of the Harpoon's list",
-      },
-      ['2'] = {
-        '<Cmd>lua require"harpoon.ui".nav_file(2)<CR>',
-        "Go to 2nd entry of the Harpoon's list",
-      },
-      ['3'] = {
-        '<Cmd>lua require"harpoon.ui".nav_file(3)<CR>',
-        "Go to 3rd entry of the Harpoon's list",
-      },
-      ['4'] = {
-        '<Cmd>lua require"harpoon.ui".nav_file(4)<CR>',
-        "Go to 4th entry of the Harpoon's list",
-      },
-      ['5'] = {
-        '<Cmd>lua require"harpoon.ui".nav_file(5)<CR>',
-        "Go to 5th entry of the Harpoon's list",
-      },
-      ['6'] = {
-        '<Cmd>lua require"harpoon.ui".nav_file(6)<CR>',
-        "Go to 6th entry of the Harpoon's list",
-      },
-      ['7'] = {
-        '<Cmd>lua require"harpoon.ui".nav_file(7)<CR>',
-        "Go to 7th entry of the Harpoon's list",
-      },
-      ['8'] = {
-        '<Cmd>lua require"harpoon.ui".nav_file(8)<CR>',
-        "Go to 8th entry of the Harpoon's list",
-      },
-      ['9'] = {
-        '<Cmd>lua require"harpoon.ui".nav_file(9)<CR>',
-        "Go to 9th entry of the Harpoon's list",
-      },
+      ['0'] = go_to(10),
+      ['1'] = go_to(1),
+      ['2'] = go_to(2),
+      ['3'] = go_to(3),
+      ['4'] = go_to(4),
+      ['5'] = go_to(5),
+      ['6'] = go_to(6),
+      ['7'] = go_to(7),
+      ['8'] = go_to(8),
+      ['9'] = go_to(9),
       a = {
         '<Cmd>lua require"harpoon.mark".add_file()<CR>',
-        "Push current file to the Harpoon's list",
+        'Harpoon push current file',
       },
       j = {
         '<Cmd>lua require"harpoon.ui".toggle_quick_menu()<CR>',
-        "Togle Harpoon's quick menu",
+        'Harpoon toggle quick menu',
       },
       t = {
         '<Cmd>lua require"harpoon.'..term..'".gotoTerminal(1)<CR>',
-        "Go to Harpoon's 1st terminal",
+        'Harpoon go to terminal',
       },
       c = {
         name = "Harpoon's commands",
-        ['0'] = {
-          '<Cmd>lua require"harpoon.'..term..'".sendCommand(1, 10)<CR>',
-          "Send 10th entry of the Harpoon's command list",
-        },
-        ['1'] = {
-          '<Cmd>lua require"harpoon.'..term..'".sendCommand(1, 1)<CR>',
-          "Send 1st entry of the Harpoon's command list",
-        },
-        ['2'] = {
-          '<Cmd>lua require"harpoon.'..term..'".sendCommand(1, 2)<CR>',
-          "Send 2nd entry of the Harpoon's command list",
-        },
-        ['3'] = {
-          '<Cmd>lua require"harpoon.'..term..'".sendCommand(1, 3)<CR>',
-          "Send 3rd entry of the Harpoon's command list",
-        },
-        ['4'] = {
-          '<Cmd>lua require"harpoon.'..term..'".sendCommand(1, 4)<CR>',
-          "Send 4th entry of the Harpoon's command list",
-        },
-        ['5'] = {
-          '<Cmd>lua require"harpoon.'..term..'".sendCommand(1, 5)<CR>',
-          "Send 5th entry of the Harpoon's command list",
-        },
-        ['6'] = {
-          '<Cmd>lua require"harpoon.'..term..'".sendCommand(1, 6)<CR>',
-          "Send 6th entry of the Harpoon's command list",
-        },
-        ['7'] = {
-          '<Cmd>lua require"harpoon.'..term..'".sendCommand(1, 7)<CR>',
-          "Send 7th entry of the Harpoon's command list",
-        },
-        ['8'] = {
-          '<Cmd>lua require"harpoon.'..term..'".sendCommand(1, 8)<CR>',
-          "Send 8th entry of the Harpoon's command list",
-        },
-        ['9'] = {
-          '<Cmd>lua require"harpoon.'..term..'".sendCommand(1, 9)<CR>',
-          "Send 9th entry of the Harpoon's command list",
-        },
+        ['0'] = cmd(10),
+        ['1'] = cmd(1),
+        ['2'] = cmd(2),
+        ['3'] = cmd(3),
+        ['4'] = cmd(4),
+        ['5'] = cmd(5),
+        ['6'] = cmd(6),
+        ['7'] = cmd(7),
+        ['8'] = cmd(8),
+        ['9'] = cmd(9),
         c = {
           '<Cmd>lua require"harpoon.cmd-ui".toggle_quick_menu()<CR>',
-          "Toggle Harpoon's command quick menu list",
+          'Harpoon toggle command quick menu',
         }
       },
     },

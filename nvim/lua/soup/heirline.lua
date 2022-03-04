@@ -204,21 +204,13 @@ M.config = function()
   local def = {vimode, space, buf, align, file, ruler, space, scroll, space}
 
   local nc = {
-    space,
-    buf,
-    align,
-    file,
-    ruler,
-    space,
-    scroll,
-    space,
+    space, buf, align, file, ruler, space, scroll, space,
     condition = function() return not is_active() end,
     hl = {unpack(hls.statusnc), force = true},
   }
 
   local statusline = {
-    nc,
-    def,
+    nc, def,
 
     hl = function()
       local hl
