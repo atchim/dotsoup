@@ -36,7 +36,7 @@ super + space ; t
 
 # Launch file manager.
 super + space ; slash
-  alacritty --class popup -e fff
+  alacritty --class popup -e lf
 
 # Launch program launcher.
 super + space ; space

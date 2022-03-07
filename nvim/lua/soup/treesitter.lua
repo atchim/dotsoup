@@ -6,10 +6,10 @@ M.config = function()
     incremental_selection = {
       enable = true,
       keymaps = {
-        init_selection = 'gnn',
-        node_incremental = 'gnn',
-        scope_incremental = 'gng',
-        node_decremental = 'gnm',
+        init_selection = 'gn',
+        node_incremental = 'gn',
+        scope_incremental = 'g,',
+        node_decremental = 'gm',
       },
     },
     textobjects = {
@@ -37,16 +37,17 @@ M.config = function()
         enable = true,
         keymaps = {
           ac = '@class.outer',
-          ic = '@class.inner',
           af = '@function.outer',
+          ic = '@class.inner',
           ['if'] = '@function.inner',
+          n = '@node',
         },
         lookahead = true,
       },
       swap = {
         enable = true,
-        swap_next = {['<C-N>'] = '@parameter.inner'},
-        swap_previous = {['<C-M>'] = '@parameter.inner'},
+        swap_next = {['<C-N>'] = '@swappable'},
+        swap_previous = {['<C-P>'] = '@swappable'},
       },
     },
     playground = {enable = true},
