@@ -1,6 +1,6 @@
 (_) @node
 
 ; Item
-(arguments (_) @item)
-(field) @item
-(parameters (_) @item)
+(arguments (_) @swappable)
+(field) @swappable
+(parameters (_) @swappable)
