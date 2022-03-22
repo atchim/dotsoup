@@ -1,6 +1,5 @@
 (_) @node
 
-; Swappables
 (array_expression (_) @swappable)
 (arguments (_) @swappable)
 (enum_variant) @swappable
@@ -11,4 +10,5 @@
 (meta_item) @swappable
 (ordered_field_declaration_list (_) @swappable)
 (parameters (_) @swappable)
+(use_list (_) @swappable)
 ; TODO: Add support to `tuple_expression` items.

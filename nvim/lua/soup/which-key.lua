@@ -24,7 +24,6 @@ M.vanilla_doc = function()
     ['<Leader>'] = {
       [','] = 'Toggle local spelling',
       ['.'] = 'Toggle local listing',
-      ['/'] = 'Toggle search highlighting',
       k = 'Diagnostic show from line',
       t = {name = 'Misc tools'},
     },

@@ -60,7 +60,6 @@ M.set_map = function()
   -- Misc
   map('n', '<Leader>,', '<Cmd>setl spell!<CR>', opts)
   map('n', '<Leader>.', '<Cmd>setl list!<CR>', opts)
-  map('n', '<Leader>/', '<Cmd>noh<CR>', opts)
   map('v', '<Leader>y', '"+y', opts)
 
   -- TODO: Map <C-D> and <C-F> to scroll through popup menus.
