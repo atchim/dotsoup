@@ -8,6 +8,7 @@ M.setup = function()
     'editorconfig/editorconfig-vim',
     {'elihunter173/dirbuf.nvim', config = require'soup.dirbuf'.config},
     {'folke/which-key.nvim', config = require'soup.which-key'.config},
+    'github/copilot.vim',
     'hrsh7th/cmp-buffer',
     'hrsh7th/cmp-nvim-lsp',
     {'hrsh7th/cmp-nvim-lua', ft = 'lua'},

@@ -1,23 +1,23 @@
 #!/bin/bash
 
 HELP='sxrc
-Start a X session.
+start X session
 
-Usage
+USAGE
   sxrc
   sxrc -c <cmd> ...
   sxrc [-h] ...
   sxrc [--] <sesh> ...
 
-Flags
-      --      Treat next arguments as positional arguments.
-  -h  --help  Print help information and exit.
+FLAGS
+      --      treat next arguments as positional arguments
+  -h  --help  print help information and exit
 
-Options
-  -c  --cmd  <cmd>  Set custom command <cmd> to be executed.
+OPTIONS
+  -c  --cmd  <cmd>  set custom command <cmd> to be executed
 
-Positional Arguments
-  <sesh>  Set session <sesh> to be started. <sesh> may be "bspwm".'
+POSITIONAL ARGUMENTS
+  <sesh>  set session <sesh> to be started; <sesh> may be "bspwm"'
 
 bspwm() {
   export _JAVA_AWT_WM_NONREPARENTING=1
@@ -29,7 +29,7 @@ bspwm() {
 }
 
 die() { (($#)) && err "$@"; exit 1; }
-err() { echo "[sxrc] [ERROR] $@" >&2; }
+err() { echo "sxrc: ERROR: $@" >&2; }
 
 parse() {
   case $1 in
@@ -37,7 +37,7 @@ parse() {
     -c|--cmd) [[ $2 ]] || die "<cmd> not given"; CMD="$2" ;;
     -h|--help) echo "$HELP"; exit ;;
     --) [[ $2 ]] || die "<sesh> not given"; SESH="$2" ;;
-    -*) die "Invalid argument: $1" ;;
+    -*) die "invalid argument: $1" ;;
     *) SESH="$1" ;;
   esac
 }
@@ -47,7 +47,7 @@ run() {
   [[ $CMD ]] && exec $CMD
   case $SESH in
     bspwm) bspwm ;;
-    *) die "Invalid value for <sesh>: $SESH" ;;
+    *) die "invalid value for <sesh>: $SESH" ;;
   esac
 }
 

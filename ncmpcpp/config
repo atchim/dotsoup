@@ -1,7 +1,4 @@
-#
 # Colors
-#
-
 active_window_border = 16
 alternative_ui_separator_color = 8
 color1 = 16
@@ -20,33 +17,21 @@ statusbar_time_color = 16
 volume_color = 16
 window_border_color = 8
 
-#
 # Delays
-#
-
 message_delay_time = 2
 playlist_disable_highlight_delay = 2
 
-#
 # Dirs
-#
-
 mpd_music_dir = ~/tune
 
-#
 # Display
-#
-
 header_text_scrolling = no
 header_visibility = yes
 progressbar_look = "▒▒░"
 statusbar_visibility = yes
 titles_visibility = yes
 
-#
 # Formating
-#
-
 alternative_header_first_line_format = $b{%t}|{%f}$/b
 alternative_header_second_line_format = $b%a$/b$(8){ [%y]}{ [%b]}$(end)
 browser_playlist_prefix = "[Playlist] "
@@ -66,24 +51,15 @@ song_list_format = {%a - %t}|{%f}$R{[%l]}
 song_status_format = {%a$(8){ [%y]}{ [%b]}$(end) - %t}|{%f}
 song_window_title_format = {%a - %t}|{%f}
 
-#
 # Modes
-#
-
 browser_display_mode = columns
 search_engine_display_mode = columns
 
-#
 # Visualizer
-#
-
 visualizer_color = 16
 visualizer_look = ..
 
-#
 # Misc
-#
-
 default_tag_editor_pattern = %n %t
 empty_tag_marker = [empty]
 external_editor = nvim

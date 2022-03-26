@@ -1,10 +1,7 @@
 status --is-interactive
 or exit
 
-#
 # Colors
-#
-
 set fish_color_autosuggestion white
 set fish_color_cancel --background=black --bold brred
 set fish_color_command --bold magenta
@@ -28,30 +25,27 @@ set fish_pager_color_description brgreen
 set fish_pager_color_prefix white
 set fish_pager_color_progress --background=brblack --bold brwhite
 
-#
 # Cursor
-#
-
 set fish_cursor_default block
 set fish_cursor_insert line
 set fish_cursor_replace underscore
 set fish_cursor_replace_one underscore
 set fish_cursor_visual block
 
-#
-# Functions
-#
-
-function f -d 'fff with cd on exit'
+# fff
+type -q fff
+and function f -d 'fff with cd on exit'
   fff $argv
-  set -q XDG_CACHE_HOME; or set XDG_CACHE_HOME $HOME/.cache
-  pushd (cat $XDG_CACHE_HOME/fff/.fff_d)
+  set -q XDG_CACHE_HOME
+  and set -l cache_dir $XDG_CACHE_HOME
+  or set -l cache_dir ~/.cache
+  pushd (cat $cache_dir/fff/.fff_d)
 end
 
-#
-# Fancy Stuff
-#
+# fortune | cowsay
+type -q fortune
+and type -q cowsay
+and function fish_greeting; fortune | cowsay; end
 
-function fish_greeting; fortune | cowsay; end
 function fish_user_key_bindings; fish_vi_key_bindings; end
-starship init fish | source
+type -q starship; and starship init fish | source
