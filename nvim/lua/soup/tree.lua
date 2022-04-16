@@ -62,8 +62,6 @@ M.config = function()
     }}},
   }
 
-  require'sopa.tree'.hi()
-
   -- TODO: Maybe register default mappings.
   require'which-key'.register({
     ['<Space>'] = {

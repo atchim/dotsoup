@@ -1,4 +1,4 @@
-ignore = ['\.unsafe$', '^README.md$']
+ignore = ['/?fnl$', '/?Makefile$', '/?README.md$', '\.unsafe$']
 rage = 1
 
 [dots]

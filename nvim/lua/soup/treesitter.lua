@@ -73,9 +73,6 @@ M.config = function()
   local cmd = vim.cmd
   cmd'set foldexpr=nvim_treesitter#foldexpr()'
   cmd'set foldmethod=expr'
-
-  -- Set highlight groups from `sopa.nvim`.
-  require'sopa.treesitter'.hi()
 end
 
 return M
