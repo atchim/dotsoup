@@ -59,7 +59,7 @@ local function user()
     end
     _16_ = t_15_
   end
-  use_2a({config = _16_, "/home/atchim/repo/sopa.nvim"})
+  use_2a({config = _16_, "atchim/sopa.nvim"})
   use_2a({ft = "sxhkdrc", "baskerville/vim-sxhkdrc"})
   use_2a("editorconfig/editorconfig-vim")
   use_2a("elihunter173/dirbuf.nvim")
