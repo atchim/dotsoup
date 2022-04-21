@@ -1,10 +1,5 @@
-local M = {}
-
-M.setup = function()
-  require'soup.vanilla'.setup()
-  vim.cmd'colorscheme sopa'
-  require'soup.hack'.setup()
-  require'soup.packer'.setup()
+local function init()
+  do end (require("soup.core")).init()
+  return (require("soup.plugins")).init()
 end
-
-return M
+return {init = init}

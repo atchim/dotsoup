@@ -1,1 +1,1 @@
-require'soup'.setup()
+require'soup'.init()
