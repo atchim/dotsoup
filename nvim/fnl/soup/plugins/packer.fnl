@@ -74,7 +74,7 @@
     :requires :williamboman/nvim-lsp-installer)
 
   ; Misc
-  (use :/home/atchim/repo/sopa.nvim
+  (use :atchim/sopa.nvim
     :config (get :soup.plugins.sopa :config))
   (use :baskerville/vim-sxhkdrc :ft :sxhkdrc)
   (use :editorconfig/editorconfig-vim)
