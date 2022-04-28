@@ -1,8 +1,7 @@
+(import-macros {: call} :fnl.soup.macros)
+
 (fn config []
-  (let
-    [ {: statusline} (require :soup.plugins.heirline)
-      {: setup} (require :heirline)]
-    (setup (statusline)))
+  (call :heirline :setup (call :soup.plugins.heirline :statusline))
   (let
     [ api vim.api
       group (api.nvim_create_augroup :soup_plugin_heirline {})]
@@ -29,107 +28,116 @@
       :width_percent_below wpb}
     (require :heirline.conditions))
   (local
-    { :get_highlight get-hi
+    { :get_highlight get-hl
       : insert
       :pick_child_on_condition pcod}
     (require :heirline.utils))
   (local {:get_icon_color get-icon} (require :nvim-web-devicons))
 
   ; Highlight definitions from builtin groups.
-  (local hi
-    { :dir (get-hi :Directory)
-      :err (get-hi :DiagnosticError)
-      :hint (get-hi :DiagnosticHint)
-      :normal (get-hi :Normal)
-      :search (get-hi :Search)
-      :special (get-hi :Special)
-      :statement (get-hi :Statement)
-      :status (get-hi :StatusLine)
-      :statusnc (get-hi :StatusLineNC)
-      :string (get-hi :String)
-      :type (get-hi :Type)
-      :warn (get-hi :DiagnosticWarn)})
+  (local hl
+    { :dir (get-hl :Directory)
+      :err (get-hl :DiagnosticError)
+      :hint (get-hl :DiagnosticHint)
+      :normal (get-hl :Normal)
+      :search (get-hl :Search)
+      :special (get-hl :Special)
+      :statement (get-hl :Statement)
+      :status (get-hl :StatusLine)
+      :statusnc (get-hl :StatusLineNC)
+      :string (get-hl :String)
+      :type (get-hl :Type)
+      :warn (get-hl :DiagnosticWarn)})
 
   ; Helpers
   (local align {:provider :%=})
   (local space {:provider " "})
 
   ; Buffer Stuff
-  (local buf
-    { :init (fn [self]
-        (set self.name (api.nvim_buf_get_name 0)))})
+  (local buf {:init (fn [self] (set self.name (api.nvim_buf_get_name 0)))})
   (local buf-icon
     { :hl (fn [self] {:fg self.icon_color})
-      :init (fn [self]
-        (let [name self.name ext (f.fnamemodify name ::e)]
+      :init
+        (fn [self]
+          (local name self.name)
+          (local ext (f.fnamemodify name ::e))
           (set (self.icon self.icon_color)
-            (get-icon name ext {:default true}))))
+            (get-icon name ext {:default true})))
       :provider (fn [self] (when self.icon self.icon))})
   (local buf-name
     { 1 space
       2
-        { :hl {:fg hi.dir.fg :style hi.dir.style}
-          :provider (fn [self]
-            (var name (f.fnamemodify self.name ::.))
-            (when (not (wpb (length name) 0.5))
-              (set name (f.pathshorten name)))
-            name)}
+        { :hl {:fg hl.dir.fg :bold true}
+          :provider
+            (fn [self]
+              (var name (f.fnamemodify self.name ::.))
+              (when (not (wpb (length name) 0.5))
+                (set name (f.pathshorten name)))
+              name)}
       :condition (fn [self] (not (= "" self.name)))})
   (local buf-flags
     [ { 1 space
-        2 {:hl {:fg hi.err.fg :style :bold} :provider :}
+        2 {:hl {:fg hl.err.fg :bold true} :provider :}
         :condition (fn [_] (not bo.modifiable))}
       { 1 space
-        2 {:hl {:fg hi.warn.fg :style :bold} :provider :+}
+        2 {:hl {:fg hl.warn.fg :bold true} :provider :+}
         :condition (fn [_] bo.modified)}])
   (local buf (insert buf buf-icon buf-flags buf-name))
 
   ; File Enconding and Format
   (local file
-    [ { :init (fn [self]
-          (set self.enc (or (when (not (= "" bo.fenc)) bo.fenc) o.enc)))
-        :provider (fn [self]
-          (when (not (= self.enc :utf-8)) (self.enc:upper)))}
+    [ { :init
+          (fn [self]
+            (set self.enc (or (when (not (= "" bo.fenc)) bo.fenc) o.enc)))
+        :provider
+          (fn [self] (when (not (= self.enc :utf-8)) (self.enc:upper)))}
       space
       { :init (fn [self] (set self.fmt bo.fileformat))
-        :provider (fn [self]
-          (when (not (= :unix self.fmt)) (self.fmt:upper)))}])
+        :provider
+          (fn [self] (when (not (= :unix self.fmt)) (self.fmt:upper)))}])
 
   ; Ruler
   (local ruler {:provider :%l:%c})
 
   ; Scroll
   (local scroll
-    { :provider (fn [self]
-        (let
-          [ line (. (api.nvim_win_get_cursor 0) 1)
-            lines (api.nvim_buf_line_count 0)
-            i (math.floor (+ (* (/ line lines) (- (length self.bar) 1)) 1))]
-          (. self.bar i)))
-      :static {:bar ["█" "▇" "▆" "▅" "▄" "▃" "▂" "▁"]}})
+    { :provider
+        (fn [self]
+          (local line (. (api.nvim_win_get_cursor 0) 1))
+          (local lines (api.nvim_buf_line_count 0))
+          (local i
+            (->
+              (/ line lines)
+              (* (- (length self.bar) 1))
+              (+ 1)
+              (math.floor)))
+          (. self.bar i))
+      :static {:bar [:█ :▇ :▆ :▅ :▄ :▃ :▂ :▁]}})
 
   ; VI Mode
   (local vimode
-    { :hl (fn [self]
-        { :fg (. self.colors (self.mode:sub 1 1))
-          :style "bold,reverse"})
+    { :hl
+        (fn [self]
+          { :fg (. self.colors (self.mode:sub 1 1))
+            :bold true
+            :reverse true})
       :init (fn [self] (set self.mode (f.mode 1)))
       :provider (fn [self] (.. "  %-3.3(" (. self.modes self.mode) "%) "))
       :static
         { :colors
-            { :c hi.statement.fg
-              :i hi.string.fg
-              :n hi.normal.fg
-              :r hi.hint.fg
-              :R hi.warn.fg
-              :s hi.special.fg
-              :S hi.special.fg
-              "" hi.special.fg
-              :t hi.type.fg
-              :v hi.search.bg
-              :V hi.search.bg
-              "" hi.search.bg
-              :! hi.err.fg}
+            { :c hl.statement.fg
+              :i hl.string.fg
+              :n hl.normal.fg
+              :r hl.hint.fg
+              :R hl.warn.fg
+              :s hl.special.fg
+              :S hl.special.fg
+              "" hl.special.fg
+              :t hl.type.fg
+              :v hl.search.bg
+              :V hl.search.bg
+              "" hl.search.bg
+              :! hl.err.fg}
           :modes
             { :c :C
               :cv :CV
@@ -171,10 +179,10 @@
   (local nc
     { 1 (unpack [space buf align file space ruler space scroll space])
       :condition (fn [_] (not (active?)))
-      :hl {1 (unpack hi.statusnc) :force true}})
+      :hl {1 (unpack hl.statusnc) :force true}})
   (local statusline
     { 1 nc 2 def
-      :hl (fn [_] (if (active?) hi.status hi.statusnc))
+      :hl (fn [_] (if (active?) hl.status hl.statusnc))
       :init pcod})
   statusline)
 

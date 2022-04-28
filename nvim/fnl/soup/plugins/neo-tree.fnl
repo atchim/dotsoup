@@ -3,6 +3,8 @@
 (fn config []
   ; TODO: Set `cursorlineopt` to `'both'` for the Neo-Tree window.
 
+  (set vim.g.neo_tree_remove_legacy_commands 1)
+
   (call :neo-tree :setup
     { :filesystem {:use_libuv_file_watcher true}
       :window
@@ -16,8 +18,4 @@
       :<CR> ["<Cmd>Neotree focus<CR>" :Focus]}
     {:prefix :<Leader><Space>}))
 
-(fn setup []
-  (set vim.g.neo_tree_remove_legacy_commands 1))
-
-{ : config
-  : setup}
+{: config}

@@ -1,15 +1,6 @@
 (import-macros {: call : get} :fnl.soup.macros)
 
 (fn config []
-  (let
-    [ signs
-        { :DiagnosticSignError :
-          :DiagnosticSignWarn :
-          :DiagnosticSignHint :
-          :DiagnosticSignInfo :}]
-    (each [sign symbol (pairs signs)]
-      (vim.fn.sign_define sign {:numhl "" :text symbol :texthl sign})))
-
   (call :nvim-lsp-installer :on_server_ready
     (fn [server]
       (local opts

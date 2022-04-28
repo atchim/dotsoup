@@ -4,6 +4,7 @@ local function init()
   do end (require("soup.core.maps")).init()
   do end (require("soup.core.cmds")).init()
   do end (require("soup.core.au")).init()
+  do end (require("soup.core.diagnostics")).init()
   return (require("soup.core.colors")).init()
 end
 return {init = init}

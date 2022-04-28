@@ -8,6 +8,7 @@
     :maps
     :cmds
     :au
+    :diagnostics
     :colors))
 
 {: init}
