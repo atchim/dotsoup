@@ -1,22 +1,39 @@
+; TODO: Add support for working directory.
+; TODO: Add support for terminal.
+; TODO: Add support for Git.
+; TODO: Add support for LSP.
+
 (import-macros {: call} :fnl.soup.macros)
 
 (fn config []
-  (call :heirline :setup (call :soup.plugins.heirline :statusline))
+  (call :soup.plugins.heirline :setup)
   (let
     [ api vim.api
       group (api.nvim_create_augroup :soup_plugin_heirline {})]
     (api.nvim_create_autocmd :ColorScheme
       { : group
-        :desc "Update colors for the status line on color scheme change."
+        :desc
+          (..
+            "Updates colors for the status line and the window bar on color"
+            " scheme change.")
         :callback
-          #(let
-            [ {: statusline} (require :soup.plugins.heirline)
-              {: reset_highlights : setup} (require :heirline)]
-            (setup (statusline))
-            (reset_highlights))})))
+          #(do
+            (call :soup.plugins.heirline :setup)
+            (call :heirline :reset_highlights))})
+    (api.nvim_create_autocmd :User
+      { : group
+        :pattern :HeirlineInitWinbar
+        :desc "Sets whether the window bar is enabled."
+        :callback
+          (fn [args]
+            (if
+              (call :heirline.conditions :buffer_matches
+                { :buftype [:nofile :prompt :quickfix]
+                  :filetype [:neo-tree :packer]})
+              (set vim.opt_local.winbar nil)))})))
 
-(fn statusline []
-  "Return built status line."
+(fn setup []
+  "Setups the status line and window bar."
 
   (local api vim.api)
   (local bo vim.bo)
@@ -25,7 +42,7 @@
 
   (local
     { :is_active active?
-      :width_percent_below wpb}
+      :width_percent_below w%<?}
     (require :heirline.conditions))
   (local
     { :get_highlight get-hl
@@ -36,8 +53,7 @@
 
   ; Highlight definitions from builtin groups.
   (local hl
-    { :dir (get-hl :Directory)
-      :err (get-hl :DiagnosticError)
+    { :err (get-hl :DiagnosticError)
       :hint (get-hl :DiagnosticHint)
       :normal (get-hl :Normal)
       :search (get-hl :Search)
@@ -46,15 +62,19 @@
       :status (get-hl :StatusLine)
       :statusnc (get-hl :StatusLineNC)
       :string (get-hl :String)
+      :title (get-hl :Title)
       :type (get-hl :Type)
-      :warn (get-hl :DiagnosticWarn)})
+      :warn (get-hl :DiagnosticWarn)
+      :winbar (get-hl :WinBar)
+      :winbarnc (get-hl :WinBarNC)})
 
   ; Helpers
   (local align {:provider :%=})
   (local space {:provider " "})
 
   ; Buffer Stuff
-  (local buf {:init (fn [self] (set self.name (api.nvim_buf_get_name 0)))})
+  (local buf-init
+    {:init (fn [self] (set self.name (api.nvim_buf_get_name 0)))})
   (local buf-icon
     { :hl (fn [self] {:fg self.icon_color})
       :init
@@ -67,11 +87,11 @@
   (local buf-name
     { 1 space
       2
-        { :hl {:fg hl.dir.fg :bold true}
+        { :hl {:fg hl.title.fg :bold true}
           :provider
             (fn [self]
               (var name (f.fnamemodify self.name ::.))
-              (when (not (wpb (length name) 0.5))
+              (when (not (w%<? (length name) 0.5))
                 (set name (f.pathshorten name)))
               name)}
       :condition (fn [self] (not (= "" self.name)))})
@@ -80,9 +100,9 @@
         2 {:hl {:fg hl.err.fg :bold true} :provider :}
         :condition (fn [_] (not bo.modifiable))}
       { 1 space
-        2 {:hl {:fg hl.warn.fg :bold true} :provider :+}
+        2 {:hl {:fg hl.warn.fg :bold true} :provider "[+]"}
         :condition (fn [_] bo.modified)}])
-  (local buf (insert buf buf-icon buf-flags buf-name))
+  (local buf (insert buf-init buf-icon buf-flags buf-name))
 
   ; File Enconding and Format
   (local file
@@ -122,7 +142,8 @@
             :bold true
             :reverse true})
       :init (fn [self] (set self.mode (f.mode 1)))
-      :provider (fn [self] (.. "  %-3.3(" (. self.modes self.mode) "%) "))
+      :provider
+        (fn [self] (.. "%-0.3(  %)%-3.4(" (. self.modes self.mode) " %)"))
       :static
         { :colors
             { :c hl.statement.fg
@@ -172,7 +193,8 @@
               :Vs :V_S
               "" :^V
               "s" :^VS
-              :! :!}}})
+              :! :!}}
+      :update :ModeChanged})
 
   ; Status Line
   (local def [vimode space buf align file space ruler space scroll space])
@@ -181,10 +203,22 @@
       :condition (fn [_] (not (active?)))
       :hl {1 (unpack hl.statusnc) :force true}})
   (local statusline
-    { 1 nc 2 def
+    { 1 (unpack [nc def])
       :hl (fn [_] (if (active?) hl.status hl.statusnc))
       :init pcod})
-  statusline)
+
+  ; Window Bar
+  (local def [space buf])
+  (local nc
+    { 1 (unpack [space buf])
+      :condition (fn [_] (not (active?)))
+      :hl {1 (unpack hl.winbarnc) :force true}})
+  (local winbar
+    { 1 (unpack [nc def])
+      :hl (fn [_] (if (active?) hl.winbar hl.winbarnc))
+      :init pcod})
+
+  (call :heirline :setup statusline winbar))
 
 { : config
-  : statusline}
+  : setup}

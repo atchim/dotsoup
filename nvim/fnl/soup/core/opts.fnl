@@ -9,7 +9,15 @@
   (set o.tagcase :followscs)
 
   ; Chars
-  (set o.fillchars {:fold " " :vert " "})
+  (set o.fillchars
+    { :fold " "
+      :horiz " "
+      :horizdown " "
+      :horizup " "
+      :vert " "
+      :verthoriz " "
+      :vertleft " "
+      :vertright " "})
   (set o.listchars
     { :eol :$
       :conceal :%
@@ -50,6 +58,7 @@
   ; UI
   (set o.cursorline true)
   (set o.cursorlineopt [:number])
+  (set o.laststatus 3)
   (set o.number true)
   (set o.pumblend 15)
   (set o.relativenumber true)

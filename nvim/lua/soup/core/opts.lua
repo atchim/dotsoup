@@ -3,7 +3,7 @@ local function init()
   o.ignorecase = true
   o.smartcase = true
   o.tagcase = "followscs"
-  o.fillchars = {fold = " ", vert = " "}
+  o.fillchars = {fold = " ", horiz = " ", horizdown = " ", horizup = " ", vert = " ", verthoriz = " ", vertleft = " ", vertright = " "}
   o.listchars = {eol = "$", conceal = "%", extends = ">", nbsp = "+", precedes = "<", space = ".", tab = "> ", trail = "~"}
   o.conceallevel = 2
   o.showmatch = true
@@ -26,6 +26,7 @@ local function init()
   o.updatetime = 250
   o.cursorline = true
   o.cursorlineopt = {"number"}
+  o.laststatus = 3
   o.number = true
   o.pumblend = 15
   o.relativenumber = true

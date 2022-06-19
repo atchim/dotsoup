@@ -7,7 +7,7 @@ super + {f,p,s,t}
   bspc node --state {fullscreen,pseudo_tiled,floating,tiled}
 
 # Set node flags.
-super + {a,x,y,z,apostrophe}
+super + {a,X,y,z,apostrophe}
   bspc node --flag {hidden,locked,sticky,private,marked}
 
 #
@@ -56,8 +56,12 @@ super + {i,o}
   bspc node {newer,older} --focus; \
   bspc wm --record-history on
 
+# Swap node with the newest marked node.
+super + x
+  bspc node --swap newest.marked
+
 # Focus last local window node.
-super + grave
+super + {Escape,grave}
   bspc node --focus last.local.window
 
 # Focus next or previous local window.
@@ -66,7 +70,7 @@ super + {comma,period}
 
 # Focus next or previous local desktop.
 super + {less,greater}
-  bspc desktop --focus {prev,next}.local
+  bspc desktop --focus {prev,next}.local.occupied
 
 #
 # Misc
@@ -84,7 +88,7 @@ super + m
 
 # Close or kill node.
 super + {_,shift + }q
-  bspc node --{close,kill}
+  bspc node focused.window --{close,kill}
 
 # Quit bspwm.
 super + alt + q

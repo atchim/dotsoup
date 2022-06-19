@@ -1,7 +1,4 @@
-#
 # Sopa de Mamaco's Palette
-#
-
 p = [
   '#080808',
   '#0c0c0c',
@@ -21,9 +18,7 @@ p = [
   '#fc4ad0',
 ]
 
-#
-# Colors
-#
+# Colors {{{1
 
 c.colors.completion.category.bg = p[1]
 c.colors.completion.category.fg = p[7]
@@ -124,19 +119,13 @@ c.colors.tabs.selected.even.fg = p[7]
 c.colors.tabs.selected.odd.bg = p[0]
 c.colors.tabs.selected.odd.fg = p[7]
 
-#
-# Completion
-#
-
+# Completion {{{1
 c.completion.cmd_history_max_items = 128
 c.completion.scrollbar.padding = 0
 c.completion.scrollbar.width = 16
 c.completion.shrink = True
 
-#
-# Downloads
-#
-
+# Downloads {{{1
 c.downloads.location.directory = '~/dl'
 c.downloads.location.prompt = False
 c.downloads.location.remember = False
@@ -144,26 +133,17 @@ c.downloads.location.suggestion = 'filename'
 c.downloads.position = 'bottom'
 c.downloads.remove_finished = 0
 
-#
-# Hints
-#
-
+# Hints {{{1
 c.hints.border = '0px solid'
 c.hints.radius = 0
 
-#
-# Misc
-#
-
+# Misc {{{1
 c.auto_save.session = True
 c.fonts.default_family = 'Hack'
 c.keyhint.radius = 0
 c.prompt.radius = 0
 
-#
-# Tabs
-#
-
+# Tabs {{{1
 c.tabs.new_position.unrelated = 'next'
 c.tabs.padding = {'bottom': 0, 'left': 0, 'right': 0, 'top': 0}
 c.tabs.position = 'left'
@@ -173,10 +153,7 @@ c.tabs.show_switching_delay = 500
 c.tabs.title.format = '{audio}{index} {current_title}'
 c.tabs.width = 64
 
-#
-# URL
-#
-
+# URL {{{1
 c.url.default_page = 'https://www.google.com'
 c.url.searchengines = {
   'DEFAULT': 'https://google.com/search?q={}',
@@ -185,14 +162,13 @@ c.url.searchengines = {
   'g': 'https://www.google.com/search?q={}',
   'gh': 'https://github.com/search?q={}',
   'gt': 'https://translate.google.com/?text={}',
+  'rs': 'https://doc.rust-lang.org/std/index.html?search={}',
+  'rsc': 'https://docs.rs/releases/search?query={}',
   'w': 'https://wikipedia.org/w/index.php?search={}',
   'y': 'https://www.youtube.com/results?search_query={}',
   'zu': 'http://gpo.zugaina.org/Search?search={}',
 }
 c.url.start_pages = 'https://www.google.com'
 
-#
-# Bottom
-#
-
+# Bottom {{{1
 config.load_autoconfig(False)

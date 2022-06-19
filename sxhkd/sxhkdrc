@@ -24,19 +24,23 @@ super + space ; equal
 
 # Launch mixer.
 super + space ; m
-  alacritty --class popup -e alsamixer -g
+  alacritty msg create-window --class popup -e alsamixer -g \
+    || alacritty --class popup -e alsamixer -g
 
 # Launch music player.
 super + space ; p
-  alacritty --class popup -e ncmpcpp
+  alacritty msg create-window --class popup -e ncmpcpp \
+    || alacritty --class popup -e ncmpcpp
 
 # Launch process manager.
 super + space ; t
-  alacritty --class popup -e htop
+  alacritty msg create-window --class popup -e htop \
+    || alacritty --class popup -e htop
 
 # Launch file manager.
 super + space ; slash
-  alacritty --class popup -e lf
+  alacritty msg create-window --class popup -e lf \
+    || alacritty --class popup -e lf
 
 # Launch program launcher.
 super + space ; space
@@ -58,6 +62,6 @@ super + r ; s
 super + space ; s ; c
   maim | xclip -selection clipboard -target image/png
 
-# Take a screenshot from selection / take a normal screenshot.
+# Take a normal screenshot or from selection.
 super + space ; s ; {s,shift + s}
   maim {_,--select} "$SHOT_DIR/$(date +%s).png"

@@ -32,7 +32,8 @@
 
   (cmp.setup
     { :formatting
-        { :format
+        { :fields [:kind :abbr]
+          :format
             (fn [_ vimitem]
               (set vimitem.kind (. icons vimitem.kind))
               vimitem)}
@@ -45,7 +46,7 @@
           :<C-Space> (cmp.mapping (cmp.mapping.complete) [:i :c])
           :<CR> (cmp.mapping.confirm {:select true})
           :<Down> (cmp.mapping.select_next_item)
-          :<S-Tab>
+          :<S-Tab> ; FIXME
             (cmp.mapping
               (fn [fallback]
                 (if
@@ -53,7 +54,7 @@
                   (luasnip.jumpable -1) (luasnip.jump -1)
                   (fallback)))
               [:i :s])
-          :<Tab>
+          :<Tab> ; FIXME
             (cmp.mapping
               (fn [fallback]
                 (if

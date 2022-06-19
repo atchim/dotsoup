@@ -1,0 +1,18 @@
+* {
+  palette-0: #080808;
+  palette-1: #0c0c0c;
+  palette-2: #121212;
+  palette-3: #1a1a1a;
+  palette-4: #252525;
+  palette-5: #383838;
+  palette-6: #5a5a5a;
+  palette-7: #959595;
+  palette-8: #ff5b5b;
+  palette-9: #bc8f05;
+  palette-10: #54a900;
+  palette-11: #00ad2b;
+  palette-12: #00a7a7;
+  palette-13: #6b90ff;
+  palette-14: #ba74ff;
+  palette-15: #fc4ad0;
+}

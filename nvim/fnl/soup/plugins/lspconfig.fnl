@@ -48,12 +48,12 @@
       :K ["<Cmd>lua vim.lsp.buf.hover()<CR>" "LSP hover information"]}
     {:buffer bufnr})
 
-  (when client.resolved_capabilities.document_formatting
+  (when client.server_capabilities.document_formatting
     (map
       {:f ["<Cmd>lua vim.lsp.buf.formatting()<CR>" "Formatting"]}
       {:buffer bufnr :prefix :<Leader>l}))
 
-  (when client.resolved_capabilities.document_range_formatting
+  (when client.server_capabilities.document_range_formatting
     (map
       { :name :LSP
         :f ["<Cmd>lua vim.lsp.buf.range_formatting()<CR>" "Range formatting"]}

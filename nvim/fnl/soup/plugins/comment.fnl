@@ -2,6 +2,8 @@
 
 (fn config []
   (call :Comment :setup
-    { :padding false}))
+    { :opleader {:block :gC}
+      :padding false
+      :toggler {:block :gcC}}))
 
 {: config}

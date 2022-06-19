@@ -1,1 +1,2 @@
-map b $nvim --cmd 'nnoremap <silent> q <Cmd>q<CR>' -c \:Dirbuf
+map b $nvim -c \:Dirbuf
+map ] $dragon $fx

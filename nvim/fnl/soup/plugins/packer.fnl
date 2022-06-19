@@ -21,8 +21,8 @@
   ; Completion
   (use
     { 1 :hrsh7th/nvim-cmp
+      :cond (fn [] true)
       :config (get :soup.plugins.cmp :config)
-      :event :VimEnter
       :requires
         [ {1 :hrsh7th/cmp-buffer :after :nvim-cmp}
           { 1 :hrsh7th/cmp-nvim-lsp
@@ -57,39 +57,37 @@
   (use {1 :baskerville/vim-sxhkdrc :ft :sxhkdrc})
 
   ; Pickers / File System
-  (use {1 :elihunter173/dirbuf.nvim :event :VimEnter})
+  (use :elihunter173/dirbuf.nvim)
   (use
     { 1 :ggandor/leap.nvim
-      :config (get :soup.plugins.leap :config)
-      :event :VimEnter})
+      :config (get :soup.plugins.leap :config)})
   (use
     { 1 :nvim-telescope/telescope.nvim
+      :cond (fn [] true)
       :config (get :soup.plugins.telescope :config)
-      :event :VimEnter
       :requires
         [ {1 :nvim-lua/plenary.nvim :opt true}
           {1 :nvim-telescope/telescope-fzf-native.nvim :opt true :run :make}]
       :wants [:plenary.nvim :telescope-fzf-native.nvim]})
   (use
     { 1 :ThePrimeagen/harpoon
+      :cond (fn [] true)
       :config (get :soup.plugins.harpoon :config)
-      :event :VimEnter
       :requires [{1 :nvim-lua/plenary.nvim :opt true}]
       :wants :plenary.nvim})
 
   ; Text Manipulation
-  (use {1 :editorconfig/editorconfig-vim :event :VimEnter})
+  (use :editorconfig/editorconfig-vim)
   (use
     { 1 :numToStr/Comment.nvim
-      :event :VimEnter
       :config (get :soup.plugins.comment :config)})
-  (use {1 :tpope/vim-surround :event :VimEnter})
+  (use :tpope/vim-surround)
 
   ; Tree-Sitter
   (use
     { 1 :nvim-treesitter/nvim-treesitter
+      :cond (fn [] true)
       :config (get :soup.plugins.treesitter :config)
-      :event :VimEnter
       :requires
         [ { 1 :nvim-treesitter/playground
             :after :nvim-treesitter}
@@ -99,15 +97,13 @@
   ; UI
   (use
     { 1 :akinsho/bufferline.nvim
-      :config (get :soup.plugins.bufferline :config)
-      :event :VimEnter})
+      :config (get :soup.plugins.bufferline :config)})
   (use
     { 1 :folke/which-key.nvim
       :config (get :soup.plugins.which-key :config)})
   (use
     { 1 :lukas-reineke/indent-blankline.nvim
-      :config (get :soup.plugins.indent-blankline :config)
-      :event :VimEnter})
+      :config (get :soup.plugins.indent-blankline :config)})
   (use
     { 1 :nvim-neo-tree/neo-tree.nvim
       ; NOTE: For now, Packer only accepts one package in `wants`, so make sure
@@ -121,7 +117,6 @@
       :wants :nui.nvim})
   (use
     { 1 :rebelot/heirline.nvim
-      ;:commit :0b93d18 ; NOTE: Commits after this are broken.
       :config (get :soup.plugins.heirline :config)
       :event :VimEnter
       :requires [{1 :kyazdani42/nvim-web-devicons :opt true}]

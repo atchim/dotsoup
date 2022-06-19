@@ -1,0 +1,68 @@
+@theme "themes/palette"
+
+* {
+  background-color: @palette-0;
+  text-color: @palette-7;
+}
+
+button {
+  background-color: inherit;
+  cursor: pointer;
+  text-color: @palette-6;
+}
+
+button selected {
+  background-color: @palette-0;
+  text-color: @palette-7;
+}
+
+element {
+  highlight: bold #54a900;
+}
+
+element alternate active, element normal active, element selected active {
+  text-color: @palette-12;
+  highlight: bold #6b90ff;
+}
+
+element alternate urgent, element normal urgent, element selected urgent {
+  highlight: bold #bc8f05;
+  text-color: @palette-8;
+}
+
+element selected {
+  background-color: @palette-2;
+  text-color: @palette-14;
+}
+
+element selected active {
+  background-color: @palette-3;
+}
+
+element-text {
+  background-color: transparent;
+  cursor: inherit;
+  highlight: inherit;
+  text-color: inherit;
+}
+
+entry {
+  text-color: @palette-11;
+}
+
+inputbar {
+  spacing: 1ch;
+}
+
+mode-switcher {
+  background-color: @palette-2;
+}
+
+prompt {
+  text-color: @palette-15;
+}
+
+window {
+  border: 2px;
+  border-color: @palette-6;
+}

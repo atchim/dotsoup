@@ -1,28 +1,11 @@
-@theme "themes/pal"
-
-* {
-  background-color: @pal-0;
-  highlight: @pal-hi;
-  text-color: @pal-7;
-}
+@theme "themes/board"
 
 element {
   padding: 0 0.5ch;
 }
 
-element selected {
-  background-color: @pal-2;
-  text-color: @pal-14;
-}
-
-element-text {
-  background-color: inherit;
-  text-color: inherit;
-}
-
 entry {
   expand: false;
-  text-color: @pal-11;
   width: 24ch;
 }
 
@@ -36,12 +19,9 @@ listview {
   layout: horizontal;
 }
 
-prompt {
-  text-color: @pal-15;
-}
-
 window {
   anchor: south;
+  border: 0;
   children: [horibox];
   location: south;
   width: 100%;
