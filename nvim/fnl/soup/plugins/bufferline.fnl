@@ -1,3 +1,6 @@
+; TODO: Hide Bufferline if there are less than 2 listed buffers.
+; TODO: Do not show the close button.
+
 (import-macros {: call} :fnl.soup.macros)
 
 (fn config []

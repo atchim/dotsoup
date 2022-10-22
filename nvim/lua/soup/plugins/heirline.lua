@@ -28,7 +28,6 @@ local function setup()
   local _local_5_ = require("heirline.utils")
   local get_hl = _local_5_["get_highlight"]
   local insert = _local_5_["insert"]
-  local pcod = _local_5_["pick_child_on_condition"]
   local _local_6_ = require("nvim-web-devicons")
   local get_icon = _local_6_["get_icon_color"]
   local hl = {err = get_hl("DiagnosticError"), hint = get_hl("DiagnosticHint"), normal = get_hl("Normal"), search = get_hl("Search"), special = get_hl("Special"), statement = get_hl("Statement"), status = get_hl("StatusLine"), statusnc = get_hl("StatusLineNC"), string = get_hl("String"), title = get_hl("Title"), type = get_hl("Type"), warn = get_hl("DiagnosticWarn"), winbar = get_hl("WinBar"), winbarnc = get_hl("WinBarNC")}
@@ -146,7 +145,7 @@ local function setup()
       return hl.statusnc
     end
   end
-  statusline = {hl = _30_, init = pcod, unpack({nc, def})}
+  statusline = {hl = _30_, fallthrough = false, unpack({nc, def})}
   local def0 = {space, buf}
   local nc0
   local function _32_(_)
@@ -161,7 +160,7 @@ local function setup()
       return hl.winbarnc
     end
   end
-  winbar = {hl = _33_, init = pcod, unpack({nc0, def0})}
+  winbar = {hl = _33_, fallthrough = false, unpack({nc0, def0})}
   return (require("heirline")).setup(statusline, winbar)
 end
 return {config = config, setup = setup}

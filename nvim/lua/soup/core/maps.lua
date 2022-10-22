@@ -1,42 +1,16 @@
 local function map_args(maps, _3fopts, _3fdescf, _3fdesc, _3fkeys)
-  do
-    local ty_8_auto = type(maps)
-    assert((ty_8_auto == "table"), "`maps`is not table")
-  end
-  local opts
-  if (nil ~= _3fopts) then
-    opts = _3fopts
-  else
-    opts = {}
-  end
-  do
-    local ty_8_auto = type(opts)
-    assert((ty_8_auto == "table"), "`opts`is not table")
-  end
-  do
-    local ty_8_auto = type(_3fdescf)
-    assert(((ty_8_auto == "nil") or (ty_8_auto == "function")), "`?descf`is not nil or function")
-  end
   local descf
-  if (nil ~= _3fdescf) then
-    local function _2_(acc, desc)
-      local desc0 = _3fdescf(acc, desc)
-      do
-        local ty_8_auto = type(desc0)
-        assert((ty_8_auto == "string"), "`desc`is not string")
-      end
-      return desc0
-    end
-    descf = _2_
-  else
-    local function _3_(acc, desc)
-      if ("" ~= acc) then
-        return (acc .. " " .. desc:gsub("^%u", string.lower))
-      else
+  if (nil == _3fdescf) then
+    local function _1_(acc, desc)
+      if ("" == acc) then
         return desc
+      else
+        return (acc .. " " .. desc:gsub("^%u", string.lower))
       end
     end
-    descf = _3_
+    descf = _1_
+  else
+    descf = _3fdescf
   end
   local desc
   if (nil ~= _3fdesc) then
@@ -44,190 +18,146 @@ local function map_args(maps, _3fopts, _3fdescf, _3fdesc, _3fkeys)
   else
     desc = ""
   end
-  do
-    local ty_8_auto = type(desc)
-    assert((ty_8_auto == "string"), "`desc`is not string")
-  end
   local keys
   if (nil ~= _3fkeys) then
     keys = _3fkeys
   else
     keys = ""
   end
-  do
-    local ty_8_auto = type(keys)
-    assert((ty_8_auto == "string"), "`keys`is not string")
-  end
   local function mkargs(keys0, cmd, desc0)
-    do
-      local ty_8_auto = type(keys0)
-      assert((ty_8_auto == "string"), "`keys`is not string")
-    end
-    do
-      local ty_8_auto = type(cmd)
-      assert(((ty_8_auto == "string") or (ty_8_auto == "function")), "`cmd`is not string or function")
-    end
-    do
-      local ty_8_auto = type(desc0)
-      assert((ty_8_auto == "string"), "`desc`is not string")
-    end
     local mode
-    local _9_
+    local _7_
     do
-      local t_8_ = opts
-      if (nil ~= t_8_) then
-        t_8_ = (t_8_).mode
+      local t_6_ = _3fopts
+      if (nil ~= t_6_) then
+        t_6_ = (t_6_).mode
       else
       end
-      _9_ = t_8_
+      _7_ = t_6_
     end
-    if (nil ~= _9_) then
-      local t_11_ = opts
-      if (nil ~= t_11_) then
-        t_11_ = (t_11_).mode
+    if (nil ~= _7_) then
+      local t_9_ = _3fopts
+      if (nil ~= t_9_) then
+        t_9_ = (t_9_).mode
       else
       end
-      mode = t_11_
+      mode = t_9_
     else
       mode = "n"
     end
-    do
-      local ty_8_auto = type(mode)
-      assert((ty_8_auto == "string"), "`mode`is not string")
-    end
     local keys1
-    local function _19_()
-      local _15_
+    local function _17_()
+      local _13_
       do
-        local t_14_ = opts
-        if (nil ~= t_14_) then
-          t_14_ = (t_14_).prefix
+        local t_12_ = _3fopts
+        if (nil ~= t_12_) then
+          t_12_ = (t_12_).prefix
         else
         end
-        _15_ = t_14_
+        _13_ = t_12_
       end
-      if (nil ~= _15_) then
-        local t_17_ = opts
-        if (nil ~= t_17_) then
-          t_17_ = (t_17_).prefix
+      if (nil ~= _13_) then
+        local t_15_ = _3fopts
+        if (nil ~= t_15_) then
+          t_15_ = (t_15_).prefix
         else
         end
-        return t_17_
+        return t_15_
       else
         return ""
       end
     end
-    keys1 = (_19_() .. keys0)
-    do
-      local ty_8_auto = type(keys1)
-      assert((ty_8_auto == "string"), "`keys`is not string")
-    end
+    keys1 = (_17_() .. keys0)
     local buffer
     do
-      local t_20_ = opts
-      if (nil ~= t_20_) then
-        t_20_ = (t_20_).buffer
+      local t_18_ = _3fopts
+      if (nil ~= t_18_) then
+        t_18_ = (t_18_).buffer
       else
       end
-      buffer = t_20_
-    end
-    do
-      local ty_8_auto = type(buffer)
-      assert(((ty_8_auto == "nil") or (ty_8_auto == "number")), "`buffer`is not nil or number")
+      buffer = t_18_
     end
     local noremap
-    local _23_
+    local _21_
     do
-      local t_22_ = opts
-      if (nil ~= t_22_) then
-        t_22_ = (t_22_).noremap
+      local t_20_ = _3fopts
+      if (nil ~= t_20_) then
+        t_20_ = (t_20_).noremap
       else
       end
-      _23_ = t_22_
+      _21_ = t_20_
     end
-    if (nil ~= _23_) then
-      local t_25_ = opts
-      if (nil ~= t_25_) then
-        t_25_ = (t_25_).noremap
+    if (nil ~= _21_) then
+      local t_23_ = _3fopts
+      if (nil ~= t_23_) then
+        t_23_ = (t_23_).noremap
       else
       end
-      noremap = t_25_
+      noremap = t_23_
     else
       noremap = true
     end
-    do
-      local ty_8_auto = type(noremap)
-      assert((ty_8_auto == "boolean"), "`noremap`is not boolean")
-    end
     local nowait
     do
-      local t_28_ = opts
-      if (nil ~= t_28_) then
-        t_28_ = (t_28_).nowait
+      local t_26_ = _3fopts
+      if (nil ~= t_26_) then
+        t_26_ = (t_26_).nowait
       else
       end
-      nowait = t_28_
-    end
-    do
-      local ty_8_auto = type(nowait)
-      assert(((ty_8_auto == "nil") or (ty_8_auto == "boolean")), "`nowait`is not nil or boolean")
+      nowait = t_26_
     end
     local silent
-    local _31_
+    local _29_
     do
-      local t_30_ = opts
-      if (nil ~= t_30_) then
-        t_30_ = (t_30_).silent
+      local t_28_ = _3fopts
+      if (nil ~= t_28_) then
+        t_28_ = (t_28_).silent
       else
       end
-      _31_ = t_30_
+      _29_ = t_28_
     end
-    if (nil ~= _31_) then
-      local t_33_ = opts
-      if (nil ~= t_33_) then
-        t_33_ = (t_33_).silent
+    if (nil ~= _29_) then
+      local t_31_ = _3fopts
+      if (nil ~= t_31_) then
+        t_31_ = (t_31_).silent
       else
       end
-      silent = t_33_
+      silent = t_31_
     else
       silent = true
-    end
-    do
-      local ty_8_auto = type(silent)
-      assert((ty_8_auto == "boolean"), "`silent`is not boolean")
     end
     return {mode, keys1, cmd, {desc = desc0, noremap = noremap, nowait = nowait, silent = silent}}, buffer
   end
   do
     local gname
     do
-      local t_36_ = maps
-      if (nil ~= t_36_) then
-        t_36_ = (t_36_).name
+      local t_34_ = maps
+      if (nil ~= t_34_) then
+        t_34_ = (t_34_).name
       else
       end
-      gname = t_36_
+      gname = t_34_
     end
     if gname then
       desc = descf(desc, gname)
     else
     end
   end
-  local function _39_()
+  local function _37_()
     for key, val in pairs(maps) do
       local keys0 = (keys .. key)
-      local _40_ = {key, val}
-      if ((_G.type(_40_) == "table") and ((_40_)[1] == "name") and true) then
-        local _ = (_40_)[2]
-      elseif ((_G.type(_40_) == "table") and true and ((_G.type((_40_)[2]) == "table") and (nil ~= ((_40_)[2])[1]) and (nil ~= ((_40_)[2])[2]))) then
-        local _ = (_40_)[1]
-        local cmd = ((_40_)[2])[1]
-        local desc_2b = ((_40_)[2])[2]
+      local _38_ = {key, val}
+      if ((_G.type(_38_) == "table") and ((_38_)[1] == "name") and true) then
+        local _ = (_38_)[2]
+      elseif ((_G.type(_38_) == "table") and true and ((_G.type((_38_)[2]) == "table") and (nil ~= ((_38_)[2])[1]) and (nil ~= ((_38_)[2])[2]))) then
+        local _ = (_38_)[1]
+        local cmd = ((_38_)[2])[1]
+        local desc_2b = ((_38_)[2])[2]
         local desc0 = descf(desc, desc_2b)
         coroutine.yield(mkargs(keys0, cmd, desc0))
       elseif true then
-        local _ = _40_
-        for args, buffer in map_args(val, opts, descf, desc, keys0) do
+        local _ = _38_
+        for args, buffer in map_args(val, _3fopts, descf, desc, keys0) do
           coroutine.yield(args, buffer)
         end
       else
@@ -235,45 +165,28 @@ local function map_args(maps, _3fopts, _3fdescf, _3fdesc, _3fkeys)
     end
     return nil
   end
-  return coroutine.wrap(_39_)
+  return coroutine.wrap(_37_)
 end
 local function map(maps, _3fopts, _3fdescf)
-  do
-    local ty_8_auto = type(maps)
-    assert((ty_8_auto == "table"), "`maps`is not table")
-  end
-  local opts
-  if (nil ~= _3fopts) then
-    opts = _3fopts
-  else
-    opts = {}
-  end
-  do
-    local ty_8_auto = type(opts)
-    assert((ty_8_auto == "table"), "`opts`is not table")
-  end
-  do
-    local ty_8_auto = type(_3fdescf)
-    assert(((ty_8_auto == "nil") or (ty_8_auto == "function")), "`?descf`is not nil or function")
-  end
   local bkmap = vim.api.nvim_buf_set_keymap
   local kmap = vim.api.nvim_set_keymap
   local ok_3f, which_key = pcall(require, "which-key")
   if ok_3f then
-    return which_key.register(maps, opts)
+    return which_key.register(maps, _3fopts)
   else
-    for args, buf in map_args(maps, opts) do
-      if (nil ~= buf) then
-        bkmap(buf, unpack(args))
-      else
+    for args, buf in map_args(maps, _3fopts, _3fdescf) do
+      if (nil == buf) then
         kmap(unpack(args))
+      else
+        bkmap(buf, unpack(args))
       end
     end
     return nil
   end
 end
 local function init()
-  map({["<Leader>k"] = {"<Cmd>lua vim.diagnostic.open_float()<CR>", "Diagnostic show from line"}, ["[d"] = {"<Cmd>lua vim.diagnostic.goto_prev()<CR>", "Diagnostic go to previous"}, ["]d"] = {"<Cmd>lua vim.diagnostic.goto_next()<CR>", "Diagnostic go to next"}, ["<Leader>,"] = {"<Cmd>setl spell!<CR>", "Toggle local spelling"}, ["<Leader>."] = {"<Cmd>setl list!<CR>", "Toggle local listing"}})
-  return map({["<Leader>y"] = {"\"+y", "CTRL-C-like yank to clipboard"}}, {mode = "v"})
+  map({["<Leader>k"] = {"<Cmd>lua vim.diagnostic.open_float()<CR>", "Diagnostic show from line"}, ["[d"] = {"<Cmd>lua vim.diagnostic.goto_prev()<CR>", "Diagnostic go to previous"}, ["]d"] = {"<Cmd>lua vim.diagnostic.goto_next()<CR>", "Diagnostic go to next"}, ["<Leader>t"] = {name = "Toggle", l = {"<Cmd>setlocal list!<CR>", "Local listing"}, L = {"<Cmd>set list!<CR>", "Global listing"}, s = {"<Cmd>setlocal spell!<CR>", "Local spelling"}, S = {"<Cmd>set spell!<CR>", "Global spelling"}}})
+  map({["<Leader>y"] = {"\"+y", "CTRL-C-like yank to clipboard"}}, {mode = "v"})
+  return map({["<Leader>p"] = {"\"_dP", "Register-safe paste"}}, {mode = "x"})
 end
 return {init = init, map_args = map_args, map = map}

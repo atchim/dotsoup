@@ -42,10 +42,7 @@ and function f -d 'fff with cd on exit'
   pushd (cat $cache_dir/fff/.fff_d)
 end
 
-# fortune | cowsay
-type -q fortune
-and type -q cowsay
-and function fish_greeting; fortune | cowsay; end
+function fish_greeting; end
 
 function fish_user_key_bindings; fish_vi_key_bindings; end
 type -q starship; and starship init fish | source

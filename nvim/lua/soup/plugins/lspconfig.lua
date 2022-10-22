@@ -4,7 +4,7 @@ local function config()
     local _2_
     do
       local caps = vim.lsp.protocol.make_client_capabilities()
-      _2_ = (require("cmp_nvim_lsp")).update_capabilities(caps)
+      _2_ = (require("cmp_nvim_lsp")).default_capabilities(caps)
     end
     local _4_
     do

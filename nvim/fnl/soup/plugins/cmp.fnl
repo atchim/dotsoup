@@ -1,6 +1,21 @@
 (import-macros {: call} :fnl.soup.macros)
 
-(fn config []
+(local M {})
+
+(fn M.has-word-before []
+  "Returns `true` whether there is a non-space character before the cursor."
+  (let [(line col) (unpack (vim.api.nvim_win_get_cursor 0))]
+    (and
+      (not= 0 col)
+      (=
+        nil
+        (->
+          (vim.api.nvim_buf_get_lines 0 (- line 1) line true)
+          (. 1)
+          (: :sub col col)
+          (: :match "%s"))))))
+
+(fn M.config []
   (local cmp (require :cmp))
   (local luasnip (require :luasnip))
   (local icons
@@ -38,15 +53,14 @@
               (set vimitem.kind (. icons vimitem.kind))
               vimitem)}
       :mapping
-        { :<C-D> (cmp.mapping (cmp.mapping.scroll_docs -1) [:i :c])
-          :<C-E> (cmp.mapping.abort)
-          :<C-F> (cmp.mapping (cmp.mapping.scroll_docs 1) [:i :c])
+        { :<C-C> (cmp.mapping.abort)
+          :<C-E> (cmp.mapping (cmp.mapping.scroll_docs 1) [:i :c])
           :<C-N> (cmp.mapping.select_next_item)
           :<C-P> (cmp.mapping.select_prev_item)
-          :<C-Space> (cmp.mapping (cmp.mapping.complete) [:i :c])
-          :<CR> (cmp.mapping.confirm {:select true})
+          :<C-Y> (cmp.mapping (cmp.mapping.scroll_docs -1) [:i :c])
+          :<CR> (cmp.mapping.confirm)
           :<Down> (cmp.mapping.select_next_item)
-          :<S-Tab> ; FIXME
+          :<S-Tab>
             (cmp.mapping
               (fn [fallback]
                 (if
@@ -54,24 +68,25 @@
                   (luasnip.jumpable -1) (luasnip.jump -1)
                   (fallback)))
               [:i :s])
-          :<Tab> ; FIXME
+          :<Tab>
             (cmp.mapping
               (fn [fallback]
                 (if
                   (cmp.visible) (cmp.select_next_item)
                   (luasnip.expandable) (luasnip.expand)
                   (luasnip.expand_or_jumpable) (luasnip.expand_or_jump)
+                  (call :soup.plugins.cmp :has-word-before) (cmp.complete)
                   (fallback)))
               [:i :s])
           :<Up> (cmp.mapping.select_prev_item)}
       :snippet {:expand #(call :luasnip :lsp_expand $1.body)}
       :sources
         (cmp.config.sources
-          [ {:name :copilot}
-            {:name :nvim_lua}
+          [ {:name :nvim_lua}
             {:name :nvim_lsp}
             {:name :luasnip}]
           [ {:name :path}
-            {:name :buffer}])}))
+            {:name :buffer}])
+      :view {:entries {:name :custom :selection_order :near_cursor}}}))
 
-{: config}
+M

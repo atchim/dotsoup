@@ -52,129 +52,147 @@ local function user()
     end
     _14_ = t_13_
   end
+  use({cond = _6_, config = _8_, requires = {{after = "nvim-cmp", "hrsh7th/cmp-buffer"}, {after = "nvim-cmp", requires = {{config = _11_, opt = true, requires = {{opt = true, "williamboman/nvim-lsp-installer"}}, wants = "nvim-lsp-installer", "neovim/nvim-lspconfig"}}, wants = "nvim-lspconfig", "hrsh7th/cmp-nvim-lsp"}, {after = "nvim-cmp", "hrsh7th/cmp-nvim-lua"}, {after = "nvim-cmp", "hrsh7th/cmp-path"}, {after = "nvim-cmp", requires = {{config = _14_, opt = true, requires = {{opt = true, "rafamadriz/friendly-snippets"}}, wants = "friendly-snippets", "L3MON4D3/LuaSnip"}}, "saadparwaiz1/cmp_luasnip"}}, wants = "LuaSnip", "hrsh7th/nvim-cmp"})
+  use({ft = "sxhkdrc", "baskerville/vim-sxhkdrc"})
   local _17_
   do
-    local t_16_ = require("soup.plugins.copilot")
+    local t_16_ = require("soup.plugins.hydra")
     if (nil ~= t_16_) then
       t_16_ = (t_16_).config
     else
     end
     _17_ = t_16_
   end
-  use({cond = _6_, config = _8_, requires = {{after = "nvim-cmp", "hrsh7th/cmp-buffer"}, {after = "nvim-cmp", requires = {{config = _11_, opt = true, requires = {{opt = true, "williamboman/nvim-lsp-installer"}}, wants = "nvim-lsp-installer", "neovim/nvim-lspconfig"}}, wants = "nvim-lspconfig", "hrsh7th/cmp-nvim-lsp"}, {after = "nvim-cmp", "hrsh7th/cmp-nvim-lua"}, {after = "nvim-cmp", "hrsh7th/cmp-path"}, {after = "nvim-cmp", requires = {{config = _14_, opt = true, requires = {{opt = true, "rafamadriz/friendly-snippets"}}, wants = "friendly-snippets", "L3MON4D3/LuaSnip"}}, "saadparwaiz1/cmp_luasnip"}, {after = "nvim-cmp", requires = {{config = _17_, opt = true, "zbirenbaum/copilot.lua"}}, wants = "copilot.lua", "zbirenbaum/copilot-cmp"}}, wants = "LuaSnip", "hrsh7th/nvim-cmp"})
-  use({ft = "sxhkdrc", "baskerville/vim-sxhkdrc"})
-  use("elihunter173/dirbuf.nvim")
+  use({config = _17_, "anuvyklack/hydra.nvim"})
   local _20_
   do
-    local t_19_ = require("soup.plugins.leap")
+    local t_19_ = require("soup.plugins.which-key")
     if (nil ~= t_19_) then
       t_19_ = (t_19_).config
     else
     end
     _20_ = t_19_
   end
-  use({config = _20_, "ggandor/leap.nvim"})
-  local function _22_()
-    return true
-  end
-  local _24_
+  use({config = _20_, "folke/which-key.nvim"})
+  use("elihunter173/dirbuf.nvim")
+  local _23_
   do
-    local t_23_ = require("soup.plugins.telescope")
-    if (nil ~= t_23_) then
-      t_23_ = (t_23_).config
+    local t_22_ = require("soup.plugins.leap")
+    if (nil ~= t_22_) then
+      t_22_ = (t_22_).config
     else
     end
-    _24_ = t_23_
+    _23_ = t_22_
   end
-  use({cond = _22_, config = _24_, requires = {{opt = true, "nvim-lua/plenary.nvim"}, {opt = true, run = "make", "nvim-telescope/telescope-fzf-native.nvim"}}, wants = {"plenary.nvim", "telescope-fzf-native.nvim"}, "nvim-telescope/telescope.nvim"})
-  local function _26_()
+  use({config = _23_, "ggandor/leap.nvim"})
+  local function _25_()
     return true
   end
-  local _28_
+  local _27_
   do
-    local t_27_ = require("soup.plugins.harpoon")
-    if (nil ~= t_27_) then
-      t_27_ = (t_27_).config
+    local t_26_ = require("soup.plugins.telescope")
+    if (nil ~= t_26_) then
+      t_26_ = (t_26_).config
     else
     end
-    _28_ = t_27_
+    _27_ = t_26_
   end
-  use({cond = _26_, config = _28_, requires = {{opt = true, "nvim-lua/plenary.nvim"}}, wants = "plenary.nvim", "ThePrimeagen/harpoon"})
-  use("editorconfig/editorconfig-vim")
+  use({cond = _25_, config = _27_, requires = {{opt = true, "nvim-lua/plenary.nvim"}, {opt = true, run = "make", "nvim-telescope/telescope-fzf-native.nvim"}}, wants = {"plenary.nvim", "telescope-fzf-native.nvim"}, "nvim-telescope/telescope.nvim"})
+  local function _29_()
+    return true
+  end
   local _31_
   do
-    local t_30_ = require("soup.plugins.comment")
+    local t_30_ = require("soup.plugins.harpoon")
     if (nil ~= t_30_) then
       t_30_ = (t_30_).config
     else
     end
     _31_ = t_30_
   end
-  use({config = _31_, "numToStr/Comment.nvim"})
+  use({cond = _29_, config = _31_, requires = {{opt = true, "nvim-lua/plenary.nvim"}}, wants = "plenary.nvim", "ThePrimeagen/harpoon"})
+  use("editorconfig/editorconfig-vim")
+  local _34_
+  do
+    local t_33_ = require("soup.plugins.comment")
+    if (nil ~= t_33_) then
+      t_33_ = (t_33_).config
+    else
+    end
+    _34_ = t_33_
+  end
+  use({config = _34_, "numToStr/Comment.nvim"})
   use("tpope/vim-surround")
-  local function _33_()
-    return true
-  end
-  local _35_
+  use("nvim-treesitter/nvim-treesitter-textobjects")
+  local _37_
   do
-    local t_34_ = require("soup.plugins.treesitter")
-    if (nil ~= t_34_) then
-      t_34_ = (t_34_).config
+    local t_36_ = require("soup.plugins.playground")
+    if (nil ~= t_36_) then
+      t_36_ = (t_36_).config
     else
     end
-    _35_ = t_34_
+    _37_ = t_36_
   end
-  use({cond = _33_, config = _35_, requires = {{after = "nvim-treesitter", "nvim-treesitter/playground"}, {after = "nvim-treesitter", "nvim-treesitter/nvim-treesitter-textobjects"}}, "nvim-treesitter/nvim-treesitter"})
-  local _38_
+  use({config = _37_, "nvim-treesitter/playground"})
+  local _40_
   do
-    local t_37_ = require("soup.plugins.bufferline")
-    if (nil ~= t_37_) then
-      t_37_ = (t_37_).config
+    local t_39_ = require("soup.plugins.treesitter")
+    if (nil ~= t_39_) then
+      t_39_ = (t_39_).config
     else
     end
-    _38_ = t_37_
+    _40_ = t_39_
   end
-  use({config = _38_, "akinsho/bufferline.nvim"})
-  local _41_
+  use({config = _40_, "nvim-treesitter/nvim-treesitter"})
+  local _43_
   do
-    local t_40_ = require("soup.plugins.which-key")
-    if (nil ~= t_40_) then
-      t_40_ = (t_40_).config
+    local t_42_ = require("soup.plugins.bufferline")
+    if (nil ~= t_42_) then
+      t_42_ = (t_42_).config
     else
     end
-    _41_ = t_40_
+    _43_ = t_42_
   end
-  use({config = _41_, "folke/which-key.nvim"})
-  local _44_
+  use({config = _43_, "akinsho/bufferline.nvim"})
+  local _46_
   do
-    local t_43_ = require("soup.plugins.indent-blankline")
-    if (nil ~= t_43_) then
-      t_43_ = (t_43_).config
+    local t_45_ = require("soup.plugins.indent-blankline")
+    if (nil ~= t_45_) then
+      t_45_ = (t_45_).config
     else
     end
-    _44_ = t_43_
+    _46_ = t_45_
   end
-  use({config = _44_, "lukas-reineke/indent-blankline.nvim"})
-  local _47_
+  use({config = _46_, "lukas-reineke/indent-blankline.nvim"})
+  local _49_
   do
-    local t_46_ = require("soup.plugins.neo-tree")
-    if (nil ~= t_46_) then
-      t_46_ = (t_46_).config
+    local t_48_ = require("soup.plugins.neo-tree")
+    if (nil ~= t_48_) then
+      t_48_ = (t_48_).config
     else
     end
-    _47_ = t_46_
+    _49_ = t_48_
   end
-  use({after = "plenary.nvim", branch = "v2.x", config = _47_, requires = {{opt = true, "MunifTanjim/nui.nvim"}, {opt = true, "nvim-lua/plenary.nvim"}}, wants = "nui.nvim", "nvim-neo-tree/neo-tree.nvim"})
-  local _50_
+  local _52_
   do
-    local t_49_ = require("soup.plugins.heirline")
-    if (nil ~= t_49_) then
-      t_49_ = (t_49_).config
+    local t_51_ = require("soup.plugins.window-picker")
+    if (nil ~= t_51_) then
+      t_51_ = (t_51_).config
     else
     end
-    _50_ = t_49_
+    _52_ = t_51_
   end
-  return use({config = _50_, event = "VimEnter", requires = {{opt = true, "kyazdani42/nvim-web-devicons"}}, wants = "nvim-web-devicons", "rebelot/heirline.nvim"})
+  use({branch = "v2.x", config = _49_, event = "VimEnter", requires = {{opt = true, "MunifTanjim/nui.nvim"}, {opt = true, "nvim-lua/plenary.nvim"}, {config = _52_, opt = true, "s1n7ax/nvim-window-picker"}}, wants = {"nui.nvim", "nvim-window-picker", "plenary.nvim"}, "nvim-neo-tree/neo-tree.nvim"})
+  local _55_
+  do
+    local t_54_ = require("soup.plugins.heirline")
+    if (nil ~= t_54_) then
+      t_54_ = (t_54_).config
+    else
+    end
+    _55_ = t_54_
+  end
+  return use({config = _55_, event = "VimEnter", requires = {{opt = true, "kyazdani42/nvim-web-devicons"}}, wants = "nvim-web-devicons", "rebelot/heirline.nvim"})
 end
 local function init()
   local err = vim.api.nvim_err_writeln

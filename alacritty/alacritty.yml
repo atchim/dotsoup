@@ -28,8 +28,8 @@ colors:
     foreground: '#959595'
 
   search:
-    bar: {background: '#080808', foreground: '#959595'}
     focused_match: {background: '#54a900', foreground: '#080808'}
+    footer_bar: {background: '#080808', foreground: '#959595'}
     matches: {background: CellForeground, foreground: CellBackground}
 
 cursor: {thickness: 0.33}
@@ -41,8 +41,8 @@ font:
 hints:
   alphabet: jkflahdsg
   enabled:
-    - regex: "\
-        (ipfs|ipns|magnet|mailto|gemini|gopher|https|http|news|file|git|ssh\
+    - regex:
+        "(ipfs|ipns|magnet|mailto|gemini|gopher|https|http|news|file|git|ssh\
         |ftp):[^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`]+"
       command: xdg-open
       binding: {key: U, mods: Control|Shift}

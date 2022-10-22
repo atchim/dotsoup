@@ -27,15 +27,8 @@
   default `def`."
   `(if (not= nil ,val) ,val ,def))
 
-(fn ty= [val ...]
-  "Expands to an assertion that type of `val` is one of the given ones."
-  (local msg (.. "`" (tostring val) "`is not " (table.concat [...] " or ")))
-  `(let [ty# (type ,val)]
-    (assert ,(oneof? `ty# ...) ,msg)))
-
 { : call
   : calls
   : get
   : oneof?
-  : ordef
-  : ty=}
+  : ordef}

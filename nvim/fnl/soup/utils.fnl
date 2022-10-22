@@ -1,4 +1,4 @@
-(import-macros {: ordef : ty=} :fnl.soup.macros)
+(import-macros {: ordef} :fnl.soup.macros)
 
 (fn split [s ?sep ?i]
   "Return an iterator for splitting text according with an arbitrary separator.
@@ -12,12 +12,9 @@
   separator. `?i` is an optional index number which denotes where to start to
   split. It defaults to the beginning of `s`."
 
-  (ty= s :string)
   (local len (length s))
   (local sep (ordef ?sep "%s+"))
-  (ty= sep :string)
   (var offset (ordef ?i 1))
-  (ty= offset :number)
   (var exhausted? false)
 
   (fn []

@@ -1,8 +1,4 @@
 local function split(s, _3fsep, _3fi)
-  do
-    local ty_8_auto = type(s)
-    assert((ty_8_auto == "string"), "`s`is not string")
-  end
   local len = #s
   local sep
   if (nil ~= _3fsep) then
@@ -10,19 +6,11 @@ local function split(s, _3fsep, _3fi)
   else
     sep = "%s+"
   end
-  do
-    local ty_8_auto = type(sep)
-    assert((ty_8_auto == "string"), "`sep`is not string")
-  end
   local offset
   if (nil ~= _3fi) then
     offset = _3fi
   else
     offset = 1
-  end
-  do
-    local ty_8_auto = type(offset)
-    assert((ty_8_auto == "number"), "`offset`is not number")
   end
   local exhausted_3f = false
   local function _3_()

@@ -6,7 +6,7 @@
       (local opts
         { :capabilities
             (let [caps (vim.lsp.protocol.make_client_capabilities)]
-              (call :cmp_nvim_lsp :update_capabilities caps))
+              (call :cmp_nvim_lsp :default_capabilities caps))
           :on_attach (get :soup.plugins.lspconfig :on_attach)})
       (match server.name
         :rust-analyzer

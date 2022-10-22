@@ -80,7 +80,7 @@ super + {less,greater}
 super + b
   cmd={hide,show}; \
   [[ $cmd = hide ]] && bspc config bottom_padding 0; \
-  echo cmd:$cmd >"/tmp/polybar-$USER-bspwm"
+  polybar-msg cmd $cmd
 
 # Toggle monocle layout.
 super + m

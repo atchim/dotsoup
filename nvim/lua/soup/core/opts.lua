@@ -24,11 +24,11 @@ local function init()
   o.lazyredraw = true
   o.ttimeoutlen = 0
   o.updatetime = 250
+  o.cmdheight = 0
   o.cursorline = true
   o.cursorlineopt = {"number"}
   o.laststatus = 3
   o.number = true
-  o.pumblend = 15
   o.relativenumber = true
   o.title = true
   o.colorcolumn = "+1"

@@ -1,4 +1,4 @@
-(import-macros {: ordef : ty=} :fnl.soup.macros)
+(import-macros {: ordef} :fnl.soup.macros)
 
 (fn map_args [maps ?opts ?descf ?desc ?keys]
   "Iterator over mappings for the `which-key.nvim` plugin.
@@ -31,47 +31,35 @@
 
   `?desc` and `?keys` are parameters intended for internal use."
 
-  (ty= maps :table)
-  (local opts (ordef ?opts {}))
-  (ty= opts :table)
-  (ty= ?descf :nil :function)
   (local descf
-    (if (not= nil ?descf)
+    (if (= nil ?descf)
       (fn [acc desc]
-        (local desc (?descf acc desc))
-        (ty= desc :string)
-        desc)
-      (fn [acc desc]
-        (if (not= "" acc)
-          (.. acc " " (desc:gsub "^%u" string.lower))
-          desc))))
+        (if (= "" acc) desc (.. acc " " (desc:gsub "^%u" string.lower))))
+      ?descf))
   (var desc (ordef ?desc ""))
-  (ty= desc :string)
   (local keys (ordef ?keys ""))
-  (ty= keys :string)
 
-  ; TODO: Add documentation.
   (fn mkargs [keys cmd desc]
-    (ty= keys :string)
-    (ty= cmd :string :function)
-    (ty= desc :string)
+    "Returns built arguments for the Neovim's keymap functions.
 
-    (local mode (ordef (?. opts :mode) :n))
-    (ty= mode :string)
-    (local keys (.. (ordef (?. opts :prefix) "") keys))
-    (ty= keys :string)
-    (local buffer (?. opts :buffer))
-    (ty= buffer :nil :number)
-    (local noremap (ordef (?. opts :noremap) true))
-    (ty= noremap :boolean)
-    (local nowait (?. opts :nowait))
-    (ty= nowait :nil :boolean)
-    (local silent (ordef (?. opts :silent) true))
-    (ty= silent :boolean)
+    This function mixes the information provided by its arguments with the
+    information from the `?opts` table in order to generate arguments with
+    inherited options.
 
-    (values
-      [mode keys cmd {: desc : noremap : nowait : silent}]
-      buffer))
+    This function returns two values; the first being the argument list, and
+    the second being the buffer number, which may be nil.
+
+    `keys` is the key sequence to bind the command to. The command defined by
+    the `cmd` argument may be a string or function. `desc` is the description
+    for the mapping."
+
+    (local mode (ordef (?. ?opts :mode) :n))
+    (local keys (.. (ordef (?. ?opts :prefix) "") keys))
+    (local buffer (?. ?opts :buffer))
+    (local noremap (ordef (?. ?opts :noremap) true))
+    (local nowait (?. ?opts :nowait))
+    (local silent (ordef (?. ?opts :silent) true))
+    (values [mode keys cmd {: desc : noremap : nowait : silent}] buffer))
 
   (let [gname (?. maps :name)]
     (when gname
@@ -85,12 +73,11 @@
         [_ [cmd desc+]]
           (let [desc (descf desc desc+)]
             (coroutine.yield (mkargs keys cmd desc)))
-        _
-          (each [args buffer (map_args val opts descf desc keys)]
+        _ (each [args buffer (map_args val ?opts descf desc keys)]
             (coroutine.yield args buffer))))))
 
 (fn map [maps ?opts ?descf]
-  "Create key mappings.
+  "Creates key mappings.
 
   Primarily, this function attempts to create mappings using the `register`
   function from `which-key`. If not able to do that, it fallbacks to
@@ -99,25 +86,16 @@
   The arguments required by this functions and their descriptions are the same
   as in the `map_args` function."
 
-  (ty= maps :table)
-  (local opts (ordef ?opts {}))
-  (ty= opts :table)
-  (ty= ?descf :nil :function)
-
   (local bkmap vim.api.nvim_buf_set_keymap)
   (local kmap vim.api.nvim_set_keymap)
   (local (ok? which-key) (pcall require :which-key))
   (if ok?
-    (which-key.register maps opts)
-    (each [args buf (map_args maps opts)]
-      (if (not= nil buf)
-        (bkmap buf (unpack args))
-        (kmap (unpack args))))))
+    (which-key.register maps ?opts)
+    (each [args buf (map_args maps ?opts ?descf)]
+      (if (= nil buf) (kmap (unpack args)) (bkmap buf (unpack args))))))
 
 (fn init []
   "Set key mappings."
-
-  ; TODO: Map `<C-D>` and `<C-F>` to scroll through popup menus.
   (map
     { ; Diagnostics
       :<Leader>k
@@ -130,13 +108,15 @@
         [ "<Cmd>lua vim.diagnostic.goto_next()<CR>"
           "Diagnostic go to next"]
 
-      ; Misc
-      "<Leader>," ["<Cmd>setl spell!<CR>" "Toggle local spelling"]
-      :<Leader>. ["<Cmd>setl list!<CR>" "Toggle local listing"]})
-
-  (map
-    {:<Leader>y ["\"+y" "CTRL-C-like yank to clipboard"]}
-    {:mode :v}))
+      ; Togglers
+      :<Leader>t
+        { :name :Toggle
+          :l ["<Cmd>setlocal list!<CR>" "Local listing"]
+          :L ["<Cmd>set list!<CR>" "Global listing"]
+          :s ["<Cmd>setlocal spell!<CR>" "Local spelling"]
+          :S ["<Cmd>set spell!<CR>" "Global spelling"]}})
+  (map {:<Leader>y ["\"+y" "CTRL-C-like yank to clipboard"]} {:mode :v})
+  (map {:<Leader>p ["\"_dP" "Register-safe paste"]} {:mode :x}))
 
 { : init
   : map_args

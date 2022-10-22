@@ -1,4 +1,9 @@
-local function config()
+local M = {}
+M["has-word-before"] = function()
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return ((0 ~= col) and (nil == ((vim.api.nvim_buf_get_lines(0, (line - 1), line, true))[1]):sub(col, col):match("%s")))
+end
+M.config = function()
   local cmp = require("cmp")
   local luasnip = require("luasnip")
   local icons = {Class = "\239\160\150", Color = "\239\163\151", Constant = "\239\163\190", Constructor = "\239\144\165", Enum = "\239\133\157", EnumMember = "\239\133\157", Event = "\239\131\167", Field = "\239\176\160", File = "\239\156\152", Folder = "\239\157\138", Function = "\239\158\148", Interface = "\239\131\168", Keyword = "\239\160\138", Method = "\239\154\166", Module = "\239\146\135", Operator = "\239\154\148", Property = "\239\130\173", Reference = "\239\146\129", Snippet = "\239\131\132", Struct = "\239\173\132", Text = "\239\157\190", TypeParameter = "\239\158\131", Unit = "\238\136\159", Value = "\239\162\159", Variable = "\239\148\170"}
@@ -22,6 +27,8 @@ local function config()
       return luasnip.expand()
     elseif luasnip.expand_or_jumpable() then
       return luasnip.expand_or_jump()
+    elseif (require("soup.plugins.cmp"))["has-word-before"]() then
+      return cmp.complete()
     else
       return fallback()
     end
@@ -29,6 +36,6 @@ local function config()
   local function _6_(_241)
     return (require("luasnip")).lsp_expand(_241.body)
   end
-  return cmp.setup({formatting = {fields = {"kind", "abbr"}, format = _1_}, mapping = {["<C-D>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), {"i", "c"}), ["<C-E>"] = cmp.mapping.abort(), ["<C-F>"] = cmp.mapping(cmp.mapping.scroll_docs(1), {"i", "c"}), ["<C-N>"] = cmp.mapping.select_next_item(), ["<C-P>"] = cmp.mapping.select_prev_item(), ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), {"i", "c"}), ["<CR>"] = cmp.mapping.confirm({select = true}), ["<Down>"] = cmp.mapping.select_next_item(), ["<S-Tab>"] = cmp.mapping(_2_, {"i", "s"}), ["<Tab>"] = cmp.mapping(_4_, {"i", "s"}), ["<Up>"] = cmp.mapping.select_prev_item()}, snippet = {expand = _6_}, sources = cmp.config.sources({{name = "copilot"}, {name = "nvim_lua"}, {name = "nvim_lsp"}, {name = "luasnip"}}, {{name = "path"}, {name = "buffer"}})})
+  return cmp.setup({formatting = {fields = {"kind", "abbr"}, format = _1_}, mapping = {["<C-C>"] = cmp.mapping.abort(), ["<C-E>"] = cmp.mapping(cmp.mapping.scroll_docs(1), {"i", "c"}), ["<C-N>"] = cmp.mapping.select_next_item(), ["<C-P>"] = cmp.mapping.select_prev_item(), ["<C-Y>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), {"i", "c"}), ["<CR>"] = cmp.mapping.confirm(), ["<Down>"] = cmp.mapping.select_next_item(), ["<S-Tab>"] = cmp.mapping(_2_, {"i", "s"}), ["<Tab>"] = cmp.mapping(_4_, {"i", "s"}), ["<Up>"] = cmp.mapping.select_prev_item()}, snippet = {expand = _6_}, sources = cmp.config.sources({{name = "nvim_lua"}, {name = "nvim_lsp"}, {name = "luasnip"}}, {{name = "path"}, {name = "buffer"}}), view = {entries = {name = "custom", selection_order = "near_cursor"}}})
 end
-return {config = config}
+return M

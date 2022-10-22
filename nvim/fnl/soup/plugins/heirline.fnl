@@ -2,6 +2,7 @@
 ; TODO: Add support for terminal.
 ; TODO: Add support for Git.
 ; TODO: Add support for LSP.
+; TODO: Hide window bar if buffer is unlisted or scratch.
 
 (import-macros {: call} :fnl.soup.macros)
 
@@ -46,8 +47,7 @@
     (require :heirline.conditions))
   (local
     { :get_highlight get-hl
-      : insert
-      :pick_child_on_condition pcod}
+      : insert}
     (require :heirline.utils))
   (local {:get_icon_color get-icon} (require :nvim-web-devicons))
 
@@ -197,7 +197,8 @@
       :update :ModeChanged})
 
   ; Status Line
-  (local def [vimode space buf align file space ruler space scroll space])
+  (local def
+    [vimode space buf align file space ruler space scroll space])
   (local nc
     { 1 (unpack [space buf align file space ruler space scroll space])
       :condition (fn [_] (not (active?)))
@@ -205,7 +206,7 @@
   (local statusline
     { 1 (unpack [nc def])
       :hl (fn [_] (if (active?) hl.status hl.statusnc))
-      :init pcod})
+      :fallthrough false})
 
   ; Window Bar
   (local def [space buf])
@@ -216,7 +217,7 @@
   (local winbar
     { 1 (unpack [nc def])
       :hl (fn [_] (if (active?) hl.winbar hl.winbarnc))
-      :init pcod})
+      :fallthrough false})
 
   (call :heirline :setup statusline winbar))
 

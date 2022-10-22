@@ -1,4 +1,4 @@
-(import-macros {: call : get : ty=} :fnl.soup.macros)
+(import-macros {: call : get} :fnl.soup.macros)
 
 (fn bootstrap []
   "Attempt to install Packer and return the process exit code."
@@ -43,18 +43,19 @@
                   :config (get :soup.plugins.luasnip :config)
                   :opt true
                   :requires [{1 :rafamadriz/friendly-snippets :opt true}]
-                  :wants :friendly-snippets}]}
-          { 1 :zbirenbaum/copilot-cmp
-            :after :nvim-cmp
-            :requires
-              [ { 1 :zbirenbaum/copilot.lua
-                  :config (get :soup.plugins.copilot :config)
-                  :opt true}]
-            :wants :copilot.lua}]
+                  :wants :friendly-snippets}]}]
       :wants :LuaSnip})
 
   ; File Type
   (use {1 :baskerville/vim-sxhkdrc :ft :sxhkdrc})
+
+  ; Key Mapping
+  (use
+    { 1 :anuvyklack/hydra.nvim
+      :config (get :soup.plugins.hydra :config)})
+  (use
+    { 1 :folke/which-key.nvim
+      :config (get :soup.plugins.which-key :config)})
 
   ; Pickers / File System
   (use :elihunter173/dirbuf.nvim)
@@ -84,37 +85,33 @@
   (use :tpope/vim-surround)
 
   ; Tree-Sitter
+  (use :nvim-treesitter/nvim-treesitter-textobjects)
+  (use
+    { 1 :nvim-treesitter/playground
+      :config (get :soup.plugins.playground :config)})
   (use
     { 1 :nvim-treesitter/nvim-treesitter
-      :cond (fn [] true)
-      :config (get :soup.plugins.treesitter :config)
-      :requires
-        [ { 1 :nvim-treesitter/playground
-            :after :nvim-treesitter}
-          { 1 :nvim-treesitter/nvim-treesitter-textobjects
-            :after :nvim-treesitter}]})
+      :config (get :soup.plugins.treesitter :config)})
 
   ; UI
   (use
     { 1 :akinsho/bufferline.nvim
       :config (get :soup.plugins.bufferline :config)})
   (use
-    { 1 :folke/which-key.nvim
-      :config (get :soup.plugins.which-key :config)})
-  (use
     { 1 :lukas-reineke/indent-blankline.nvim
       :config (get :soup.plugins.indent-blankline :config)})
   (use
     { 1 :nvim-neo-tree/neo-tree.nvim
-      ; NOTE: For now, Packer only accepts one package in `wants`, so make sure
-      ; `plenary.nvim` gets loaded first.
-      :after :plenary.nvim
       :branch :v2.x
       :config (get :soup.plugins.neo-tree :config)
+      :event :VimEnter
       :requires
         [ {1 :MunifTanjim/nui.nvim :opt true}
-          {1 :nvim-lua/plenary.nvim :opt true}]
-      :wants :nui.nvim})
+          {1 :nvim-lua/plenary.nvim :opt true}
+          { 1 :s1n7ax/nvim-window-picker
+            :config (get :soup.plugins.window-picker :config)
+            :opt true}]
+      :wants [:nui.nvim :nvim-window-picker :plenary.nvim]})
   (use
     { 1 :rebelot/heirline.nvim
       :config (get :soup.plugins.heirline :config)
