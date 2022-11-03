@@ -73,41 +73,6 @@ super + {less,greater}
   bspc desktop --focus {prev,next}.local.occupied
 
 #
-# Misc
-#
-
-# Hide or show the Polybar bar.
-super + b
-  cmd={hide,show}; \
-  [[ $cmd = hide ]] && bspc config bottom_padding 0; \
-  polybar-msg cmd $cmd
-
-# Toggle monocle layout.
-super + m
-  bspc desktop --layout next
-
-# Close or kill node.
-super + {_,shift + }q
-  bspc node focused.window --{close,kill}
-
-# Quit bspwm.
-super + alt + q
-  bspc quit
-
-# Restart status bar.
-super + r ; b
-  echo cmd:restart >"/tmp/polybar-$USER-bspwm"
-
-# Restart bspwm.
-super + r ; w
-  bspc wm --restart
-
-# Launch Tchpad.
-super + w
-  rofi -modi tchpad -show tchpad -show-icons \
-    -tchpad-cmd 'bspc node $TCHPAD_WIN --flag hidden'
-
-#
 # Preselect
 #
 
@@ -137,3 +102,23 @@ super + {shift + ,ctrl + }{Down,Left,Right,Up}
 # Move a floating window.
 super + {Down,Left,Right,Up}
   bspc node --move {0 20,-20 0,20 0,0 -20}
+
+#
+# Misc
+#
+
+# Toggle monocle layout.
+super + m
+  bspc desktop --layout next
+
+# Close or kill node.
+super + {_,shift + }q
+  bspc node focused.window --{close,kill}
+
+# Quit bspwm.
+super + alt + q
+  bspc quit
+
+# Restart bspwm.
+super + r ; w
+  bspc wm --restart

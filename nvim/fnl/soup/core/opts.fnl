@@ -1,5 +1,7 @@
-(fn init []
-  "Set options for raw editor."
+(local M {})
+
+(fn M.init []
+  "Initializes options for raw editor."
 
   (local o vim.opt)
 
@@ -68,4 +70,4 @@
   (set o.colorcolumn :+1)
   (set o.textwidth 79))
 
-{: init}
+M

@@ -1,5 +1,7 @@
-(fn init []
-  "Set global variables."
+(local M {})
+
+(fn M.init []
+  "Initializes global variables."
 
   (local g vim.g)
 
@@ -19,4 +21,4 @@
   (set g.python_recommended_style 0)
   (set g.rust_recommended_style 0))
 
-{: init}
+M

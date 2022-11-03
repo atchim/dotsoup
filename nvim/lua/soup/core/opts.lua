@@ -1,4 +1,5 @@
-local function init()
+local M = {}
+M.init = function()
   local o = vim.opt
   o.ignorecase = true
   o.smartcase = true
@@ -35,4 +36,4 @@ local function init()
   o.textwidth = 79
   return nil
 end
-return {init = init}
+return M

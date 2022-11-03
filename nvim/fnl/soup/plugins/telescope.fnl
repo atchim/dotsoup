@@ -1,25 +1,29 @@
-(import-macros {: call} :fnl.soup.macros)
+(import-macros {: modcall} :soupmacs.soupmacs)
+(local M {})
 
-(fn config []
-  (call :telescope :setup)
-  (call :telescope :load_extension :fzf)
-  (call :soup.core.maps :map
-    { :name :Telescope
-      :b
+(fn M.config []
+  "Post-load configuration hook."
+  (modcall :telescope :setup ())
+  (modcall :telescope :load_extension :fzf)
+  (modcall
+    :soup.core.maps
+    :map
+    ( { :name :Telescope
+        :b
         [ "<Cmd>lua require'telescope.builtin'.buffers()<CR>"
           "Buffers"]
-      :f
+        :f
         [ "<Cmd>lua require'telescope.builtin'.find_files()<CR>"
           "Files"]
-      :g
+        :g
 				[ "<Cmd>lua require'telescope.builtin'.live_grep()<CR>"
           "Live grep"]
-      :h
+        :h
 				[ "<Cmd>lua require'telescope.builtin'.help_tags()<CR>"
           "Help tags"]
-      :o
+        :o
         [ "<Cmd>lua require'telescope.builtin'.oldfiles()<CR>"
           "Old files"]}
-    {:prefix :<Leader>f}))
+      {:prefix :<Leader>f})))
 
-{: config}
+M

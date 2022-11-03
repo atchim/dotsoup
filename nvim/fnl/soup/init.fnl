@@ -1,8 +1,8 @@
-(import-macros {: calls} :fnl.soup.macros)
+(import-macros {: subcalls} :soupmacs.soupmacs)
+(local M {})
 
-(fn init []
-  (calls :init :soup
-    :core
-    :plugins))
+(fn M.init []
+  "Initializes the Soup configurations."
+  (subcalls :init :soup :core :plugins))
 
-{: init}
+M

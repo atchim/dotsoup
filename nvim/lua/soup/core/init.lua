@@ -1,4 +1,5 @@
-local function init()
+local M = {}
+M.init = function()
   do end (require("soup.core.g")).init()
   do end (require("soup.core.opts")).init()
   do end (require("soup.core.maps")).init()
@@ -7,4 +8,4 @@ local function init()
   do end (require("soup.core.diagnostics")).init()
   return (require("soup.core.colors")).init()
 end
-return {init = init}
+return M

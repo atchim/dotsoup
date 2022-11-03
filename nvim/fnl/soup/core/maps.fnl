@@ -1,9 +1,10 @@
-(import-macros {: ordef} :fnl.soup.macros)
+(import-macros {: ordef} :soupmacs.soupmacs)
+(local M {})
 
-(fn map_args [maps ?opts ?descf ?desc ?keys]
+(fn M.map_args [maps ?opts ?descf ?desc ?keys]
   "Iterator over mappings for the `which-key.nvim` plugin.
   
-  Each iteration will return a list and a buffer number which may be `nil`. The
+  Each iteration returns a list and a buffer number which may be `nil`. The
   list contains arguments for the `vim.api.nvim_set_keymap`. The buffer
   number may be used for the `vim.api.nvim_buf_set_keymap` variant.
 
@@ -23,16 +24,16 @@
   and the second one is the current group name or mapping description. It must
   return a string.
 
-  `?descf` defaults for a function which will check if the accumulated string
-  is not empty. Case it's true, the function will turn lowercase the first
-  letter of the current description and will join and return the accumulated
-  string with it separated by a space. Otherwise, it will return the current
-  description as is.
+  `?descf` defaults for a function which checks if the accumulated string is
+  not empty. Case it's true, the function turns lowercase the first letter of
+  the current description and joins and returns the accumulated string with it
+  separated by a space. Otherwise, it returns the current description as is.
 
   `?desc` and `?keys` are parameters intended for internal use."
 
   (local descf
-    (if (= nil ?descf)
+    (if
+      (= nil ?descf)
       (fn [acc desc]
         (if (= "" acc) desc (.. acc " " (desc:gsub "^%u" string.lower))))
       ?descf))
@@ -61,9 +62,7 @@
     (local silent (ordef (?. ?opts :silent) true))
     (values [mode keys cmd {: desc : noremap : nowait : silent}] buffer))
 
-  (let [gname (?. maps :name)]
-    (when gname
-      (set desc (descf desc gname))))
+  (let [gname (?. maps :name)] (when gname (set desc (descf desc gname))))
 
   (coroutine.wrap
     #(each [key val (pairs maps)]
@@ -71,12 +70,12 @@
       (match [key val]
         [:name _] nil
         [_ [cmd desc+]]
-          (let [desc (descf desc desc+)]
-            (coroutine.yield (mkargs keys cmd desc)))
-        _ (each [args buffer (map_args val ?opts descf desc keys)]
+        (let [desc (descf desc desc+)]
+          (coroutine.yield (mkargs keys cmd desc)))
+        _ (each [args buffer (M.map_args val ?opts descf desc keys)]
             (coroutine.yield args buffer))))))
 
-(fn map [maps ?opts ?descf]
+(fn M.map [maps ?opts ?descf]
   "Creates key mappings.
 
   Primarily, this function attempts to create mappings using the `register`
@@ -89,35 +88,28 @@
   (local bkmap vim.api.nvim_buf_set_keymap)
   (local kmap vim.api.nvim_set_keymap)
   (local (ok? which-key) (pcall require :which-key))
-  (if ok?
-    (which-key.register maps ?opts)
-    (each [args buf (map_args maps ?opts ?descf)]
+  (if
+    ok? (which-key.register maps ?opts)
+    (each [args buf (M.map_args maps ?opts ?descf)]
       (if (= nil buf) (kmap (unpack args)) (bkmap buf (unpack args))))))
 
-(fn init []
-  "Set key mappings."
-  (map
+(fn M.init []
+  "Initializes key mappings."
+  (M.map
     { ; Diagnostics
       :<Leader>k
-        [ "<Cmd>lua vim.diagnostic.open_float()<CR>"
-          "Diagnostic show from line"]
+      ["<Cmd>lua vim.diagnostic.open_float()<CR>" "Diagnostic show from line"]
       "[d"
-        [ "<Cmd>lua vim.diagnostic.goto_prev()<CR>"
-          "Diagnostic go to previous"]
+      ["<Cmd>lua vim.diagnostic.goto_prev()<CR>" "Diagnostic go to previous"]
       "]d"
-        [ "<Cmd>lua vim.diagnostic.goto_next()<CR>"
-          "Diagnostic go to next"]
+      ["<Cmd>lua vim.diagnostic.goto_next()<CR>" "Diagnostic go to next"]
 
       ; Togglers
       :<Leader>t
-        { :name :Toggle
-          :l ["<Cmd>setlocal list!<CR>" "Local listing"]
-          :L ["<Cmd>set list!<CR>" "Global listing"]
-          :s ["<Cmd>setlocal spell!<CR>" "Local spelling"]
-          :S ["<Cmd>set spell!<CR>" "Global spelling"]}})
-  (map {:<Leader>y ["\"+y" "CTRL-C-like yank to clipboard"]} {:mode :v})
-  (map {:<Leader>p ["\"_dP" "Register-safe paste"]} {:mode :x}))
+      { :name :Toggle
+        :l ["<Cmd>setlocal list!<CR>" "Local listing"]
+        :s ["<Cmd>setlocal spell!<CR>" "Local spelling"]}})
+  (M.map {:<Leader>y ["\"+y" "CTRL-C-like yank to clipboard"]} {:mode :v})
+  (M.map {:<Leader>p ["\"_dP" "Register-safe paste"]} {:mode :x}))
 
-{ : init
-  : map_args
-  : map}
+M

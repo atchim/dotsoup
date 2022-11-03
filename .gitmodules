@@ -1,0 +1,3 @@
+[submodule "nvim/soupmacs"]
+	path = nvim/soupmacs
+	url = https://github.com/atchim/soupmacs

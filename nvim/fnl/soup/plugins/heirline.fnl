@@ -1,225 +1,278 @@
-; TODO: Add support for working directory.
-; TODO: Add support for terminal.
-; TODO: Add support for Git.
-; TODO: Add support for LSP.
-; TODO: Hide window bar if buffer is unlisted or scratch.
+(import-macros
+  {: bo : buf} :fnl.soup.plugins.heirline-macros
+  {: modcall} :soupmacs.soupmacs)
 
-(import-macros {: call} :fnl.soup.macros)
+(local M {})
 
-(fn config []
-  (call :soup.plugins.heirline :setup)
+(fn M.init []
+  "Sets the status line, buffer line and window bar."
+
+  (local api vim.api)
+  (local tbldx vim.tbl_deep_extend)
+
+  (local
+    {:is_active active? :width_percent_below w%<?}
+    (require :heirline.conditions))
+
+  (local
+    {:get_highlight get-hl : insert :make_buflist mkbufls}
+    (require :heirline.utils))
+
+  (local hl
+    { :comment (get-hl :Comment)
+      :const (get-hl :Constant)
+      :dir (get-hl :Directory)
+      :err (get-hl :DiagnosticError)
+      :hint (get-hl :DiagnosticHint)
+      :info (get-hl :DiagnosticInfo)
+      :normal (get-hl :Normal)
+      :num (get-hl :Number)
+      :preproc (get-hl :Preproc)
+      :search (get-hl :Search)
+      :special (get-hl :Special)
+      :status (get-hl :StatusLine)
+      :string (get-hl :String)
+      :tabline (get-hl :TabLine)
+      :tablinesel (get-hl :TabLineSel)
+      :title (get-hl :Title)
+      :ty (get-hl :Type)
+      :warn (get-hl :DiagnosticWarn)
+      :winbar (get-hl :Winbar)
+      :winbarnc (get-hl :WinbarNC)})
+
+  (local align {:provider :%=})
+  (local space {:provider " "})
+
+  (local statusln
+    (let
+      [ file
+        [ { :init
+            (fn [self]
+              (set self.enc
+                (or (when (not= vim.bo.fenc "") vim.bo.fenc) vim.o.enc)))
+            :provider (fn [self] self.enc)
+            :hl {:fg hl.comment.fg}}
+          space
+          { :init (fn [self] (set self.fmt vim.bo.fileformat))
+            :provider (fn [self] (match self.fmt :dos : :mac : :unix :))
+            :hl {:fg hl.ty.fg}}]
+        git
+        { :condition
+          (fn [self]
+            (let [head (or vim.b.gitsigns_head ghead vim.g.gitsigns_head)]
+              (when head (set self.head head) true)))
+          :provider (fn [self] (.. : " " self.head " "))
+          :hl {:fg hl.ty.fg}}
+        ruler
+        (let
+          [ proto
+            { :init
+              (fn [self]
+                (when (not self.once)
+                  (api.nvim_create_autocmd
+                    :CursorMoved
+                    {:pattern :*:*o :command :redrawstatus})
+                  (set self.once true)))}
+            ln {:provider :%l :hl {:fg hl.num.fg}}
+            col {:provider :%c :hl {:fg hl.const.fg}}]
+          (insert proto ln space col))
+        scroll
+        { :static {:bar [:█ :▇ :▆ :▅ :▄ :▃ :▂ :▁]}
+          :provider
+          (fn [self]
+            (let
+              [ line (. (api.nvim_win_get_cursor 0) 1)
+                lines (api.nvim_buf_line_count 0)
+                i
+                  (->
+                    (/ line lines)
+                    (* (- (length self.bar) 1))
+                    (+ 1)
+                    (math.floor))]
+              (. self.bar i)))}
+        vimode
+        { :static
+          { :colors
+            { "\19" hl.special.fg
+              "\22" hl.search.bg
+              :! hl.err.fg
+              :c hl.preproc.fg
+              :i hl.string.fg
+              :n hl.normal.fg
+              :r hl.warn.fg
+              :R hl.hint.fg
+              :s hl.special.fg
+              :S hl.special.fg
+              :t hl.ty.fg
+              :v hl.search.bg
+              :V hl.search.bg}
+            :modes
+            { :n :N
+              :no :N?
+              :nov :NV?
+              :noV :NV_?
+              "no\22" :NV#?
+              :niI :N>I
+              :niR :N>R
+              :niV :N>V
+              :nt "N@T"
+              :ntT :N>T
+              :v :V
+              :vs :V<S
+              :V :V_
+              :Vs :V_<S
+              "\22" :V#
+              "\22s" :V#<S
+              :s :S
+              :S :S_
+              "\19" :S#
+              :i :I
+              :ic :IC
+              :ix :IX
+              :R :R
+              :Rc :RC
+              :Rx :RX
+              :Rv :RV
+              :Rvc :RVC
+              :Rvx :RVX
+              :c :CMD
+              :cv :EX
+              :r "<CR>"
+              :rm :...
+              :r? :?
+              :! :!
+              :t :T}}
+          :init
+          (fn [self]
+            (set self.mode (vim.fn.mode 1))
+            (when (not self.once)
+              (api.nvim_create_autocmd
+                :ModeChanged
+                {:pattern :*:*o :command :redrawstatus})
+              (set self.once true)))
+          :provider
+          (fn [self] (.. "%-0.3(  %)%-5.5(" (. self.modes self.mode) " %)"))
+          :hl
+          (fn [self] {:fg (. self.colors (self.mode:sub 1 1)) :reverse true})
+          :update :ModeChanged}]
+      { 1
+        (unpack
+          [ vimode
+            space
+            git
+            (buf {:cwd? true})
+            align
+            file
+            space
+            ruler
+            space
+            scroll
+            space])
+        :hl hl.status}))
+
+  (local winbar
+    { 1 (unpack [space (buf {:cwd? true})])
+      :hl
+      (fn [_]
+        (if (active?) hl.winbar (tbldx :force hl.winbarnc {:force true})))})
+
+  ; TODO: Avoid duplicate file names.
+  (local bufln
+    (let
+      [ proto
+        { :init
+          (fn [self]
+            (set self.name (api.nvim_buf_get_name self.bufnr))
+            (set self.type (bo :buftype {:bufnr? true} self)))
+          :hl
+          (fn [self]
+            (if (or self.is_active self.is_visible)
+              hl.tablinesel
+              (tbldx :force hl.tabline {:force true})))
+          :on_click
+          { :minwid (fn [self] self.bufnr)
+            :callback
+            (fn [_ minwid _ button]
+              (match button
+                :l (api.nvim_win_set_buf 0 minwid)
+                :r (api.nvim_buf_delete minwid {:force false})))
+            :name :bufln_click_cb}}
+        cur
+        { :condition (fn [self] self.is_active)
+          :provider "⏵ "
+          :hl {:fg hl.special.fg}}
+        nr
+        { :provider (fn [self] self.bufnr)
+          :hl
+          (fn [self]
+            { :fg
+                (->
+                  (if
+                    (or self.is_active self.is_visible) hl.tablinesel
+                    hl.tabline)
+                  (. :fg))})}
+        diag
+        (let
+          [ proto
+            { :condition (fn [self] (vim.diagnostic.get self.bufnr))
+              :static 
+              { :has
+                (fn [self severity]
+                  (->>
+                    {:severity (. vim.diagnostic.severity severity)}
+                    (vim.diagnostic.get self.bufnr)
+                    (length)
+                    (< 0)))}}
+            sign
+              (fn [severity]
+                (->
+                  (vim.fn.sign_getdefined (.. :DiagnosticSign severity))
+                  (. 1)
+                  (. :text)))
+            mksign
+            (fn [key signsufx hl-group]
+              { :condition (fn [self] (self:has key))
+                :static {:sign (sign signsufx)}
+                :provider (fn [self] self.sign)
+                :hl {:fg (?. hl hl-group :fg)}})
+            err (mksign :ERROR :Error :err)
+            warn (mksign :WARN :Warn :warn)
+            info (mksign :INFO :Info :info)
+            hint (mksign :HINT :Hint :hint)]
+          (insert proto err warn info hint))
+        buf* (buf {:bufnr? true :short? true})]
+      (mkbufls (insert proto space cur nr space diag buf* space))))
+
+  (modcall :heirline :setup (statusln winbar bufln))
+  (set vim.opt.showtabline 2))
+
+(fn M.config []
+  "Post-load configuration hook."
+  (modcall :soup.plugins.heirline :init ())
   (let
     [ api vim.api
       group (api.nvim_create_augroup :soup_plugin_heirline {})]
     (api.nvim_create_autocmd :ColorScheme
       { : group
         :desc
-          (..
-            "Updates colors for the status line and the window bar on color"
-            " scheme change.")
+        (..
+          "Updates colors for the status line and the window bar on color"
+          " scheme change.")
         :callback
-          #(do
-            (call :soup.plugins.heirline :setup)
-            (call :heirline :reset_highlights))})
+        #(do
+          (modcall :soup.plugins.heirline :init ())
+          (modcall :heirline :reset_highlights ()))})
     (api.nvim_create_autocmd :User
       { : group
         :pattern :HeirlineInitWinbar
         :desc "Sets whether the window bar is enabled."
         :callback
-          (fn [args]
-            (if
-              (call :heirline.conditions :buffer_matches
-                { :buftype [:nofile :prompt :quickfix]
-                  :filetype [:neo-tree :packer]})
-              (set vim.opt_local.winbar nil)))})))
+        #(when
+          (modcall
+            :heirline.conditions
+            :buffer_matches
+            { :buftype [:nofile :prompt :quickfix]
+              :filetype [:neo-tree :packer]})
+          (set vim.opt_local.winbar nil))})))
 
-(fn setup []
-  "Setups the status line and window bar."
-
-  (local api vim.api)
-  (local bo vim.bo)
-  (local f vim.fn)
-  (local o vim.o)
-
-  (local
-    { :is_active active?
-      :width_percent_below w%<?}
-    (require :heirline.conditions))
-  (local
-    { :get_highlight get-hl
-      : insert}
-    (require :heirline.utils))
-  (local {:get_icon_color get-icon} (require :nvim-web-devicons))
-
-  ; Highlight definitions from builtin groups.
-  (local hl
-    { :err (get-hl :DiagnosticError)
-      :hint (get-hl :DiagnosticHint)
-      :normal (get-hl :Normal)
-      :search (get-hl :Search)
-      :special (get-hl :Special)
-      :statement (get-hl :Statement)
-      :status (get-hl :StatusLine)
-      :statusnc (get-hl :StatusLineNC)
-      :string (get-hl :String)
-      :title (get-hl :Title)
-      :type (get-hl :Type)
-      :warn (get-hl :DiagnosticWarn)
-      :winbar (get-hl :WinBar)
-      :winbarnc (get-hl :WinBarNC)})
-
-  ; Helpers
-  (local align {:provider :%=})
-  (local space {:provider " "})
-
-  ; Buffer Stuff
-  (local buf-init
-    {:init (fn [self] (set self.name (api.nvim_buf_get_name 0)))})
-  (local buf-icon
-    { :hl (fn [self] {:fg self.icon_color})
-      :init
-        (fn [self]
-          (local name self.name)
-          (local ext (f.fnamemodify name ::e))
-          (set (self.icon self.icon_color)
-            (get-icon name ext {:default true})))
-      :provider (fn [self] (when self.icon self.icon))})
-  (local buf-name
-    { 1 space
-      2
-        { :hl {:fg hl.title.fg :bold true}
-          :provider
-            (fn [self]
-              (var name (f.fnamemodify self.name ::.))
-              (when (not (w%<? (length name) 0.5))
-                (set name (f.pathshorten name)))
-              name)}
-      :condition (fn [self] (not (= "" self.name)))})
-  (local buf-flags
-    [ { 1 space
-        2 {:hl {:fg hl.err.fg :bold true} :provider :}
-        :condition (fn [_] (not bo.modifiable))}
-      { 1 space
-        2 {:hl {:fg hl.warn.fg :bold true} :provider "[+]"}
-        :condition (fn [_] bo.modified)}])
-  (local buf (insert buf-init buf-icon buf-flags buf-name))
-
-  ; File Enconding and Format
-  (local file
-    [ { :init
-          (fn [self]
-            (set self.enc (or (when (not (= "" bo.fenc)) bo.fenc) o.enc)))
-        :provider
-          (fn [self] (when (not (= self.enc :utf-8)) (self.enc:upper)))}
-      space
-      { :init (fn [self] (set self.fmt bo.fileformat))
-        :provider
-          (fn [self] (when (not (= :unix self.fmt)) (self.fmt:upper)))}])
-
-  ; Ruler
-  (local ruler {:provider :%l:%c})
-
-  ; Scroll
-  (local scroll
-    { :provider
-        (fn [self]
-          (local line (. (api.nvim_win_get_cursor 0) 1))
-          (local lines (api.nvim_buf_line_count 0))
-          (local i
-            (->
-              (/ line lines)
-              (* (- (length self.bar) 1))
-              (+ 1)
-              (math.floor)))
-          (. self.bar i))
-      :static {:bar [:█ :▇ :▆ :▅ :▄ :▃ :▂ :▁]}})
-
-  ; VI Mode
-  (local vimode
-    { :hl
-        (fn [self]
-          { :fg (. self.colors (self.mode:sub 1 1))
-            :bold true
-            :reverse true})
-      :init (fn [self] (set self.mode (f.mode 1)))
-      :provider
-        (fn [self] (.. "%-0.3(  %)%-3.4(" (. self.modes self.mode) " %)"))
-      :static
-        { :colors
-            { :c hl.statement.fg
-              :i hl.string.fg
-              :n hl.normal.fg
-              :r hl.hint.fg
-              :R hl.warn.fg
-              :s hl.special.fg
-              :S hl.special.fg
-              "" hl.special.fg
-              :t hl.type.fg
-              :v hl.search.bg
-              :V hl.search.bg
-              "" hl.search.bg
-              :! hl.err.fg}
-          :modes
-            { :c :C
-              :cv :CV
-              :i :I
-              :ic :IC
-              :ix :IX
-              :n :N
-              :niI :NI
-              :niR :NR
-              :niV :NV
-              :no :N?
-              :nov :N?
-              :noV :N?
-              "no" :N?
-              :nt :NT
-              :r :...
-              :rm :M
-              :r? :?
-              :R :R
-              :Rc :RC
-              :Rv :RV
-              :Rvc :RVC
-              :Rvx :RVX
-              :Rx :RX
-              :s :S
-              :S :S_
-              "" :^S
-              :t :T
-              :v :V
-              :vs :VS
-              :V :V_
-              :Vs :V_S
-              "" :^V
-              "s" :^VS
-              :! :!}}
-      :update :ModeChanged})
-
-  ; Status Line
-  (local def
-    [vimode space buf align file space ruler space scroll space])
-  (local nc
-    { 1 (unpack [space buf align file space ruler space scroll space])
-      :condition (fn [_] (not (active?)))
-      :hl {1 (unpack hl.statusnc) :force true}})
-  (local statusline
-    { 1 (unpack [nc def])
-      :hl (fn [_] (if (active?) hl.status hl.statusnc))
-      :fallthrough false})
-
-  ; Window Bar
-  (local def [space buf])
-  (local nc
-    { 1 (unpack [space buf])
-      :condition (fn [_] (not (active?)))
-      :hl {1 (unpack hl.winbarnc) :force true}})
-  (local winbar
-    { 1 (unpack [nc def])
-      :hl (fn [_] (if (active?) hl.winbar hl.winbarnc))
-      :fallthrough false})
-
-  (call :heirline :setup statusline winbar))
-
-{ : config
-  : setup}
+M

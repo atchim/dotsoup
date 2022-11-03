@@ -1,9 +1,14 @@
-(import-macros {: call} :fnl.soup.macros)
+(import-macros {: modcall} :soupmacs.soupmacs)
+(local M {})
 
-(fn config []
+(fn M.config []
+  "Post-load configuration hook."
+
   (set vim.g.neo_tree_remove_legacy_commands 1)
 
-  (call :neo-tree :setup
+  (modcall
+    :neo-tree
+    :setup
     { :filesystem {:use_libuv_file_watcher true}
       :event_handlers
         [ { :event :neo_tree_buffer_enter
@@ -39,10 +44,12 @@
               :zC :close_all_nodes}
           :width 32}})
 
-  (call :soup.core.maps :map
-    { :name "Neo Tree"
-      :<Space> ["<Cmd>Neotree toggle<CR>" :Toggle]
-      :<CR> ["<Cmd>Neotree focus<CR>" :Focus]}
-    {:prefix :<Leader><Space>}))
+  (modcall
+    :soup.core.maps
+    :map
+    ( { :name "Neo Tree"
+        :<Space> ["<Cmd>Neotree toggle<CR>" :Toggle]
+        :<CR> ["<Cmd>Neotree focus<CR>" :Focus]}
+      {:prefix :<Leader><Space>})))
 
-{: config}
+M

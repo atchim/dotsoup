@@ -1,31 +1,35 @@
-(import-macros {: call : get} :fnl.soup.macros)
+(import-macros {: modcall : modget?} :soupmacs.soupmacs)
+(local M {})
 
-(fn config []
-  (call :nvim-lsp-installer :on_server_ready
-    (fn [server]
-      (local opts
-        { :capabilities
-            (let [caps (vim.lsp.protocol.make_client_capabilities)]
-              (call :cmp_nvim_lsp :default_capabilities caps))
-          :on_attach (get :soup.plugins.lspconfig :on_attach)})
-      (match server.name
-        :rust-analyzer
+(fn M.config []
+  "Post-load configuration hook."
+  (fn on-server-ready [server]
+    (local opts
+      { :capabilities
+          (let [caps (vim.lsp.protocol.make_client_capabilities)]
+            (modcall :cmp_nvim_lsp :default_capabilities caps))
+        :on_attach (modget? :soup.plugins.lspconfig :on_attach)})
+    (match server.name
+      :rust-analyzer
+        (set opts.settings
+          { :rust-analyzer
+              { :assist {:importGranurality :module :importPrefix :by_self}
+                :cargo {:loadOutDirsFromCheck true}
+                :procMacro {:enable true}}})
+      :sumneko_lua
+        (do
+          (set opts.root_dir vim.loop.cwd)
           (set opts.settings
-            { :rust-analyzer
-                { :assist {:importGranurality :module :importPrefix :by_self}
-                  :cargo {:loadOutDirsFromCheck true}
-                  :procMacro {:enable true}}})
-        :sumneko_lua
-          (do
-            (set opts.root_dir vim.loop.cwd)
-            (set opts.settings
-              { :Lua
-                { :diagnostics {:globals [:vim]}
-                  :workspace
-                    {:library (vim.api.nvim_get_runtime_file "" true)}}})))
-      (server:setup opts))))
+            { :Lua
+              { :diagnostics {:globals [:vim]}
+                :workspace
+                  {:library (vim.api.nvim_get_runtime_file "" true)}}})))
+    (server:setup opts))
+  (modcall :nvim-lsp-installer :on_server_ready on-server-ready))
 
-(fn on_attach [client bufnr]
+(fn M.on_attach [client bufnr]
+  "On-attach configurations."
+
   (local {: map} (require :soup.core.maps))
 
   (map
@@ -59,5 +63,4 @@
         :f ["<Cmd>lua vim.lsp.buf.range_formatting()<CR>" "Range formatting"]}
       {:buffer bufnr :mode :v :prefix :<Leader>l})))
 
-{ : config
-  : on_attach}
+M

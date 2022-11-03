@@ -1,9 +1,12 @@
-(import-macros {: call} :fnl.soup.macros)
+(import-macros {: modcall} :soupmacs.soupmacs)
+(local M {})
 
-(fn config []
-  "Post load configuration hook."
+(fn M.config []
+  "Post-load configuration hook."
 
-  (call :nvim-treesitter.configs :setup
+  (modcall
+    :nvim-treesitter.configs
+    :setup
     { :highlight {:enable true}
       :incremental_selection
         { :enable true
@@ -43,9 +46,8 @@
             :swap_next {:<C-N> "@swappable"}
             :swap_previous {:<C-P> "@swappable"}}}})
 
-  ; XXX: May be possible to dynamically set this in the future.
   (let [o vim.opt]
     (set o.foldexpr "nvim_treesitter#foldexpr()")
     (set o.foldmethod :expr)))
 
-{: config}
+M

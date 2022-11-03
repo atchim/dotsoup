@@ -1,6 +1,7 @@
-local function config()
-  local config0 = require("sopa.config")
-  config0.enabled_plugins = {"bufferline", "cmp", "indent-blankline", "leap", "neo-tree", "treesitter"}
+local M = {}
+M.config = function()
+  local config = require("sopa.config")
+  config.enabled_integrations = {"cmp", "indent-blankline", "leap", "neo-tree", "treesitter"}
   return nil
 end
-return {config = config}
+return M

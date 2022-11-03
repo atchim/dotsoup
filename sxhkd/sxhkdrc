@@ -47,14 +47,6 @@ super + space ; space
   rofi -modi run -show run -theme dmenu
 
 #
-# Misc
-#
-
-# Reload sxhkd.
-super + r ; s
-  pkill -USR1 --exact sxhkd
-
-#
 # Screenshot
 #
 
@@ -65,3 +57,25 @@ super + space ; s ; c
 # Take a normal screenshot or from selection.
 super + space ; s ; {s,shift + s}
   maim {_,--select} "$SHOT_DIR/$(date +%s).png"
+
+#
+# Misc
+#
+
+# Hide or show the Polybar bar.
+super + b
+  cmd={hide,show}; \
+  [[ $cmd = hide ]] && bspc config bottom_padding 0; \
+  polybar-msg cmd $cmd
+
+# Restart status bar.
+super + r ; b
+  polybar-msg cmd restart
+
+# Reload sxhkd.
+super + r ; s
+  pkill -USR1 --exact sxhkd
+
+# Rofi window mode.
+super + w
+  rofi -modi window -show window -show-icons

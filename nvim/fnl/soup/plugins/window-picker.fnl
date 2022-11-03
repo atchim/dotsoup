@@ -1,10 +1,14 @@
-(import-macros {: call : get} :fnl.soup.macros)
+(import-macros {: modcall : modget?} :soupmacs.soupmacs)
+(local M {})
 
-(fn config []
-  (local config {:selection_chars :JKFLAHDSG})
-  (->>
-    (get :sopa.plugins.window-picker :colors)
-    (vim.tbl_deep_extend :force config)
-    (call :window-picker :setup)))
+(fn M.config []
+  "Post-load configuration hook."
+  (let
+    [config {:use_winbar :smart :selection_chars :JKFLAHDSG}]
+    (->>
+      (modget? :sopa.integrations.window-picker :colors)
+      (vim.tbl_deep_extend :force config)
+      ()
+      (modcall :window-picker :setup))))
 
-{: config}
+M

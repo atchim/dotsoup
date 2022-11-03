@@ -1,7 +1,8 @@
-(import-macros {: call} :fnl.soup.macros)
+(import-macros {: modcall} :soupmacs.soupmacs)
+(local M {})
 
-(fn init []
-  "Set plugin configurations."
-  (call :soup.plugins.packer :init))
+(fn M.init []
+  "Initializes plugin configurations."
+  (modcall :soup.plugins.packer :init ()))
 
-{: init}
+M

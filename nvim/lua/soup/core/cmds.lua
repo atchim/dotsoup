@@ -28,31 +28,61 @@ local function _6_()
   return vim.cmd(("bprevious " .. _7_()))
 end
 cmds = {buf = {del = _1_, ["goto"] = _2_, next = _3_, prev = _6_}}
+local function split(s, _3fsep, _3fi)
+  local len = #s
+  local sep = ordef(_3fsep, "%s+")
+  local offset = ordef(_3fi, 1)
+  local exhausted_3f = false
+  local function _9_()
+    local start, _end = nil, nil
+    do
+      local start0, _end0 = s:find(sep, offset)
+      if (1 == start0) then
+        offset = (1 + _end0)
+        start, _end = s:find(sep, offset)
+      else
+        start, _end = start0, _end0
+      end
+    end
+    if exhausted_3f then
+      return nil
+    elseif (nil ~= start) then
+      local old_offset = offset
+      exhausted_3f = (len == _end)
+      offset = (1 + _end)
+      return old_offset, (start - 1)
+    else
+      exhausted_3f = true
+      return offset, len
+    end
+  end
+  return _9_
+end
 local function comp(lead, line, pos)
   local args
   do
-    local _let_9_ = vim.fn.matchstrpos(line, "S\\%[oup] *\\zs.*")
-    local _ = _let_9_[1]
-    local start = _let_9_[2]
-    local _0 = _let_9_[3]
-    local _local_10_ = require("soup.utils")
-    local split = _local_10_["split"]
-    local tbl_15_auto = {}
-    local i_16_auto = #tbl_15_auto
-    for start0, _end in split(line, "%s+", (1 + start)) do
-      local val_17_auto
+    local _let_12_ = vim.fn.matchstrpos(line, "S\\%[oup] *\\zs.*")
+    local _ = _let_12_[1]
+    local start = _let_12_[2]
+    local _0 = _let_12_[3]
+    local _local_13_ = require("soup.utils")
+    local split0 = _local_13_["split"]
+    local tbl_17_auto = {}
+    local i_18_auto = #tbl_17_auto
+    for start0, _end in split0(line, "%s+", (1 + start)) do
+      local val_19_auto
       if ((start0 < pos) and (_end < pos)) then
-        val_17_auto = line:sub(start0, _end)
+        val_19_auto = line:sub(start0, _end)
       else
-        val_17_auto = nil
+        val_19_auto = nil
       end
-      if (nil ~= val_17_auto) then
-        i_16_auto = (i_16_auto + 1)
-        do end (tbl_15_auto)[i_16_auto] = val_17_auto
+      if (nil ~= val_19_auto) then
+        i_18_auto = (i_18_auto + 1)
+        do end (tbl_17_auto)[i_18_auto] = val_19_auto
       else
       end
     end
-    args = tbl_15_auto
+    args = tbl_17_auto
   end
   local subcmd, broken_3f = nil, nil
   do
@@ -73,32 +103,33 @@ local function comp(lead, line, pos)
     return {}
   else
     local lead0 = lead:sub(1, pos)
-    local function _14_()
-      local tbl_15_auto = {}
-      local i_16_auto = #tbl_15_auto
+    local function _17_()
+      local tbl_17_auto = {}
+      local i_18_auto = #tbl_17_auto
       for arg_2a, _ in pairs(subcmd) do
-        local val_17_auto
+        local val_19_auto
         do
           local start, _0 = arg_2a:find(lead0, 1, true)
           if (nil ~= start) then
-            val_17_auto = arg_2a
+            val_19_auto = arg_2a
           else
-            val_17_auto = nil
+            val_19_auto = nil
           end
         end
-        if (nil ~= val_17_auto) then
-          i_16_auto = (i_16_auto + 1)
-          do end (tbl_15_auto)[i_16_auto] = val_17_auto
+        if (nil ~= val_19_auto) then
+          i_18_auto = (i_18_auto + 1)
+          do end (tbl_17_auto)[i_18_auto] = val_19_auto
         else
         end
       end
-      return tbl_15_auto
+      return tbl_17_auto
     end
-    return vim.fn.sort(_14_())
+    return vim.fn.sort(_17_())
   end
 end
-local function init()
-  local function _18_(repl)
+local M = {}
+M.init = function()
+  local function _21_(repl)
     local cmd
     do
       local cmd0 = cmds
@@ -118,7 +149,7 @@ local function init()
       return error("missing subcommand")
     end
   end
-  vim.api.nvim_create_user_command("Soup", _18_, {complete = comp, count = 0, desc = "Soup commands.", nargs = "+"})
+  vim.api.nvim_create_user_command("Soup", _21_, {complete = comp, count = 0, desc = "Soup commands.", nargs = "+"})
   return (require("soup.core.maps")).map({["[b"] = {"<Cmd>Soup buf prev<CR>", "Buffer previous"}, ["]b"] = {"<Cmd>Soup buf next<CR>", "Buffer next"}, gb = {"<Cmd>Soup buf goto<CR>", "Buffer goto"}, gB = {"<Cmd>Soup buf del<CR>", "Buffer delete"}})
 end
-return {init = init}
+return M

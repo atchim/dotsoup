@@ -1,4 +1,5 @@
-local function init()
+local M = {}
+M.init = function()
   return (require("soup.plugins.packer")).init()
 end
-return {init = init}
+return M

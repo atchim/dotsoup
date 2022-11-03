@@ -1,8 +1,11 @@
-(import-macros {: calls} :fnl.soup.macros)
+(import-macros {: subcalls} :soupmacs.soupmacs)
+(local M {})
 
-(fn init []
-  "Set configurations for raw editor."
-  (calls :init :soup.core
+(fn M.init []
+  "Initializes configurations for raw editor."
+  (subcalls
+    :init
+    :soup.core
     :g
     :opts
     :maps
@@ -11,4 +14,4 @@
     :diagnostics
     :colors))
 
-{: init}
+M

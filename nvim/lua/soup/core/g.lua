@@ -1,4 +1,5 @@
-local function init()
+local M = {}
+M.init = function()
   local g = vim.g
   g.loaded_netrw = 1
   g.loaded_netrwPlugin = 1
@@ -10,4 +11,4 @@ local function init()
   g.rust_recommended_style = 0
   return nil
 end
-return {init = init}
+return M
