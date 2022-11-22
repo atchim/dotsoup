@@ -796,7 +796,7 @@ M.config = function()
     local colors0 = (require("soup.plugins.heirline")).colors()
     return (require("heirline.utils")).on_colorscheme(colors0)
   end
-  api.nvim_create_autocmd("ColorScheme", {desc = "Defines highlight colors for Heirline.", group = group, pattern = "sopa", callback = _153_})
+  api.nvim_create_autocmd("ColorScheme", {desc = "Defines highlight colors for Heirline.", group = group, callback = _153_})
   local function _154_()
     if (require("heirline.conditions")).buffer_matches({buftype = {"nofile", "prompt", "quickfix"}, filetype = {"neo-tree", "packer"}}) then
       vim.opt_local.winbar = nil

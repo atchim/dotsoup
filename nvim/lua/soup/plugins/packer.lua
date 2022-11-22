@@ -21,7 +21,7 @@ local function user()
     vim.opt.termguicolors = true
     return (require("sopa")).init()
   end
-  use({event = "UIEnter", config = _3_, "/home/atchim/repo/sopa.nvim"})
+  use({event = "UIEnter", config = _3_, "atchim/sopa.nvim"})
   local function _4_()
     vim.opt.timeoutlen = 500
     do end (require("which-key")).setup()

@@ -170,7 +170,6 @@
       :ColorScheme
       { :desc "Defines highlight colors for Heirline."
         : group
-        :pattern :sopa
         :callback
         #(let [colors (modcall :soup.plugins.heirline :colors [])]
           (modcall :heirline.utils :on_colorscheme colors))})

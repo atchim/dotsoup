@@ -19,7 +19,7 @@
   (use :baskerville/bubblegum)
 
   (use
-    { 1 :/home/atchim/repo/sopa.nvim
+    { 1 :atchim/sopa.nvim
       :event :UIEnter
       :config
       #(let
