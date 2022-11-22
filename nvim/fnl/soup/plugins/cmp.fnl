@@ -78,7 +78,7 @@
               (fallback)))
           [:i :s])
         :<Up> (cmp.mapping.select_prev_item)}
-      :snippet {:expand #(modcall :luasnip :lsp_expand $1.body)}
+      :snippet {:expand (fn [args] (modcall :luasnip :lsp_expand args.body))}
       :sources
       (cmp.config.sources
         [{:name :nvim_lua} {:name :nvim_lsp} {:name :luasnip}]

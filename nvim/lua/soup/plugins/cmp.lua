@@ -33,8 +33,8 @@ M.config = function()
       return fallback()
     end
   end
-  local function _6_(_241)
-    return (require("luasnip")).lsp_expand(_241.body)
+  local function _6_(args)
+    return (require("luasnip")).lsp_expand(args.body)
   end
   return cmp.setup({formatting = {fields = {"kind", "abbr"}, format = _1_}, mapping = {["<C-C>"] = cmp.mapping.abort(), ["<C-E>"] = cmp.mapping(cmp.mapping.scroll_docs(1), {"i", "c"}), ["<C-N>"] = cmp.mapping.select_next_item(), ["<C-P>"] = cmp.mapping.select_prev_item(), ["<C-Y>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), {"i", "c"}), ["<CR>"] = cmp.mapping.confirm(), ["<Down>"] = cmp.mapping.select_next_item(), ["<S-Tab>"] = cmp.mapping(_2_, {"i", "s"}), ["<Tab>"] = cmp.mapping(_4_, {"i", "s"}), ["<Up>"] = cmp.mapping.select_prev_item()}, snippet = {expand = _6_}, sources = cmp.config.sources({{name = "nvim_lua"}, {name = "nvim_lsp"}, {name = "luasnip"}}, {{name = "path"}, {name = "buffer"}}), view = {entries = {name = "custom", selection_order = "near_cursor"}}})
 end

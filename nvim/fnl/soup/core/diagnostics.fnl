@@ -1,7 +1,7 @@
 (local M {})
 
 (fn M.init []
-  "Initializes diagnostics configurations."
+  "Sets diagnostics configurations."
   (let
     [ signs
       { :DiagnosticSignError :
@@ -10,8 +10,6 @@
         :DiagnosticSignInfo :}]
     (each [sign symbol (pairs signs)]
       (vim.fn.sign_define sign {:numhl "" :text symbol :texthl sign})))
-  (vim.diagnostic.config
-    { :update_in_insert true
-      :virtual_text {:spacing 1}}))
+  (vim.diagnostic.config {:update_in_insert true :virtual_text {:spacing 1}}))
 
 M

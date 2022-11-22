@@ -1,7 +1,7 @@
 (local M {})
 
 (fn M.init []
-  "Initializes global variables."
+  "Sets global variables."
 
   (local g vim.g)
 
@@ -13,12 +13,12 @@
   (vim.api.nvim_set_keymap :n :<Space> :<NOP> {:noremap true})
   (set g.mapleader " ")
 
-  ; Misc
-  (set g.omni_sql_no_default_maps 1)
-  (set g.vimsyn_embed 1)
-
   ; No Recommended Styles
   (set g.python_recommended_style 0)
-  (set g.rust_recommended_style 0))
+  (set g.rust_recommended_style 0)
+
+  ; Misc
+  (set g.omni_sql_no_default_maps 1)
+  (set g.vimsyn_embed 1))
 
 M

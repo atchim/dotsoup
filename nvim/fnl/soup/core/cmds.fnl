@@ -6,10 +6,10 @@
 
 (local cmds
   { :buf
-      { :del #(pcall vim.api.nvim_buf_delete vim.v.count {})
-        :goto #(pcall vim.api.nvim_set_current_buf vim.v.count)
-        :next #(vim.cmd (.. "bnext " (vcount-or-1)))
-        :prev #(vim.cmd (.. "bprevious " (vcount-or-1)))}})
+    { :del #(pcall vim.api.nvim_buf_delete vim.v.count {})
+      :goto #(pcall vim.api.nvim_set_current_buf vim.v.count)
+      :next #(vim.cmd (.. "bnext " (vcount-or-1)))
+      :prev #(vim.cmd (.. "bprevious " (vcount-or-1)))}})
 
 (fn split [s ?sep ?i]
   "Returns an iterator for splitting text according with arbitrary separator.
@@ -28,12 +28,12 @@
   (var offset (ordef ?i 1))
   (var exhausted? false)
 
-  (fn []
+  #(do
     ; Strip off leading separators.
     (local (start end)
       (let [(start end) (s:find sep offset)]
-        (if
-          (= 1 start) (do (set offset (+ 1 end)) (s:find sep offset))
+        (if (= 1 start)
+          (do (set offset (+ 1 end)) (s:find sep offset))
           (values start end))))
 
     (if
@@ -66,8 +66,8 @@
           (set broken? true)))
       (values subcmd broken?)))
 
-  (if
-    broken? []
+  (if broken?
+    []
     (let [lead (lead:sub 1 pos)]
       (vim.fn.sort (icollect [arg* _ (pairs subcmd)]
         (let [(start _) (arg*:find lead 1 true)]
@@ -76,7 +76,7 @@
 (local M {})
 
 (fn M.init []
-  "Initializes user commands."
+  "Sets user commands."
 
   (vim.api.nvim_create_user_command :Soup
     (fn [repl]

@@ -7,7 +7,7 @@
   (modcall
     :soup.core.maps
     :map
-    ( {:c [:<Cmd>CccHighlighterToggle<CR> "Color Highlighter"]}
-      {:prefix :<Leader>t})))
+    [ {:c [:<Cmd>CccHighlighterToggle<CR> "Color Highlighter"]}
+      {:prefix :<Leader>t}]))
 
 M

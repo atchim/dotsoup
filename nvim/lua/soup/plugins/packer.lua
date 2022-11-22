@@ -12,153 +12,75 @@ local function user()
   local _local_2_ = require("packer")
   local use = _local_2_["use"]
   use({opt = true, "wbthomason/packer.nvim"})
-  use({event = "UIEnter", "editorconfig/editorconfig-vim"})
-  local _4_
-  do
-    local t_3_ = require("soup.plugins.sopa")
-    if (nil ~= t_3_) then
-      t_3_ = (t_3_).config
-    else
-    end
-    _4_ = t_3_
+  use("baskerville/bubblegum")
+  local function _3_()
+    local config = require("sopa.config")
+    local api = vim.api
+    local group = api.nvim_create_augroup("soup_core_colors", {})
+    config.enabled_integrations = {"cmp", "indent-blankline", "leap", "neo-tree", "treesitter"}
+    vim.opt.termguicolors = true
+    return (require("sopa")).init()
   end
-  use({config = _4_, "atchim/sopa.nvim"})
-  local function _6_()
+  use({event = "UIEnter", config = _3_, "/home/atchim/repo/sopa.nvim"})
+  local function _4_()
     vim.opt.timeoutlen = 500
-    return (require("which-key")).setup()
-  end
-  use({event = "UIEnter", config = _6_, "folke/which-key.nvim"})
-  local _8_
-  do
-    local t_7_ = require("soup.plugins.treesitter")
-    if (nil ~= t_7_) then
-      t_7_ = (t_7_).config
-    else
+    do end (require("which-key")).setup()
+    local labels = (require("soup.core.maps")).labels
+    local _let_5_ = require("which-key")
+    local register = _let_5_["register"]
+    for _, _6_ in ipairs(labels) do
+      local _each_7_ = _6_
+      local maps = _each_7_[1]
+      local _3fopts = _each_7_[2]
+      register(maps, _3fopts)
     end
-    _8_ = t_7_
+    return nil
   end
-  use({event = "UIEnter", config = _8_, "nvim-treesitter/nvim-treesitter"})
-  use({after = "nvim-treesitter", "nvim-treesitter/nvim-treesitter-textobjects"})
-  local function _10_()
+  use({event = "UIEnter", config = _4_, "folke/which-key.nvim"})
+  use({event = "UIEnter", "editorconfig/editorconfig-vim"})
+  use({event = "BufRead", config = (require("soup.plugins.treesitter")).config, "nvim-treesitter/nvim-treesitter"})
+  use({after = "nvim-treesitter", requires = "nvim-treesitter", "nvim-treesitter/nvim-treesitter-textobjects"})
+  local function _8_()
     return (require("soup.core.maps")).map({p = {"<Cmd>TSPlaygroundToggle<CR>", "Tree-Sitter Playground"}}, {prefix = "<Leader>t"})
   end
-  use({after = "nvim-treesitter", config = _10_, "nvim-treesitter/playground"})
-  local _12_
-  do
-    local t_11_ = require("soup.plugins.cmp")
-    if (nil ~= t_11_) then
-      t_11_ = (t_11_).config
-    else
-    end
-    _12_ = t_11_
-  end
-  local _15_
-  do
-    local t_14_ = require("soup.plugins.lspconfig")
-    if (nil ~= t_14_) then
-      t_14_ = (t_14_).config
-    else
-    end
-    _15_ = t_14_
-  end
-  local function _17_()
+  use({after = "nvim-treesitter", config = _8_, requires = "nvim-treesitter", "nvim-treesitter/playground"})
+  use({opt = true, "kyazdani42/nvim-web-devicons"})
+  use({event = "UIEnter", config = (require("soup.plugins.ccc")).config, "uga-rosa/ccc.nvim"})
+  use({event = "BufRead", config = (require("soup.plugins.heirline")).config, requires = {"ccc.nvim", "nvim-web-devicons"}, wants = {"ccc.nvim", "nvim-web-devicons", "sopa.nvim"}, "rebelot/heirline.nvim"})
+  local function _9_()
     return (require("luasnip.loaders.from_vscode")).lazy_load()
   end
-  use({event = "UIEnter", config = _12_, requires = {{after = "nvim-cmp", "hrsh7th/cmp-buffer"}, {after = "nvim-cmp", requires = {{config = _15_, opt = true, requires = {{opt = true, "williamboman/nvim-lsp-installer"}}, wants = "nvim-lsp-installer", "neovim/nvim-lspconfig"}}, wants = "nvim-lspconfig", "hrsh7th/cmp-nvim-lsp"}, {after = "nvim-cmp", "hrsh7th/cmp-nvim-lua"}, {after = "nvim-cmp", "hrsh7th/cmp-path"}, {after = "nvim-cmp", requires = {{config = _17_, opt = true, requires = {{opt = true, "rafamadriz/friendly-snippets"}}, wants = "friendly-snippets", "L3MON4D3/LuaSnip"}}, "saadparwaiz1/cmp_luasnip"}}, wants = "LuaSnip", "hrsh7th/nvim-cmp"})
-  local _19_
-  do
-    local t_18_ = require("soup.plugins.telescope")
-    if (nil ~= t_18_) then
-      t_18_ = (t_18_).config
-    else
-    end
-    _19_ = t_18_
-  end
-  use({event = "UIEnter", config = _19_, requires = {{opt = true, "nvim-lua/plenary.nvim"}, {opt = true, run = "make", "nvim-telescope/telescope-fzf-native.nvim"}}, wants = {"plenary.nvim", "telescope-fzf-native.nvim"}, "nvim-telescope/telescope.nvim"})
-  local _22_
-  do
-    local t_21_ = require("soup.plugins.neo-tree")
-    if (nil ~= t_21_) then
-      t_21_ = (t_21_).config
-    else
-    end
-    _22_ = t_21_
-  end
-  local _25_
-  do
-    local t_24_ = require("soup.plugins.window-picker")
-    if (nil ~= t_24_) then
-      t_24_ = (t_24_).config
-    else
-    end
-    _25_ = t_24_
-  end
-  use({branch = "v2.x", config = _22_, event = "UIEnter", requires = {{opt = true, "kyazdani42/nvim-web-devicons"}, {opt = true, "MunifTanjim/nui.nvim"}, {opt = true, "nvim-lua/plenary.nvim"}, {config = _25_, opt = true, "s1n7ax/nvim-window-picker"}}, wants = {"nui.nvim", "nvim-web-devicons", "nvim-window-picker", "plenary.nvim"}, "nvim-neo-tree/neo-tree.nvim"})
-  local _28_
-  do
-    local t_27_ = require("soup.plugins.heirline")
-    if (nil ~= t_27_) then
-      t_27_ = (t_27_).config
-    else
-    end
-    _28_ = t_27_
-  end
-  use({event = "UIEnter", config = _28_, requires = {{opt = true, "kyazdani42/nvim-web-devicons"}}, wants = "nvim-web-devicons", "rebelot/heirline.nvim"})
-  local function _30_()
+  use({event = "BufRead", config = (require("soup.plugins.cmp")).config, requires = {{after = "nvim-cmp", "hrsh7th/cmp-buffer"}, {after = "nvim-cmp", requires = {{config = (require("soup.plugins.lspconfig")).config, opt = true, requires = {{opt = true, "williamboman/nvim-lsp-installer"}}, wants = "nvim-lsp-installer", "neovim/nvim-lspconfig"}}, wants = "nvim-lspconfig", "hrsh7th/cmp-nvim-lsp"}, {after = "nvim-cmp", "hrsh7th/cmp-nvim-lua"}, {after = "nvim-cmp", "hrsh7th/cmp-path"}, {after = "nvim-cmp", requires = {{config = _9_, opt = true, requires = {{opt = true, "rafamadriz/friendly-snippets"}}, wants = "friendly-snippets", "L3MON4D3/LuaSnip"}}, "saadparwaiz1/cmp_luasnip"}}, wants = "LuaSnip", "hrsh7th/nvim-cmp"})
+  use({opt = true, "nvim-lua/plenary.nvim"})
+  use({event = "UIEnter", config = (require("soup.plugins.telescope")).config, requires = {{opt = true, run = "make", "nvim-telescope/telescope-fzf-native.nvim"}, "plenary.nvim"}, wants = {"plenary.nvim", "telescope-fzf-native.nvim"}, "nvim-telescope/telescope.nvim"})
+  use({branch = "v2.x", config = (require("soup.plugins.neo-tree")).config, event = "UIEnter", requires = {{opt = true, "MunifTanjim/nui.nvim"}, "nvim-web-devicons", "plenary.nvim", {config = (require("soup.plugins.window-picker")).config, opt = true, requires = "sopa.nvim", wants = "sopa.nvim", "s1n7ax/nvim-window-picker"}}, wants = {"nui.nvim", "nvim-web-devicons", "nvim-window-picker", "plenary.nvim"}, "nvim-neo-tree/neo-tree.nvim"})
+  local function _10_()
     return (require("leap")).set_default_keymaps()
   end
-  use({event = "InsertCharPre", config = _30_, "ggandor/leap.nvim"})
-  local function _31_()
+  use({event = "UIEnter", config = _10_, "ggandor/leap.nvim"})
+  local function _11_()
     return (require("Comment")).setup({opleader = {block = "gC"}, toggler = {block = "gcC"}, padding = false})
   end
-  use({config = _31_, "numToStr/Comment.nvim"})
-  local function _32_()
+  use({event = "UIEnter", config = _11_, "numToStr/Comment.nvim"})
+  local function _12_()
     return (require("nvim-surround")).setup({})
   end
-  use({event = "InsertCharPre", config = _32_, "kylechui/nvim-surround"})
-  local function _33_()
+  use({event = "UIEnter", config = _12_, "kylechui/nvim-surround"})
+  local function _13_()
     return (require("gitsigns")).setup({})
   end
-  use({event = "UIEnter", config = _33_, "lewis6991/gitsigns.nvim"})
-  local _35_
-  do
-    local t_34_ = require("soup.plugins.harpoon")
-    if (nil ~= t_34_) then
-      t_34_ = (t_34_).config
-    else
-    end
-    _35_ = t_34_
-  end
-  use({event = "UIEnter", config = _35_, requires = {{opt = true, "nvim-lua/plenary.nvim"}}, wants = "plenary.nvim", "ThePrimeagen/harpoon"})
-  local function _37_()
+  use({event = "UIEnter", config = _13_, wants = "sopa.nvim", "lewis6991/gitsigns.nvim"})
+  use({event = "UIEnter", config = (require("soup.plugins.harpoon")).config, requires = "plenary.nvim", wants = "plenary.nvim", "ThePrimeagen/harpoon"})
+  local function _14_()
     do end (require("indent_blankline")).setup({show_current_context = true, show_current_context_start = true, enabled = false})
     return (require("soup.core.maps")).map({i = {"<Cmd>IndentBlanklineToggle<CR>", "Indent Blankline"}}, {prefix = "<Leader>t"})
   end
-  use({config = _37_, "lukas-reineke/indent-blankline.nvim"})
-  local _39_
-  do
-    local t_38_ = require("soup.plugins.ccc")
-    if (nil ~= t_38_) then
-      t_38_ = (t_38_).config
-    else
-    end
-    _39_ = t_38_
-  end
-  use({event = "UIEnter", config = _39_, "uga-rosa/ccc.nvim"})
-  local _42_
-  do
-    local t_41_ = require("soup.plugins.noice")
-    if (nil ~= t_41_) then
-      t_41_ = (t_41_).config
-    else
-    end
-    _42_ = t_41_
-  end
-  use({event = "UIEnter", config = _42_, "folke/noice.nvim"})
-  local function _44_()
+  use({event = "UIEnter", config = _14_, "lukas-reineke/indent-blankline.nvim"})
+  use({disable = true, event = "UIEnter", config = (require("soup.plugins.noice")).config, "folke/noice.nvim"})
+  local function _15_()
     return (require("fidget")).setup({text = {spinner = "dots"}})
   end
-  return use({config = _44_, "j-hui/fidget.nvim"})
+  return use({event = "UIEnter", config = _15_, "j-hui/fidget.nvim"})
 end
 local M = {}
 M.init = function()

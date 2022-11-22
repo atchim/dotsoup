@@ -1,7 +1,7 @@
 (local M {})
 
 (fn M.init []
-  "Initializes options for raw editor."
+  "Sets options for raw editor."
 
   (local o vim.opt)
 

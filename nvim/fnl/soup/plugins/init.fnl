@@ -3,6 +3,6 @@
 
 (fn M.init []
   "Initializes plugin configurations."
-  (modcall :soup.plugins.packer :init ()))
+  (modcall :soup.plugins.packer :init []))
 
 M
