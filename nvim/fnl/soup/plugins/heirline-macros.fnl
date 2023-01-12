@@ -1,6 +1,7 @@
-(local M {})
+; TODO: Context status line using both LSP and Tree-Sitter.
+;   <https://github.com/SmiteshP/nvim-navic>
 
-(local symbol
+(local (bind! symbol)
   (let
     [ symbols {}
       names
@@ -13,17 +14,18 @@
         :nonnil true
         :statusline-space true
         :vim-api true}]
-    (fn M.bind! [sym ?name]
-      "Binds `sym` to `?name`."
-      (let [name (or ?name (tostring sym))]
-        (assert-compile (. names name) "invalid symbol" name)
-        (tset symbols name (assert-compile (sym? sym) "not a symbol" sym))))
-    (fn [name]
-      "Returns the value for symbol with `name`."
-      (assert (. names name) (-> "invalid symbol \"%s\"" (: :format name)))
-      (assert
-        (. symbols name)
-        (-> "symbol \"%s\" not bound" (: :format name))))))
+    (values
+      (fn [sym ?name]
+        "Binds `sym` to `?name`."
+        (let [name (or ?name (tostring sym))]
+          (assert-compile (. names name) "invalid symbol" name)
+          (tset symbols name (assert-compile (sym? sym) "not a symbol" sym))))
+      (fn [name]
+        "Returns the value for symbol with `name`."
+        (assert (. names name) (-> "invalid symbol \"%s\"" (: :format name)))
+        (assert
+          (. symbols name)
+          (-> "symbol \"%s\" not bound" (: :format name)))))))
 
 (fn vimode []
   "Shorthand for mode status line."
@@ -334,12 +336,13 @@
           (. self#.bar i#)))
       :hl {:fg :scroll}}))
 
-(fn M.bufln []
+(fn bufln []
   "Shorthand for buffer line."
   (let
     [ api (symbol :vim-api)
       space (symbol :statusline-space)
-      utils (symbol :heirline-utils)]
+      utils (symbol :heirline-utils)
+      insert #`((-> ,utils (. :insert)) ,$...)]
     `(let
       [ proto#
         { :init
@@ -360,16 +363,9 @@
                 :r ((-> ,api (. :nvim_buf_delete)) minwid# {:force false})))
             :name :bufln_click_cb}}
         nr# {:provider (fn [self#] self#.bufnr)}]
-      ( (-> ,utils (. :insert))
-        proto#
-        ,space
-        nr#
-        ,space
-        ,(diagn)
-        ,(buf :buf)
-        ,space))))
+      ,(insert `proto# space `nr# space (diagn) (buf :buf) space))))
 
-(fn M.statusln3 []
+(fn statusln3 []
   "Shorthand for assembling a status line designed for `laststatus=3`."
   (let [space (symbol :statusline-space) utils (symbol :heirline-utils)]
     `((-> ,utils (. :insert))
@@ -383,7 +379,7 @@
       ,space
       ,(scroll))))
 
-(fn M.winbar []
+(fn winbar []
   "Shorthand for window bar."
   (let
     [ conditions (symbol :heirline-conditions)
@@ -400,4 +396,4 @@
               {:bg :winbarbg :fg :winbarfg :bold true}
               {:bg :winbarncbg :fg :winbarncfg :bold true}))}))))
 
-M
+{: bind! : bufln : statusln3 : winbar}

@@ -155,7 +155,9 @@
     (modcall
       :heirline
       :setup
-      [(statusln3) (winbar) (heirline-utils.make_buflist (bufln))])
+      { :statusline (statusln3)
+        :winbar (winbar)
+        :tabline (heirline-utils.make_buflist (bufln))})
     (set vim.opt.showtabline 2)))
 
 (fn M.config []
@@ -173,7 +175,7 @@
         :callback
         #(let [colors (modcall :soup.plugins.heirline :colors [])]
           (modcall :heirline.utils :on_colorscheme colors))})
-    ;FIXME: When writing an unnamed buffer it doesn't get triggered.
+    ; FIXME: When writing an unnamed buffer it doesn't get triggered.
     (api.nvim_create_autocmd
       :User
       { :desc "Sets whether the window bar is enabled."

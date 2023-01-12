@@ -75,8 +75,12 @@
     { 1 :rebelot/heirline.nvim
       :event :BufRead
       :config (modget :soup.plugins.heirline :config)
-      :requires [:ccc.nvim :nvim-web-devicons]
-      :wants [:ccc.nvim :nvim-web-devicons :sopa.nvim]})
+      :wants
+      [ :ccc.nvim
+        :nvim-web-devicons
+        ; NOTE: A GUI color scheme is required to colors to work; so load
+        ; `sopa` before.
+        :sopa.nvim]})
 
   (use
     { 1 :hrsh7th/nvim-cmp
@@ -104,6 +108,18 @@
               :requires [{1 :rafamadriz/friendly-snippets :opt true}]
               :wants :friendly-snippets}]}]
       :wants :LuaSnip})
+
+  (use
+    { 1 :windwp/nvim-autopairs
+      :event :BufRead
+      :config
+      (fn []
+        (modcall :nvim-autopairs :setup {:check_ts true})
+        (let
+          [ cmp-autop (require :nvim-autopairs.completion.cmp)
+            cmp (require :cmp)]
+          (cmp.event:on :confirm_done (cmp-autop.on_confirm_done))))
+      :wants :nvim-cmp})
   
   (use {1 :nvim-lua/plenary.nvim :opt true})
 
@@ -170,7 +186,7 @@
     { 1 :lukas-reineke/indent-blankline.nvim
       :event :UIEnter
       :config
-      #(do
+      (fn []
         (modcall
           :indent_blankline
           :setup
@@ -183,11 +199,7 @@
           [ {:i [:<Cmd>IndentBlanklineToggle<CR> "Indent Blankline"]}
             {:prefix :<Leader>t}]))})
 
-  (use
-    { 1 :folke/noice.nvim
-      :disable true
-      :event :UIEnter
-      :config (modget :soup.plugins.noice :config)})
+  (use {1 :elihunter173/dirbuf.nvim :cmd :Dirbuf})
 
   (use
     { 1 :j-hui/fidget.nvim
