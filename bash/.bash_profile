@@ -1,3 +1,7 @@
+# Ccache
+command -v ccache &>/dev/null && export CCACHE_DIR=~/.cache/ccache
+command -v ccache &>/dev/null && PATH="/usr/lib/ccache/bin:$PATH"
+
 # fff
 if command -v fff &>/dev/null; then
   export FFF_COL2=5
@@ -10,16 +14,14 @@ if command -v fff &>/dev/null; then
   export FFF_MARK_FORMAT=[%f]
 fi
 
-# Misc
-command -v ccache &>/dev/null && export CCACHE_DIR=~/.cache/ccache
-command -v fish &>/dev/null && export SHELL=/bin/fish
-command -v nvim &>/dev/null && export EDITOR=nvim
-export MANPATH="$HOME/.local/share/man:$MANPATH"
-
 # PATH
-command -v ccache &>/dev/null && PATH="/usr/lib/ccache/bin:$PATH"
 command -v cargo &>/dev/null && PATH="$HOME/.cargo/bin:$PATH"
 PATH="$HOME/.local/bin:$PATH"
+
+# Vars
+command -v nvim &>/dev/null && export EDITOR=nvim
+export MANPATH="$HOME/.local/share/man:$MANPATH"
+export SHOT_DIR="$HOME/pix/shot"
 
 # pfetch
 if command -v pfetch &>/dev/null; then

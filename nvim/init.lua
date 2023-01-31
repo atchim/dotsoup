@@ -1,1 +1,1 @@
-require'soup'.init()
+return (require("soup")).init()

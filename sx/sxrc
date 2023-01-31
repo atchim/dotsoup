@@ -20,16 +20,14 @@ POSITIONAL ARGUMENTS
   <sesh>  set session <sesh> to be started; <sesh> may be "bspwm"'
 
 bspwm() {
-  export _JAVA_AWT_WM_NONREPARENTING=1
-  export SHOT_DIR="$HOME/pix/shot"
   ~/.fehbg &
   SXHKD_SHELL=/bin/bash sxhkd ~/.config/sxhkd/bspwm.sxhkdrc &
   launch-bar bspwm &
   exec bspwm
 }
 
-die() { (($#)) && err "$@"; exit 1; }
 err() { echo "sxrc: ERROR: $@" >&2; }
+die() { (($#)) && err "$@"; exit 1; }
 
 parse() {
   case $1 in

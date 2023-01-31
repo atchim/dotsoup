@@ -1,14 +1,14 @@
-fd = $(wildcard $1$2) $(foreach d, $(wildcard $1*), $(call fd, $d/, $2))
-fnl-files = $(call fd, fnl/, *.fnl)
-fnl-files := $(filter-out %macros.fnl, $(fnl-files))
-lua-files = $(patsubst fnl/%.fnl, lua/%.lua, $(fnl-files))
+fd = $(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call fd,$d/,$2))
+fnl-files = $(call fd,./,*.fnl)
+fnl-files := $(filter-out ./soupmacs/% %macros.fnl,$(fnl-files))
+gen-lua-files = $(patsubst %.fnl,%.lua,$(fnl-files))
 
-all: $(lua-files)
+all: $(gen-lua-files)
 
-clean: lua
-	rm -fr $^
+clean:
+	rm -fr $(gen-lua-files)
 
-lua/%.lua: fnl/%.fnl
+%.lua: %.fnl
 	@mkdir -p $(dir $@)
 	fennel -c $< > $@
 

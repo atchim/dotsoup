@@ -33,6 +33,7 @@ colors:
     matches: {background: CellForeground, foreground: CellBackground}
 
 cursor: {thickness: 0.33}
+env: {SHELL: /bin/fish}
 
 font:
   normal: {family: Hack Nerd Font}
@@ -51,5 +52,3 @@ hints:
 
 key_bindings:
   - {key: Q, mode: Vi|~Search, action: ToggleViMode}
-
-shell: {program: '/bin/fish'}

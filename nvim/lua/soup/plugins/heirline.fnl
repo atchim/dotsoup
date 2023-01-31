@@ -2,7 +2,7 @@
 ; TODO: Make use of the `update` field for on-demand event-based updates.
 
 (import-macros
-  {: bind! : bufln : statusln3 : winbar} :fnl.soup.plugins.heirline-macros
+  {: bind! : bufln : statusln3 : winbar} :lua.soup.plugins.heirline-macros
   {: modcall : nonnil} :soupmacs.soupmacs)
 
 (local M {})
