@@ -1,0 +1,57 @@
+#!/bin/sh -e
+
+help() {
+  cat - <<EOF
+sudoedit-like for doas
+
+USAGE
+  doasedit [-h] <file...>
+
+FLAGS
+  -h  --help  print this help message and exit
+
+POSITIONAL ARGUMENTS
+  <file...> file to edit
+
+The original script source can be found via
+<https://github.com/AN3223/scripts/blob/master/doasedit>.
+EOF
+}
+
+main() {
+  case "$1" in
+    -h|--help) help; exit;;
+  esac
+
+  export TMPDIR=/dev/shm/
+  trap 'trap - EXIT HUP QUIT TERM INT ABRT; rm -f "$tmp" "$tmpcopy"' \
+    EXIT HUP QUIT TERM INT ABRT
+
+  for file; do
+	  case "$file" in
+	    -*) file=./"$file";;
+	  esac
+
+	  tmp="$(mktemp)"
+	  if [ -f "$file" ] && [ ! -r "$file" ]; then
+		  doas cat "$file" > "$tmp"
+	  elif [ -r "$file" ]; then
+		  cat "$file" > "$tmp"
+	  fi
+
+	  tmpcopy="$(mktemp)"
+	  cat "$tmp" > "$tmpcopy"
+	  ${EDITOR:-vi} "$tmp"
+
+	  if cmp -s "$tmp" "$tmpcopy"; then
+		  echo 'file unchanged, exiting...'
+	  else
+		  doas dd if="$tmp" of="$file"
+		  echo 'changes written'
+	  fi
+
+	  rm "$tmp" "$tmpcopy"
+  done
+}
+
+main "$@"

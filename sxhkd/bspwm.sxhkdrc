@@ -17,9 +17,7 @@ super + {a,X,y,z,apostrophe}
 # Show, focus and unstick any hidden sticky window or hide and stick current
 # window.
 super + shift + Return
-  id=$(bspc query --nodes --node any.window.hidden.sticky); \
-  bspc node $id --flag hidden --flag sticky=on; \
-  [[ $id ]] && bspc node $id --flag sticky --focus $id
+  bspwm-utils stick-stack
 
 # Focus last local desktop.
 super + Tab
@@ -94,10 +92,7 @@ super + equal
 
 # Expand or contract a window.
 super + {shift + ,ctrl + }{Down,Left,Right,Up}
-  n=32; \
-  i={0,1}; \
-  x=({bottom top 0 $n,left right -$n 0,right left $n 0,top bottom 0 -$n}); \
-  bspc node --resize $\{x[$i]\} $\{x[2]\} $\{x[3]\}
+  bspwm-utils {expand,contract} {down,left,right,up}
 
 # Move a floating window.
 super + {Down,Left,Right,Up}

@@ -1,44 +1,45 @@
-#!/bin/bash
+#!/bin/sh
 
-MY_HELP="launch-bar
+help() {
+  cat - <<EOF
+launch-bar
 launch a Polybar bar
 
 USAGE
-  launch-bar [--] [-h] <bar>
+  launch-bar -h
+  launch-bar [--] <bar>
 
 FLAGS
       --      treat next arguments as positional arguments
-  -h  --help  print help information and exit
+  -h  --help  print this help message and exit
 
 POSITIONAL ARGUMENTS
-  <bar>  name of the bar to launch"
-
-bar() { [[ $MY_BAR ]] && die "invalid trailing argument: $1"; MY_BAR="$1"; }
-die() { (($#)) && err "$@"; exit 1; }
-err() { echo "launch-bar: ERROR: $@" >&2; }
-
-parse() {
-  while (($#)); do
-    ((MY_RAW)) && { bar "$1"; shift 1; continue; }
-    case $1 in
-      --) MY_RAW=1 ;;
-      -h|--help) echo "$MY_HELP"; exit ;;
-      -*) die "invalid option: $1" >&2 ;;
-      *) bar "$1" ;;
-    esac
-    shift 1
-  done
-  [[ $MY_BAR ]] || die "<bar> not given"
+  <bar>  name of the bar to launch
+EOF
 }
 
-run() {
+err() { echo "launch-bar: ERROR: $*" >&2; }
+die() { [ "$#" -gt 0 ] && err "$@"; exit 1; }
+bar() { [ "$BAR" ] && die "invalid trailing argument: $1"; BAR="$1"; }
+
+parse() {
+  case $1 in
+    -h|--help) help; exit;;
+    --) [ "$2" ] || die "<bar> not given"; bar "$2";;
+    -*) die "invalid argument: $1";;
+    *) bar "$1";;
+  esac
+  [ "$BAR" ] || die "<bar> not given"
+}
+
+main() {
   parse "$@"
-  local file="${XDG_CONFIG_HOME:-$HOME/.config}/polybar/$MY_BAR.ini"
-  [[ -f $file ]] || die "bar file doesn't exist: $file"
-  local tmp=/tmp/polybar-$USER-$MY_BAR
-  [[ -p $tmp ]] && kill $(readlink $tmp | cut -d. -f2)
-  polybar -c "$file" "$MY_BAR" &
+  bar_file="${XDG_CONFIG_HOME:-$HOME/.config}/polybar/$BAR.ini"
+  [ -f "$bar_file" ] || die "bar file does not exist: $bar_file"
+  tmp=/tmp/polybar-$USER-$BAR
+  [ -p "$tmp" ] && kill "$(readlink "$tmp" | cut -d. -f2)"
+  polybar -c "$bar_file" "$BAR" &
   ln -fs /tmp/polybar_mqueue.$! "$tmp"
 }
 
-run "$@"
+main "$@"

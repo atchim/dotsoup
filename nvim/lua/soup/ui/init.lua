@@ -7,24 +7,13 @@ local function _1_()
 end
 local function _2_(_, opts)
   vim.opt.timeoutlen = 500
-  do end (require("which-key")).setup(opts)
-  local _let_3_ = require("soup.map")
-  local labels = _let_3_["labels"]
-  local _let_4_ = require("which-key")
-  local register = _let_4_["register"]
-  for _0, _5_ in ipairs(labels) do
-    local _each_6_ = _5_
-    local maps = _each_6_[1]
-    local _3fopts = _each_6_[2]
-    register(maps, _3fopts)
-  end
-  return nil
+  local _let_3_ = require("which-key")
+  local register = _let_3_["register"]
+  local setup = _let_3_["setup"]
+  setup(opts)
+  return register({["<Space>"] = {name = "Neo-Tree"}, c = {name = "Quickfix"}, f = {name = "Find"}, l = {name = "LSP"}, t = {name = "Toggle"}}, {prefix = "<Leader>"})
 end
-local function _7_(_, opts)
-  do end (require("indent_blankline")).setup(opts)
-  return require("soup.map")({i = {"<Cmd>IndentBlanklineToggle<CR>", "Indent Blankline"}}, {prefix = "<Leader>t"})
-end
-lazy_spec = {{event = "UIEnter", config = _1_, "atchim/sopa.nvim"}, {name = "which-key", event = "UIEnter", opts = {}, config = _2_, "folke/which-key.nvim"}, {event = "BufRead", config = true, dependencies = "atchim/sopa.nvim", "lewis6991/gitsigns.nvim"}, {event = "BufRead", opts = {show_current_context = true, show_current_context_start = true, enabled = false}, config = _7_, "lukas-reineke/indent-blankline.nvim"}}
+lazy_spec = {{event = "UIEnter", config = _1_, "atchim/sopa.nvim"}, {event = "UIEnter", opts = {}, config = _2_, "folke/which-key.nvim"}, {event = "BufRead", config = true, dependencies = "atchim/sopa.nvim", "lewis6991/gitsigns.nvim"}, {event = "BufRead", keys = {{desc = "Indent Blankline", "<Leader>ti", "<Cmd>IndentBlanklineToggle<CR>"}}, opts = {show_current_context = true, show_current_context_start = true, enabled = false}, config = true, "lukas-reineke/indent-blankline.nvim"}}
 local function setup()
   do
     local o = vim.opt
@@ -46,13 +35,17 @@ local function setup()
   end
   do
     local api = vim.api
-    local group = api.nvim_create_augroup("soup_ui_yank_hl_au", {})
-    local function _8_()
+    local group = api.nvim_create_augroup("soup.ui.yank_hl", {})
+    local function _4_()
       return vim.highlight.on_yank({})
     end
-    api.nvim_create_autocmd("TextYankPost", {desc = "Highlights selection on yank.", group = group, callback = _8_})
+    api.nvim_create_autocmd("TextYankPost", {desc = "Highlights selection on yank.", group = group, callback = _4_})
   end
-  require("soup.map")({name = "Toggle", l = {"<Cmd>setlocal list!<CR>", "Local listing"}, s = {"<Cmd>setlocal spell!<CR>", "Local spelling"}}, {prefix = "<Leader>t"})
+  do
+    local map = vim.keymap.set
+    map("n", "<Leader>tl", "<Cmd>setlocal list!<CR>", {desc = "Local listing"})
+    map("n", "<Leader>ts", "<Cmd>setlocal spell!<CR>", {desc = "Local spelling"})
+  end
   do end (require("soup")).push_lazy_spec(lazy_spec)
   return (require("soup.ui.heirline")).setup()
 end

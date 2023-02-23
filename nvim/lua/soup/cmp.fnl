@@ -94,7 +94,7 @@
       :event :BufRead
       :dependencies
       { 1 :L3MON4D3/LuaSnip
-        :config (fn [] (modcall :luasnip.loaders.from_vscode :lazy_load []))
+        :config #(modcall :luasnip.loaders.from_vscode :lazy_load [])
         :dependencies :rafamadriz/friendly-snippets}}])
 
 (fn setup []

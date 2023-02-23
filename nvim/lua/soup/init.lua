@@ -1,5 +1,4 @@
 local lazy_spec = {}
-local lazy_opts = {defaults = {lazy = true}}
 local function push_lazy_spec(spec)
   return table.insert(lazy_spec, spec)
 end
@@ -13,7 +12,7 @@ local function setup_lazy()
     end
     do end (vim.opt.rtp):prepend(lazy_path)
   end
-  return (require("lazy")).setup(lazy_spec, lazy_opts)
+  return (require("lazy")).setup(lazy_spec, {defaults = {lazy = true}})
 end
 local function setup()
   vim.keymap.set("n", "<Space>", "<NOP>")
@@ -23,15 +22,10 @@ local function setup()
     o.lazyredraw = true
     o.ttimeoutlen = 0
     o.updatetime = 250
-    o.clipboard = "unnamed"
-    o.undofile = true
   end
-  do
-    local map_21 = require("soup.map")
-    map_21({["<Leader>y"] = {"\"+y", "CTRL-C-like yank to clipboard"}}, {mode = {"n", "v"}})
-    map_21({["<Leader>p"] = {"\"_dP", "Register-safe paste"}}, {mode = "x"})
-  end
-  do end (require("soup.syn")).setup()
+  do end (require("soup.edit")).setup()
+  do end (require("soup.cmd")).setup()
+  do end (require("soup.ts")).setup()
   do end (require("soup.cmp")).setup()
   do end (require("soup.lsp")).setup()
   do end (require("soup.nav")).setup()

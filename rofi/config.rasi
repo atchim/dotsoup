@@ -1,5 +1,5 @@
 configuration {
-  font: "Hack 9";
+  font: "Hack Nerd Font 9";
 }
 
 @theme "board"

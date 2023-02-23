@@ -1,0 +1,53 @@
+#!/bin/sh
+
+help() {
+  cat - <<EOF
+bspwm-utils
+utilities for bspwm
+
+USAGE
+  bspwm-utils -h
+  bspwm-utils CMD
+
+FLAGS
+  -h  --help  print this help message and exit
+
+CMD
+  contract <dir>  contract in the direction
+  expand <dir>    expand in the direction
+  stick-stack     toggle stick-stack
+EOF
+}
+
+err() { echo "bspwm-utils: ERROR: $*" >&2; }
+die() { [ "$#" -gt 0 ] && err "$@"; exit 1; }
+
+contract_or_expand() {
+  n=20
+  case $2 in
+    down) [ "$1" = expand ] && dir=bottom || dir=top; dx=0; dy="$n";;
+    left) [ "$1" = expand ] && dir=left || dir=right; dx="-$n"; dy=0;;
+    right) [ "$1" = expand ] && dir=right || dir=left; dx="$n"; dy=0;;
+    up) [ "$1" = expand ] && dir=top || dir=bottom; dx=0; dy="-$n";;
+    *) die "invalid <dir>: $2";;
+  esac
+  bspc node --resize "$dir" "$dx" "$dy"
+}
+
+stick_stack() {
+  id=$(bspc query --nodes --node any.window.hidden.sticky)
+  # shellcheck disable=SC2086
+  bspc node $id --flag hidden --flag sticky=on
+  [ "$id" ] && bspc node "$id" --flag sticky --focus "$id"
+}
+
+parse() {
+  case $1 in
+    -h|--help) help; exit;;
+    contract|expand) contract_or_expand "$1" "$2";;
+    stick-stack) stick_stack;;
+    *) die "invalid argument: $1";;
+  esac
+}
+
+parse "$@"

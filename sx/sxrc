@@ -1,52 +1,60 @@
-#!/bin/bash
+#!/bin/sh
 
-HELP='sxrc
+help() {
+  cat - <<EOF
+sxrc
 start X session
 
 USAGE
   sxrc
-  sxrc -c <cmd> ...
-  sxrc [-h] ...
-  sxrc [--] <sesh> ...
+  sxrc -h
+  sxrc -c <cmd>
+  sxrc [--] <sesh>
 
 FLAGS
       --      treat next arguments as positional arguments
-  -h  --help  print help information and exit
+  -h  --help  print this help message and exit
 
 OPTIONS
-  -c  --cmd  <cmd>  set custom command <cmd> to be executed
+  -c  --cmd  <cmd>  set custom command to be executed
 
 POSITIONAL ARGUMENTS
-  <sesh>  set session <sesh> to be started; <sesh> may be "bspwm"'
+  <sesh>  set session to be started; <sesh> may be "bspwm"
+
+If executed with no arguments, it will use "bspwm" as the session to be
+started.
+EOF
+}
+
+err() { echo "sxrc: ERROR: $*" >&2; }
+die() { [ "$#" -gt 0 ] && err "$@"; exit 1; }
 
 bspwm() {
   ~/.fehbg &
-  SXHKD_SHELL=/bin/bash sxhkd ~/.config/sxhkd/bspwm.sxhkdrc &
+  SXHKD_SHELL=/bin/sh sxhkd ~/.config/sxhkd/bspwm.sxhkdrc &
   launch-bar bspwm &
+  dunst &
   exec bspwm
 }
 
-err() { echo "sxrc: ERROR: $@" >&2; }
-die() { (($#)) && err "$@"; exit 1; }
-
 parse() {
   case $1 in
-    '') SESH=bspwm ;;
-    -c|--cmd) [[ $2 ]] || die "<cmd> not given"; CMD="$2" ;;
-    -h|--help) echo "$HELP"; exit ;;
-    --) [[ $2 ]] || die "<sesh> not given"; SESH="$2" ;;
-    -*) die "invalid argument: $1" ;;
-    *) SESH="$1" ;;
+    '') SESH=bspwm;;
+    -c|--cmd) [ "$2" ] || die "<cmd> not given"; CMD="$2";;
+    -h|--help) help; exit;;
+    --) [ "$2" ] || die "<sesh> not given"; SESH="$2";;
+    -*) die "invalid argument: $1";;
+    *) SESH="$1";;
   esac
 }
 
-run() {
+main() {
   parse "$@"
-  [[ $CMD ]] && exec $CMD
+  [ "$CMD" ] && exec $CMD
   case $SESH in
-    bspwm) bspwm ;;
-    *) die "invalid value for <sesh>: $SESH" ;;
+    bspwm) bspwm;;
+    *) die "invalid value for <sesh>: $SESH";;
   esac
 }
 
-run "$@"
+main "$@"

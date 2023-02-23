@@ -1,4 +1,4 @@
-(import-macros {: modcall : ordef} :soupmacs.soupmacs)
+(import-macros {: ordef} :soupmacs.soupmacs)
 
 (macro vcount-or-1 []
   "Returns non-zero `v:count` or 1."
@@ -58,7 +58,7 @@
     (do
       (var subcmd cmds)
       (var broken? false)
-      (each [_ arg* (ipairs args) :until broken?]
+      (each [_ arg* (ipairs args) &until broken?]
         (local item (. subcmd arg*))
         (if
           (= :table (type item)) (set subcmd item)
@@ -91,10 +91,10 @@
         (error "missing subcommand")))
     {:complete comp :count 0 :desc "Soup commands." :nargs :+})
 
-  (modcall :soup.map
-    { "[b" ["<Cmd>Soup buf prev<CR>" "Buffer previous"]
-      "]b" ["<Cmd>Soup buf next<CR>" "Buffer next"]
-      :gb ["<Cmd>Soup buf goto<CR>" "Buffer goto"]
-      :gB ["<Cmd>Soup buf del<CR>" "Buffer delete"]}))
+  (let [map vim.keymap.set]
+    (map :n "[b" "<Cmd>Soup buf prev<CR>" {:desc "Buffer previous"})
+    (map :n "]b" "<Cmd>Soup buf next<CR>" {:desc "Buffer next"})
+    (map :n :gb "<Cmd>Soup buf goto<CR>" {:desc "Buffer goto"})
+    (map :n :gB "<Cmd>Soup buf del<CR>" {:desc "Buffer delete"})))
 
 {: setup}

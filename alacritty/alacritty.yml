@@ -13,6 +13,11 @@ colors:
     end: {background: '#ba74ff', foreground: '#080808'}
     start: {background: '#ba74ff', foreground: '#080808'}
 
+  indexed_colors:
+    - {index: 232, color: '#0c0c0c'}
+    - {index: 235, color: '#252525'}
+    - {index: 240, color: '#5a5a5a'}
+
   normal:
     black: '#080808'
     red: '#ff5b5b'
@@ -44,7 +49,7 @@ hints:
   enabled:
     - regex:
         "(ipfs|ipns|magnet|mailto|gemini|gopher|https|http|news|file|git|ssh\
-        |ftp):[^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`]+"
+          |ftp):[^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`]+"
       command: xdg-open
       binding: {key: U, mods: Control|Shift}
       mouse: {enabled: true}

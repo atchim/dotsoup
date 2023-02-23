@@ -1,3 +1,1 @@
-if [[ $- == *i* ]]; then
-  eval "$(starship init bash)"
-fi
+if [[ $- == *i* ]]; then eval "$(starship init bash)"; fi

@@ -38,7 +38,7 @@
           (let
             [ group#
               ( (-> ,api (. :nvim_create_augroup))
-                :soup_plugin_heirline_statusln_init
+                :soup.ui.heirline.statusln_init
                 {})]
             ( (-> ,api (. :nvim_create_autocmd))
               :ModeChanged
@@ -74,7 +74,7 @@
   (let
     [ api (symbol :vim-api)
       buf? (= kind :buf)
-      bufnr (if buf? (fn [self] `(-> ,self (. :bufnr))) (fn [_self] 0))
+      bufnr (if buf? (fn [self] `(-> ,self (. :bufnr))) #0)
       nonnil (symbol :nonnil)
       status? (= kind :status)
       utils (symbol :heirline-utils)]
@@ -145,11 +145,11 @@
   (let
     [ api (symbol :vim-api)
       buf? (= :buf kind)
-      bufnr (if buf? (fn [self] `(-> ,self (. :bufnr))) (fn [_self] 0))
+      bufnr (if buf? (fn [self] `(-> ,self (. :bufnr))) #0)
       bo
       (if buf?
         (fn [self opt] `(-> vim.bo (. ,(bufnr self)) (. ,opt)))
-        (fn [_self opt] `(. vim.bo ,opt)))
+        (fn [_ opt] `(. vim.bo ,opt)))
       conditions (symbol :heirline-conditions)
       devicons (symbol :devicons)
       utils (symbol :heirline-utils)
@@ -391,9 +391,8 @@
       (clone#
         [,space ,(buf :win)]
         { :hl
-          (fn [_self#]
-            (if (active?#)
-              {:bg :winbarbg :fg :winbarfg :bold true}
-              {:bg :winbarncbg :fg :winbarncfg :bold true}))}))))
+          #(if (active?#)
+            {:bg :winbarbg :fg :winbarfg :bold true}
+            {:bg :winbarncbg :fg :winbarncfg :bold true})}))))
 
 {: bind! : bufln : statusln3 : winbar}

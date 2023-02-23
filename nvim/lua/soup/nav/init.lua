@@ -2,16 +2,17 @@ local lazy_spec
 local function _1_()
   return (require("leap")).set_default_keymaps()
 end
-local function _2_(_, opts)
-  do end (require("ccc")).setup(opts)
-  return require("soup.map")({c = {"<Cmd>CccHighlighterToggle<CR>", "Color Highlighter"}}, {prefix = "<Leader>t"})
+local function _2_()
+  do end (require("telescope")).setup()
+  return (require("telescope")).load_extension("fzf")
 end
 local function _3_()
-  do end (require("telescope")).setup()
-  do end (require("telescope")).load_extension("fzf")
-  return require("soup.map")({name = "Telescope", b = {"<Cmd>lua require'telescope.builtin'.buffers()<CR>", "Buffers"}, f = {"<Cmd>lua require'telescope.builtin'.find_files()<CR>", "Files"}, g = {"<Cmd>lua require'telescope.builtin'.live_grep()<CR>", "Live grep"}, h = {"<Cmd>lua require'telescope.builtin'.help_tags()<CR>", "Help tags"}, o = {"<Cmd>lua require'telescope.builtin'.oldfiles()<CR>", "Old files"}}, {prefix = "<Leader>f"})
+  return (require("todo-comments")).jump_prev()
 end
-lazy_spec = {{event = "BufRead", config = _1_, "ggandor/leap.nvim"}, {keys = "<Leader>tc", opts = {}, config = _2_, "uga-rosa/ccc.nvim"}, {cmd = "Telescope", keys = {"<Leader>fb", "<Leader>ff", "<Leader>fg", "<Leader>fh", "<Leader>fo"}, config = _3_, dependencies = {{build = "make", "nvim-telescope/telescope-fzf-native.nvim"}, "nvim-lua/plenary.nvim"}, "nvim-telescope/telescope.nvim"}}
+local function _4_()
+  return (require("todo-comments")).jump_next()
+end
+lazy_spec = {{event = "BufRead", config = _1_, "ggandor/leap.nvim"}, {cmd = "Telescope", keys = {{desc = "Buffers", "<Leader>fb", "<Cmd>lua require'telescope.builtin'.buffers()<CR>"}, {desc = "Files", "<Leader>ff", "<Cmd>lua require'telescope.builtin'.find_files()<CR>"}, {desc = "Live grep", "<Leader>fg", "<Cmd>lua require'telescope.builtin'.live_grep()<CR>"}, {desc = "Help tags", "<Leader>fh", "<Cmd>lua require'telescope.builtin'.help_tags()<CR>"}, {desc = "Old files", "<Leader>fo", "<Cmd>lua require'telescope.builtin'.oldfiles()<CR>"}}, config = _2_, dependencies = {{build = "make", "nvim-telescope/telescope-fzf-native.nvim"}, "nvim-lua/plenary.nvim"}, "nvim-telescope/telescope.nvim"}, {cmd = {"TodoQuickFix", "TodoLocList", "TodoTelescope"}, event = "BufRead", keys = {{desc = "Todo telescope", "<Leader>ft", "<Cmd>TodoTelescope<CR>"}, {desc = "Todo previous", "[t", _3_}, {desc = "Todo next", "]t", _4_}}, opts = {colors = {info = {"Todo"}}, highlight = {after = "", keyword = ""}}, config = true, dependencies = "nvim-telescope/telescope.nvim", "folke/todo-comments.nvim"}, {keys = {{desc = "Color Highlighter", "<Leader>tc", "<Cmd>CccHighlighterToggle<CR>"}}, opts = {}, config = true, "uga-rosa/ccc.nvim"}}
 local function setup()
   do
     local o = vim.opt
@@ -24,19 +25,26 @@ local function setup()
     g.loaded_netrw = 1
     g.loaded_netrwPlugin = 1
   end
-  local function _4_()
-    local f = vim.fn
-    local _5_
-    if (f.empty(f.filter(f.getwininfo(), "v:val.quickfix")) == 1) then
-      _5_ = "copen"
-    else
-      _5_ = "cclose"
+  do
+    local map = vim.keymap.set
+    map("n", "<Leader>c<CR>", "<Cmd>copen<CR>", {desc = "Open"})
+    local function _5_()
+      local f = vim.fn
+      local _6_
+      if (f.empty(f.filter(f.getwininfo(), "v:val.quickfix")) == 1) then
+        _6_ = "copen"
+      else
+        _6_ = "cclose"
+      end
+      return vim.cmd[_6_]()
     end
-    return vim.cmd[_5_]()
+    map("n", "<Leader>cc", _5_, {desc = "Toggle"})
+    map("n", "<Leader>cj", "<Cmd>cbelow<CR>", {desc = "Go to next below"})
+    map("n", "<Leader>ck", "<Cmd>cabove<CR>", {desc = "Go to next above"})
+    map("n", "<Leader>cn", "<Cmd>cnext<CR>", {desc = "Go to next"})
+    map("n", "<Leader>cp", "<Cmd>cprevious<CR>", {desc = "Go to previous"})
   end
-  require("soup.map")({["<Leader>"] = {c = {name = "Quickfix", ["<CR>"] = {"<Cmd>copen<CR>", "Open"}, c = {_4_, "Toggle"}, j = {"<Cmd>cbelow<CR>", "Go to next below"}, k = {"<Cmd>cabove<CR>", "Go to next above"}, n = {"<Cmd>cnext<CR>", "Go to next"}, p = {"<Cmd>cprevious<CR>", "Go to previous"}}}})
   do end (require("soup")).push_lazy_spec(lazy_spec)
-  do end (require("soup.nav.cmd")).setup()
   return (require("soup.nav.neo-tree")).setup()
 end
 return {setup = setup}

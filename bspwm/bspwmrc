@@ -19,6 +19,7 @@ bspc config presel_feedback_color '#080808'
 # Rules
 bspc rule --remove '*:*'
 bspc rule --add Chromium-browser-chromium desktop='^2'
+bspc rule --add Chromium-bin-browser-chromium desktop='^2'
 bspc rule --add firefox desktop='^2'
 bspc rule --add Google-chrome desktop='^2'
 bspc rule --add qutebrowser desktop='^2'

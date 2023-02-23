@@ -4,38 +4,42 @@
   [ { 1 :atchim/sopa.nvim
       :event :UIEnter
       :config
-      (fn []
-        (let [config (require :sopa.config)]
-          (set config.enabled_integrations
-            [:cmp :indent-blankline :leap :neo-tree :treesitter])
-          (set vim.opt.termguicolors true)
-          (modcall :sopa :init [])))}
+      #(let [config (require :sopa.config)]
+        (set config.enabled_integrations
+          [:cmp :indent-blankline :leap :neo-tree :treesitter])
+        (set vim.opt.termguicolors true)
+        (modcall :sopa :init []))}
     { 1 :folke/which-key.nvim
-      :name :which-key
       :event :UIEnter
       :opts {}
       :config
       (fn [_ opts]
         (set vim.opt.timeoutlen 500)
-        (modcall :which-key :setup opts)
-        (let [{: labels} (require :soup.map) {: register} (require :which-key)]
-          (each [_ [maps ?opts] (ipairs labels)] (register maps ?opts))))}
+        (let [{: register : setup} (require :which-key)]
+          (setup opts)
+          ; Registers groups.
+          (register
+            { :<Space> {:name :Neo-Tree}
+              :c {:name :Quickfix}
+              :f {:name :Find}
+              :l {:name :LSP}
+              :t {:name :Toggle}}
+            {:prefix :<Leader>})))}
     { 1 :lewis6991/gitsigns.nvim
       :event :BufRead
       :config true
       :dependencies :atchim/sopa.nvim}
     { 1 :lukas-reineke/indent-blankline.nvim
       :event :BufRead
+      :keys
+      [ { 1 :<Leader>ti
+          2 :<Cmd>IndentBlanklineToggle<CR>
+          :desc "Indent Blankline"}]
       :opts
       { :enabled false
         :show_current_context true
         :show_current_context_start true}
-      :config
-      (fn [_ opts]
-        (modcall :indent_blankline :setup opts)
-        (modcall :soup.map
-          [ {:i [:<Cmd>IndentBlanklineToggle<CR> "Indent Blankline"]}
-            {:prefix :<Leader>t}]))}])
+      :config true}])
 
 (fn setup []
   "Sets up UI."
@@ -75,17 +79,15 @@
     (set o.visualbell true))
 
   ; Yank Highlight
-  (let [api vim.api group (api.nvim_create_augroup :soup_ui_yank_hl_au {})]
+  (let [api vim.api group (api.nvim_create_augroup :soup.ui.yank_hl {})]
     (api.nvim_create_autocmd :TextYankPost
       { :desc "Highlights selection on yank."
         : group
         :callback #(vim.highlight.on_yank {})}))
 
-  (modcall :soup.map
-    [ { :name :Toggle
-        :l ["<Cmd>setlocal list!<CR>" "Local listing"]
-        :s ["<Cmd>setlocal spell!<CR>" "Local spelling"]}
-      {:prefix :<Leader>t}])
+  (let [map vim.keymap.set]
+    (map :n :<Leader>tl "<Cmd>setlocal list!<CR>" {:desc "Local listing"})
+    (map :n :<Leader>ts "<Cmd>setlocal spell!<CR>" {:desc "Local spelling"}))
 
   (modcall :soup :push_lazy_spec lazy-spec)
   (modcall :soup.ui.heirline :setup []))

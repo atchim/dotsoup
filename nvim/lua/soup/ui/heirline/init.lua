@@ -93,7 +93,7 @@ local function config()
       self_3_auto.mode = vim.fn.mode(1)
       if not self_3_auto["init?"] then
         do
-          local group_4_auto = api.nvim_create_augroup("soup_plugin_heirline_statusln_init", {})
+          local group_4_auto = api.nvim_create_augroup("soup.ui.heirline.statusln_init", {})
           api.nvim_create_autocmd("ModeChanged", {command = "redrawstatus", group = group_4_auto, pattern = "*:*o"})
         end
         self_3_auto["init?"] = true
@@ -560,7 +560,7 @@ local function config()
         end
         return insert_45_auto(unpack(_106_()))
       end
-      local function _108_(_self_98_auto)
+      local function _108_()
         if active_3f_96_auto() then
           return {bg = "winbarbg", bold = true, fg = "winbarfg"}
         else
@@ -788,7 +788,7 @@ local function config()
   end
   local colors = (require("soup.ui.heirline")).fetch_colors()
   local api = vim.api
-  local group = api.nvim_create_augroup("soup_ui_heirline", {clear = true})
+  local group = api.nvim_create_augroup("soup.ui.heirline.def_hl", {clear = true})
   do end (require("heirline")).load_colors(colors)
   setup_lines()
   local function _153_()
@@ -806,7 +806,7 @@ local function config()
   end
   return api.nvim_create_autocmd("User", {desc = "Sets whether the window bar is enabled.", group = group, pattern = "HeirlineInitWinbar", callback = _154_})
 end
-local lazy_spec = {event = "UIEnter", config = config, dependencies = {"atchim/sopa.nvim", "kyazdani42/nvim-web-devicons", "uga-rosa/ccc.nvim"}, "rebelot/heirline.nvim"}
+local lazy_spec = {"rebelot/heirline.nvim", event = "UIEnter", config = config, dependencies = {"atchim/sopa.nvim", "kyazdani42/nvim-web-devicons", "uga-rosa/ccc.nvim"}}
 local function setup()
   return (require("soup")).push_lazy_spec(lazy_spec)
 end

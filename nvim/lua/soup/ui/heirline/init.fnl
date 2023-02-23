@@ -1,5 +1,6 @@
 ; TODO: Enhance buffer line.
 ; TODO: Make use of the `update` field for on-demand event-based updates.
+; TODO: Show macro-recording and related messages.
 
 (import-macros
   {: bind! : bufln : statusln3 : winbar} :lua.soup.ui.heirline.macros
@@ -91,7 +92,6 @@
       :winbarncbg winbarnc.bg
       :winbarncfg winbarnc.fg}))
 
-
 (fn config []
   "Post-load configuration hook."
 
@@ -166,7 +166,7 @@
   (let
     [ colors (modcall :soup.ui.heirline :fetch_colors [])
       api vim.api
-      group (api.nvim_create_augroup :soup_ui_heirline {:clear true})]
+      group (api.nvim_create_augroup :soup.ui.heirline.def_hl {:clear true})]
     (modcall :heirline :load_colors colors)
     (setup-lines)
     (api.nvim_create_autocmd
@@ -174,9 +174,8 @@
       { :desc "Defines highlight colors for Heirline."
         : group
         :callback
-        (fn []
-          (let [colors (modcall :soup.ui.heirline :fetch_colors [])]
-            (modcall :heirline.utils :on_colorscheme colors)))})
+        #(let [colors (modcall :soup.ui.heirline :fetch_colors [])]
+          (modcall :heirline.utils :on_colorscheme colors))})
     ; FIXME: When writing an unnamed buffer it doesn't get triggered.
     (api.nvim_create_autocmd
       :User
@@ -184,14 +183,13 @@
         : group
         :pattern :HeirlineInitWinbar
         :callback
-        (fn []
-          (when
-            (modcall
-              :heirline.conditions
-              :buffer_matches
-              { :buftype [:nofile :prompt :quickfix]
-                :filetype [:neo-tree :packer]})
-            (set vim.opt_local.winbar nil)))})))
+        #(when
+          (modcall
+            :heirline.conditions
+            :buffer_matches
+            { :buftype [:nofile :prompt :quickfix]
+              :filetype [:neo-tree :packer]})
+          (set vim.opt_local.winbar nil))})))
 
 (local lazy-spec
   { 1 :rebelot/heirline.nvim

@@ -1,7 +1,8 @@
 (import-macros {: modcall} :soupmacs.soupmacs)
 
 (local opts
-  { :highlight {:enable true}
+  { :context_commentstring {:enable true}
+    :highlight {:enable true}
     :incremental_selection
     { :enable true
       :keymaps
@@ -54,18 +55,15 @@
         :TSEditQueryUserAfter]
       :event :BufRead
       : opts
-      : config}
-    { 1 :nvim-treesitter/nvim-treesitter-textobjects
-      :event :BufRead
-      :dependencies [:nvim-treesitter/nvim-treesitter]}
-    { 1 :nvim-treesitter/playground
-      :keys :<Leader>tp
-      :config
-      (fn []
-        (modcall :soup.map
-          [ {:p [:<Cmd>TSPlaygroundToggle<CR> "Tree-Sitter Playground"]}
-            {:prefix :<Leader>t}]))
-      :dependencies [:nvim-treesitter/nvim-treesitter]}])
+      : config
+      :dependencies
+      [ :nvim-treesitter/nvim-treesitter-textobjects
+        { 1 :nvim-treesitter/playground
+          :keys
+          [ { 1 :<Leader>tp
+              2 :<Cmd>TSPlaygroundToggle<CR>
+              :desc "Tree-Sitter Playground"}]}
+        :JoosepAlviste/nvim-ts-context-commentstring]}])
 
 (fn setup []
   "Sets up Tree-Sitter-related stuff."

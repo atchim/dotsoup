@@ -1,0 +1,23 @@
+[global]
+background = "#0c0c0c"
+font = Hack Nerd Font 9
+foreground = "#959595"
+frame_color = "#959595"
+frame_width = 2
+highlight = "#00ad2b"
+idle_threshold = 60
+mouse_left_click = do_action, close_current
+mouse_middle_click = close_all
+mouse_right_click = close_current
+offset = 10x10
+progress_bar_frame_width = 0
+
+[urgency_low]
+foreground = "#5a5a5a"
+frame_color = "#5a5a5a"
+
+[urgency_critical]
+foreground = "#ff5b5b"
+frame_color = "#ff5b5b"
+
+# vim: ft=cfg

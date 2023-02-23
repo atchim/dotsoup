@@ -1,4 +1,4 @@
-set font 'Hack Normal 9'
+set font 'Hack Nerd Font 9'
 set highlight-transparency 0.5
 set completion-bg '#0c0c0c'
 set completion-fg '#5a5a5a'

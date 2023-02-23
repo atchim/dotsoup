@@ -1,7 +1,6 @@
 (import-macros {: modcall} :soupmacs.soupmacs)
 
 (local lazy-spec [])
-(local lazy-opts {:defaults {:lazy true}})
 
 (fn push-lazy-spec [spec]
   "Pushes `lazy.nvim` plugin specification."
@@ -20,7 +19,7 @@
           :--branch=stable
           lazy-path]))
     (vim.opt.rtp:prepend lazy-path))
-  (modcall :lazy :setup [lazy-spec lazy-opts]))
+  (modcall :lazy :setup [lazy-spec {:defaults {:lazy true}}]))
 
 (fn setup []
   "Sets up the Soup configurations."
@@ -33,19 +32,11 @@
     ; Performance
     (set o.lazyredraw true)
     (set o.ttimeoutlen 0)
-    (set o.updatetime 250)
+    (set o.updatetime 250))
 
-    ; Misc
-    (set o.clipboard :unnamed)
-    (set o.undofile true))
-
-  (let [map! (require :soup.map)]
-    (map!
-      {:<Leader>y ["\"+y" "CTRL-C-like yank to clipboard"]}
-      {:mode [:n :v]})
-    (map! {:<Leader>p ["\"_dP" "Register-safe paste"]} {:mode :x}))
-
-  (modcall :soup.syn :setup [])
+  (modcall :soup.edit :setup [])
+  (modcall :soup.cmd :setup [])
+  (modcall :soup.ts :setup [])
   (modcall :soup.cmp :setup [])
   (modcall :soup.lsp :setup [])
   (modcall :soup.nav :setup [])

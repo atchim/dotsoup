@@ -137,12 +137,6 @@ c.downloads.remove_finished = 0
 c.hints.border = '0px solid'
 c.hints.radius = 0
 
-# Misc {{{1
-c.auto_save.session = True
-c.fonts.default_family = 'Hack'
-c.keyhint.radius = 0
-c.prompt.radius = 0
-
 # Tabs {{{1
 c.tabs.new_position.unrelated = 'next'
 c.tabs.padding = {'bottom': 0, 'left': 0, 'right': 0, 'top': 0}
@@ -161,7 +155,10 @@ c.url.searchengines = {
   'd': 'https://duckduckgo.com/?q={}',
   'dpl': 'https://www.deepl.com/translator#au/au/{}',
   'g': 'https://www.google.com/search?q={}',
+  'gb': 'https://gentoobrowse.randomdan.homeip.net/search?criteria={}',
+  'gbp': 'https://gentoobrowse.randomdan.homeip.net/packages/{}',
   'gh': 'https://github.com/search?q={}',
+  'gh/': 'https://github.com/{}',
   'gt': 'https://translate.google.com/?sl=auto&text={}',
   'rs': 'https://doc.rust-lang.org/std/index.html?search={}',
   'rsc': 'https://docs.rs/releases/search?query={}',
@@ -171,6 +168,13 @@ c.url.searchengines = {
   'zu': 'http://gpo.zugaina.org/Search?search={}',
 }
 c.url.start_pages = 'https://www.google.com'
+
+# Misc {{{1
+c.auto_save.session = True
+c.fonts.default_family = 'Hack Nerd Font'
+c.keyhint.radius = 0
+c.prompt.radius = 0
+c.spellcheck.languages = ['en-US', 'pt-BR']
 
 # Bottom {{{1
 config.load_autoconfig(False)

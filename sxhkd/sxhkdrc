@@ -65,7 +65,7 @@ super + space ; s ; {s,shift + s}
 # Hide or show the Polybar bar.
 super + b
   cmd={hide,show}; \
-  [[ $cmd = hide ]] && bspc config bottom_padding 0; \
+  [ "$cmd" = hide ] && bspc config bottom_padding 0; \
   polybar-msg cmd $cmd
 
 # Restart status bar.

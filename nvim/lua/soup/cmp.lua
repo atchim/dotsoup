@@ -41,7 +41,7 @@ local lazy_spec
 local function _7_()
   return (require("luasnip.loaders.from_vscode")).lazy_load()
 end
-lazy_spec = {{config = config, "hrsh7th/nvim-cmp"}, {event = "BufRead", dependencies = "hrsh7th/nvim-cmp", "hrsh7th/cmp-buffer"}, {event = "LspAttach", dependencies = "hrsh7th/nvim-cmp", "hrsh7th/cmp-nvim-lsp"}, {ft = "lua", dependencies = "hrsh7th/nvim-cmp", "hrsh7th/cmp-nvim-lua"}, {event = "BufRead", dependencies = "hrsh7th/nvim-cmp", "hrsh7th/cmp-path"}, {event = "BufRead", dependencies = {config = _7_, dependencies = "rafamadriz/friendly-snippets", "L3MON4D3/LuaSnip"}, "saadparwaiz1/cmp_luasnip"}}
+lazy_spec = {{"hrsh7th/nvim-cmp", config = config}, {"hrsh7th/cmp-buffer", event = "BufRead", dependencies = "hrsh7th/nvim-cmp"}, {"hrsh7th/cmp-nvim-lsp", event = "LspAttach", dependencies = "hrsh7th/nvim-cmp"}, {"hrsh7th/cmp-nvim-lua", ft = "lua", dependencies = "hrsh7th/nvim-cmp"}, {"hrsh7th/cmp-path", event = "BufRead", dependencies = "hrsh7th/nvim-cmp"}, {"saadparwaiz1/cmp_luasnip", event = "BufRead", dependencies = {"L3MON4D3/LuaSnip", config = _7_, dependencies = "rafamadriz/friendly-snippets"}}}
 local function setup()
   vim.g.omni_sql_no_default_maps = 1
   return (require("soup")).push_lazy_spec(lazy_spec)

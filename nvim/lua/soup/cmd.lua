@@ -157,6 +157,10 @@ local function setup()
     end
   end
   vim.api.nvim_create_user_command("Soup", _22_, {complete = comp, count = 0, desc = "Soup commands.", nargs = "+"})
-  return require("soup.map")({["[b"] = {"<Cmd>Soup buf prev<CR>", "Buffer previous"}, ["]b"] = {"<Cmd>Soup buf next<CR>", "Buffer next"}, gb = {"<Cmd>Soup buf goto<CR>", "Buffer goto"}, gB = {"<Cmd>Soup buf del<CR>", "Buffer delete"}})
+  local map = vim.keymap.set
+  map("n", "[b", "<Cmd>Soup buf prev<CR>", {desc = "Buffer previous"})
+  map("n", "]b", "<Cmd>Soup buf next<CR>", {desc = "Buffer next"})
+  map("n", "gb", "<Cmd>Soup buf goto<CR>", {desc = "Buffer goto"})
+  return map("n", "gB", "<Cmd>Soup buf del<CR>", {desc = "Buffer delete"})
 end
 return {setup = setup}
