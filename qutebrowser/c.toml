@@ -1,0 +1,177 @@
+auto_save.session = true
+completion.shrink = true
+fonts.default_family = 'Hack Nerd Font'
+keyhint.radius = 0
+prompt.radius = 0
+spellcheck.languages = ['en-US', 'pt-BR']
+statusbar.show = 'in-mode'
+
+[colors]
+_palette = [
+  '#080808',
+  '#0c0c0c',
+  '#121212',
+  '#1a1a1a',
+  '#252525',
+  '#383838',
+  '#5a5a5a',
+  '#959595',
+  '#ff5b5b',
+  '#bc8f05',
+  '#54a900',
+  '#00ad2b',
+  '#00a7a7',
+  '#6b90ff',
+  '#ba74ff',
+  '#fc4ad0',
+]
+
+[colors.completion]
+category.bg = 1
+category.fg = 7
+category.border.bottom = 1
+category.border.top = 1
+even.bg = 0
+fg = [7, 6, 10]
+item.selected.bg = 2
+item.selected.border.bottom = 2
+item.selected.border.top = 2
+item.selected.fg = 7
+item.selected.match.fg = 10
+match.fg = 14
+odd.bg = 0
+scrollbar.bg = 0
+scrollbar.fg = 4
+
+[colors.contextmenu]
+disabled.bg = 0
+disabled.fg = 6
+menu.bg = 0
+menu.fg = 7
+selected.bg = 1
+selected.fg = 7
+
+[colors.downloads]
+bar.bg = 0
+start.fg = 0
+start.bg = 10
+stop.fg = 0
+stop.bg = 11
+error.fg = 0
+error.bg = 8
+
+[colors.hints]
+bg = 14
+fg = 0
+match.fg = 6
+
+[colors.keyhint]
+bg = 0
+fg = 7
+suffix.fg = 10
+
+[colors.messages]
+error.bg = 8
+error.border = 8
+error.fg = 0
+info.bg = 11
+info.border = 11
+info.fg = 0
+warning.bg = 10
+warning.border = 10
+warning.fg = 0
+
+[colors.prompts]
+bg = 0
+border = 0
+fg = 7
+selected.bg = 1
+
+[colors.statusbar]
+caret.bg = 0
+caret.fg = 7
+caret.selection.bg = 0
+caret.selection.fg = 7
+command.bg = 0
+command.fg = 7
+command.private.bg = 0
+command.private.fg = 7
+insert.bg = 0
+insert.fg = 7
+normal.bg = 0
+normal.fg = 7
+passthrough.bg = 0
+passthrough.fg = 7
+private.bg = 0
+private.fg = 6
+progress.bg = 7
+url.error.fg = 8
+url.fg = 7
+url.hover.fg = 14
+url.success.http.fg = 7
+url.success.https.fg = 11
+url.warn.fg = 10
+
+[colors.tabs]
+bar.bg = 1
+even.bg = 0
+even.fg = 6
+indicator.error = 8
+indicator.start = 10
+indicator.stop = 11
+odd.bg = 0
+odd.fg = 6
+pinned.even.bg = 1
+pinned.even.fg = 6
+pinned.odd.bg = 1
+pinned.odd.fg = 6
+pinned.selected.even.bg = 0
+pinned.selected.even.fg = 7
+pinned.selected.odd.bg = 0
+pinned.selected.odd.fg = 7
+selected.even.bg = 0
+selected.even.fg = 7
+selected.odd.bg = 0
+selected.odd.fg = 7
+
+[downloads]
+location.directory = '~/Downloads'
+location.prompt = false
+location.suggestion = 'both'
+position = 'bottom'
+remove_finished = 0
+
+[hints]
+border = '0px solid'
+radius = 0
+
+[tabs]
+new_position.unrelated = 'next'
+padding = {bottom = 0, left = 0, right = 0, top = 0}
+position = 'left'
+select_on_remove = 'last-used'
+show = 'switching'
+title.format = '{audio}{index} {current_title}'
+width = 50
+
+[url]
+default_page = 'https://www.google.com'
+start_pages = 'https://www.google.com'
+
+[url.searchengines]
+DEFAULT = 'https://google.com/search?q={}'
+a = 'https://wiki.archlinux.org/index.php?search={}'
+d = 'https://duckduckgo.com/?q={}'
+dpl = 'https://www.deepl.com/translator#au/au/{}'
+g = 'https://www.google.com/search?q={}'
+gb = 'https://gentoobrowse.randomdan.homeip.net/search?criteria={}'
+gbp = 'https://gentoobrowse.randomdan.homeip.net/packages/{}'
+gh = 'https://github.com/search?q={}'
+'gh/' = 'https://github.com/{}'
+gt = 'https://translate.google.com/?sl=auto&text={}'
+rs = 'https://doc.rust-lang.org/std/index.html?search={}'
+rsc = 'https://docs.rs/releases/search?query={}'
+sc = 'https://soundcloud.com/search?q={}'
+w = 'https://wikipedia.org/w/index.php?search={}'
+y = 'https://www.youtube.com/results?search_query={}'
+zu = 'http://gpo.zugaina.org/Search?search={}'

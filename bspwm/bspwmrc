@@ -1,6 +1,6 @@
 #!/bin/sh
 
-bspc monitor --reset-desktops tty browse art chat media game file vm conf misc
+bspc monitor --reset-desktops tty browse art chat media game fs vm conf misc
 
 # General
 bspc config border_width 2
@@ -33,5 +33,6 @@ bspc rule --add TelegramDesktop desktop='^4'
 bspc rule --add Zathura desktop='^5' state=tiled
 bspc rule --add Dwarf_Fortress desktop='^6'
 bspc rule --add dwarftherapist desktop='^6'
+bspc rule --add zsnes desktop='^6'
 bspc rule --add '*:popup' state=floating
 bspc rule --add vlc state=floating

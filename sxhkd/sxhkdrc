@@ -4,11 +4,13 @@
 
 # Set brazilian keyboard layout.
 super + space ; k ; b
-  setxkbmap -model abnt2 -layout br
+  setxkbmap -model abnt2 -layout br \
+  && notify-send --urgency=low "Changed keyboard layout to pt-BR"
 
 # Set north american keyboard layout.
 super + space ; k ; u
-  setxkbmap -layout us
+  setxkbmap -layout us \
+  && notify-send --urgency=low "Changed keyboard layout to en-US"
 
 #
 # Launchers
@@ -52,11 +54,13 @@ super + space ; space
 
 # Take a screenshot and copy it to clipboard.
 super + space ; s ; c
-  maim | xclip -selection clipboard -target image/png
+  maim | xclip -selection clipboard -target image/png \
+  && notify-send "Screenshot saved to clipboard"
 
 # Take a normal screenshot or from selection.
 super + space ; s ; {s,shift + s}
-  maim {_,--select} "$SHOT_DIR/$(date +%s).png"
+  maim {_,--select} "$SHOT_DIR/$(date +%s).png" \
+  && notify-send "Screenshot saved"
 
 #
 # Misc
