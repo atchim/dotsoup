@@ -84,22 +84,14 @@
         [{:name :path} {:name :buffer}])
       :view {:entries {:name :custom :selection_order :near_cursor}}}))
 
-(local lazy-spec
-  [ {1 :hrsh7th/nvim-cmp : config}
-    {1 :hrsh7th/cmp-buffer :event :BufRead :dependencies :hrsh7th/nvim-cmp}
-    {1 :hrsh7th/cmp-nvim-lsp :event :LspAttach :dependencies :hrsh7th/nvim-cmp}
-    {1 :hrsh7th/cmp-nvim-lua :ft :lua :dependencies :hrsh7th/nvim-cmp}
-    {1 :hrsh7th/cmp-path :event :BufRead :dependencies :hrsh7th/nvim-cmp}
-    { 1 :saadparwaiz1/cmp_luasnip
-      :event :BufRead
-      :dependencies
-      { 1 :L3MON4D3/LuaSnip
-        :config #(modcall :luasnip.loaders.from_vscode :lazy_load [])
-        :dependencies :rafamadriz/friendly-snippets}}])
-
-(fn setup []
-  "Sets up auto-completion-related stuff."
-  (set vim.g.omni_sql_no_default_maps 1)
-  (modcall :soup :push_lazy_spec lazy-spec))
-
-{: setup}
+[ {1 :hrsh7th/nvim-cmp : config}
+  {1 :hrsh7th/cmp-buffer :event :BufRead :dependencies :hrsh7th/nvim-cmp}
+  {1 :hrsh7th/cmp-nvim-lsp :event :LspAttach :dependencies :hrsh7th/nvim-cmp}
+  {1 :hrsh7th/cmp-nvim-lua :ft :lua :dependencies :hrsh7th/nvim-cmp}
+  {1 :hrsh7th/cmp-path :event :BufRead :dependencies :hrsh7th/nvim-cmp}
+  { 1 :saadparwaiz1/cmp_luasnip
+    :event :BufRead
+    :dependencies
+    { 1 :L3MON4D3/LuaSnip
+      :config #(modcall :luasnip.loaders.from_vscode :lazy_load [])
+      :dependencies :rafamadriz/friendly-snippets}}]

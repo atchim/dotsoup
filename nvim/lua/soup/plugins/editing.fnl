@@ -23,7 +23,20 @@
         (-> (rule pairy (. pairies* i) lispies)
           (: :with_pair (cond.not_after_regex :%w)))))))
 
-(local lazy-spec 
+[ { 1 :echasnovski/mini.comment
+    :event :BufRead
+    :opts
+    { :hooks
+      { :pre
+        #(modcall
+          :ts_context_commentstring.internal
+          :update_commentstring
+          [])}
+      :options {:pad_comment_parts false}}
+    :config (fn [_ opts] (modcall :mini.comment :setup opts))
+    :dependencies :JoosepAlviste/nvim-ts-context-commentstring}
+  {1 :editorconfig/editorconfig-vim :event :BufRead}
+  {1 :kylechui/nvim-surround :event :BufRead :config true}
   { 1 :windwp/nvim-autopairs
     :event :InsertCharPre
     :opts
@@ -38,10 +51,4 @@
         :highlight :Search
         :highlight_grey :Comment}}
     : config
-    :dependencies :hrsh7th/nvim-cmp})
-
-(fn setup []
-  "Sets up autopairs configurations."
-  (modcall :soup :push_lazy_spec lazy-spec))
-
-{: setup}
+    :dependencies :hrsh7th/nvim-cmp}]

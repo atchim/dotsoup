@@ -15,4 +15,4 @@ config.unbind("=")
 config.bind("zz", "zoom")
 
 # Misc
-config.bind('tt', 'set-cmd-text -s :tab-take')
+config.bind('wt', 'set-cmd-text -s :tab-take')

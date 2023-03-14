@@ -30,10 +30,7 @@ def set_c():
 
   for k, v in dict_attrs(data):
     if k.startswith('colors.'):
-      if isinstance(v, list):
-        v = [palette[i] for i in v]
-      else:
-        v = palette[v]
+      v = [palette[i] for i in v] if isinstance(v, list) else palette[v]
     config.set(k, v)
 
 set_c()

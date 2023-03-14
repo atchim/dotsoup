@@ -3,7 +3,7 @@
 ; TODO: Show macro-recording and related messages.
 
 (import-macros
-  {: bind! : bufln : statusln3 : winbar} :lua.soup.ui.heirline.macros
+  {: bind! : bufln : statusln3 : winbar} :lua.soup.plugins.ui.heirline.macros
   {: modcall : nonnil} :soupmacs.soupmacs)
 
 (fn fetch-colors []
@@ -164,9 +164,10 @@
       (set vim.opt.showtabline 2)))
 
   (let
-    [ colors (modcall :soup.ui.heirline :fetch_colors [])
+    [ colors (fetch-colors)
       api vim.api
-      group (api.nvim_create_augroup :soup.ui.heirline.def_hl {:clear true})]
+      group
+      (api.nvim_create_augroup :soup.plugins.ui.heirline.def-hl {:clear true})]
     (modcall :heirline :load_colors colors)
     (setup-lines)
     (api.nvim_create_autocmd
@@ -174,7 +175,7 @@
       { :desc "Defines highlight colors for Heirline."
         : group
         :callback
-        #(let [colors (modcall :soup.ui.heirline :fetch_colors [])]
+        #(let [colors (fetch-colors)]
           (modcall :heirline.utils :on_colorscheme colors))})
     ; FIXME: When writing an unnamed buffer it doesn't get triggered.
     (api.nvim_create_autocmd
@@ -191,12 +192,7 @@
               :filetype [:neo-tree :packer]})
           (set vim.opt_local.winbar nil))})))
 
-(local lazy-spec
-  { 1 :rebelot/heirline.nvim
-    :event :UIEnter
-    : config
-    :dependencies
-    [:atchim/sopa.nvim :kyazdani42/nvim-web-devicons :uga-rosa/ccc.nvim]})
-
-(fn setup [] "Sets up status lines." (modcall :soup :push_lazy_spec lazy-spec))
-{:fetch_colors fetch-colors : setup}
+{ 1 :rebelot/heirline.nvim
+  :event "User SoupHasColors"
+  : config
+  :dependencies [:ccc.nvim :kyazdani42/nvim-web-devicons]}

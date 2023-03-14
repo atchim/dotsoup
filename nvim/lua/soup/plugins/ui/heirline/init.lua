@@ -786,13 +786,13 @@ local function config()
     vim.opt.showtabline = 2
     return nil
   end
-  local colors = (require("soup.ui.heirline")).fetch_colors()
+  local colors = fetch_colors()
   local api = vim.api
-  local group = api.nvim_create_augroup("soup.ui.heirline.def_hl", {clear = true})
+  local group = api.nvim_create_augroup("soup.plugins.ui.heirline.def-hl", {clear = true})
   do end (require("heirline")).load_colors(colors)
   setup_lines()
   local function _153_()
-    local colors0 = (require("soup.ui.heirline")).fetch_colors()
+    local colors0 = fetch_colors()
     return (require("heirline.utils")).on_colorscheme(colors0)
   end
   api.nvim_create_autocmd("ColorScheme", {desc = "Defines highlight colors for Heirline.", group = group, callback = _153_})
@@ -806,8 +806,4 @@ local function config()
   end
   return api.nvim_create_autocmd("User", {desc = "Sets whether the window bar is enabled.", group = group, pattern = "HeirlineInitWinbar", callback = _154_})
 end
-local lazy_spec = {"rebelot/heirline.nvim", event = "UIEnter", config = config, dependencies = {"atchim/sopa.nvim", "kyazdani42/nvim-web-devicons", "uga-rosa/ccc.nvim"}}
-local function setup()
-  return (require("soup")).push_lazy_spec(lazy_spec)
-end
-return {fetch_colors = fetch_colors, setup = setup}
+return {"rebelot/heirline.nvim", event = "User SoupHasColors", config = config, dependencies = {"ccc.nvim", "kyazdani42/nvim-web-devicons"}}

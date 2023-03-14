@@ -73,7 +73,7 @@
           (when (not= nil start) arg*)))))))
 
 (fn setup []
-  "Sets up Soup navigation commands."
+  "Sets up Soup commands."
 
   (vim.api.nvim_create_user_command :Soup
     (fn [repl]

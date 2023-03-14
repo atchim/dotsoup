@@ -37,13 +37,7 @@ local function config()
   end
   return cmp.setup({formatting = {fields = {"kind", "abbr"}, format = _1_}, mapping = {["<C-C>"] = cmp.mapping.abort(), ["<C-E>"] = cmp.mapping(cmp.mapping.scroll_docs(1), {"i", "c"}), ["<C-N>"] = cmp.mapping.select_next_item(), ["<C-P>"] = cmp.mapping.select_prev_item(), ["<C-Y>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), {"i", "c"}), ["<CR>"] = cmp.mapping.confirm(), ["<Down>"] = cmp.mapping.select_next_item(), ["<S-Tab>"] = cmp.mapping(_2_, {"i", "s"}), ["<Tab>"] = cmp.mapping(_4_, {"i", "s"}), ["<Up>"] = cmp.mapping.select_prev_item()}, snippet = {expand = _6_}, sources = cmp.config.sources({{name = "nvim_lua"}, {name = "nvim_lsp"}, {name = "luasnip"}}, {{name = "path"}, {name = "buffer"}}), view = {entries = {name = "custom", selection_order = "near_cursor"}}})
 end
-local lazy_spec
 local function _7_()
   return (require("luasnip.loaders.from_vscode")).lazy_load()
 end
-lazy_spec = {{"hrsh7th/nvim-cmp", config = config}, {"hrsh7th/cmp-buffer", event = "BufRead", dependencies = "hrsh7th/nvim-cmp"}, {"hrsh7th/cmp-nvim-lsp", event = "LspAttach", dependencies = "hrsh7th/nvim-cmp"}, {"hrsh7th/cmp-nvim-lua", ft = "lua", dependencies = "hrsh7th/nvim-cmp"}, {"hrsh7th/cmp-path", event = "BufRead", dependencies = "hrsh7th/nvim-cmp"}, {"saadparwaiz1/cmp_luasnip", event = "BufRead", dependencies = {"L3MON4D3/LuaSnip", config = _7_, dependencies = "rafamadriz/friendly-snippets"}}}
-local function setup()
-  vim.g.omni_sql_no_default_maps = 1
-  return (require("soup")).push_lazy_spec(lazy_spec)
-end
-return {setup = setup}
+return {{"hrsh7th/nvim-cmp", config = config}, {"hrsh7th/cmp-buffer", event = "BufRead", dependencies = "hrsh7th/nvim-cmp"}, {"hrsh7th/cmp-nvim-lsp", event = "LspAttach", dependencies = "hrsh7th/nvim-cmp"}, {"hrsh7th/cmp-nvim-lua", ft = "lua", dependencies = "hrsh7th/nvim-cmp"}, {"hrsh7th/cmp-path", event = "BufRead", dependencies = "hrsh7th/nvim-cmp"}, {"saadparwaiz1/cmp_luasnip", event = "BufRead", dependencies = {"L3MON4D3/LuaSnip", config = _7_, dependencies = "rafamadriz/friendly-snippets"}}}
