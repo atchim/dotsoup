@@ -8,11 +8,11 @@ config.bind("<Ctrl+Shift+Tab>", "tab-focus stack-next")
 
 # Zoom
 config.unbind("+")
-config.bind("z+", "zoom-in")
+config.bind("z=", "zoom-in")
 config.unbind("-")
 config.bind("z-", "zoom-out")
 config.unbind("=")
 config.bind("zz", "zoom")
 
 # Misc
-config.bind('wt', 'set-cmd-text -s :tab-take')
+config.bind('tt', 'set-cmd-text -s :tab-take')

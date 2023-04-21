@@ -35,7 +35,6 @@
       :options {:pad_comment_parts false}}
     :config (fn [_ opts] (modcall :mini.comment :setup opts))
     :dependencies :JoosepAlviste/nvim-ts-context-commentstring}
-  {1 :editorconfig/editorconfig-vim :event :BufRead}
   {1 :kylechui/nvim-surround :event :BufRead :config true}
   { 1 :windwp/nvim-autopairs
     :event :InsertCharPre

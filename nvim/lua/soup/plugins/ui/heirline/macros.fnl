@@ -342,7 +342,7 @@
     [ api (symbol :vim-api)
       space (symbol :statusline-space)
       utils (symbol :heirline-utils)
-      insert #`((-> ,utils (. :insert)) ,$...)]
+      insert (fn [...] `((-> ,utils (. :insert)) ,...))]
     `(let
       [ proto#
         { :init

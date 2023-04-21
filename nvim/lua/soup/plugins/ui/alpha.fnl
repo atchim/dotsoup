@@ -32,6 +32,7 @@
       (dashboard.button :f "  Find files" ":Telescope find_files<CR>")
       (dashboard.button :g "  Live grep" ":Telescope live_grep<CR>")
       (dashboard.button :o "  Recent files" ":Telescope oldfiles<CR>")
+      (dashboard.button :h "🩺 Check health" ::checkhealth<CR>)
       (dashboard.button :l "󰒲  Lazy" ::Lazy<CR>)
       (dashboard.button :m "🧱 Mason" ::Mason<CR>)
       (dashboard.button :q "  Quit" ":qa<CR>")])
@@ -47,5 +48,4 @@
   :name :alpha
   :event :VimEnter
   : opts
-  :config true
   :dependencies :kyazdani42/nvim-web-devicons}

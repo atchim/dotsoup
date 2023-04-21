@@ -38,7 +38,6 @@
     (set o.tabstop 2)
 
     ; Performance
-    (set o.lazyredraw true)
     (set o.ttimeoutlen 0)
     (set o.updatetime 250)
 

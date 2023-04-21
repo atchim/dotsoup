@@ -2,7 +2,7 @@
 
 [ { 1 :atchim/sopa.nvim
     :event :UIEnter
-    :opts {:custom_groups {:MiniStarterHeader {:link :Constant}}}
+    :opts (fn [_ opts] opts)
     :config
     (fn [_ opts]
       (modcall :sopa :setup opts)
@@ -35,5 +35,4 @@
     :opts
     { :enabled false
       :show_current_context true
-      :show_current_context_start true}
-    :config true}]
+      :show_current_context_start true}}]

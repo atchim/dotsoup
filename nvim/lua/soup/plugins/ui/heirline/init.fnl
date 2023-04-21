@@ -160,7 +160,20 @@
         :setup
         { :statusline (statusln3)
           :winbar (winbar)
-          :tabline (heirline-utils.make_buflist (bufln))})
+          :tabline (heirline-utils.make_buflist (bufln))
+          :opts
+          { :disable_winbar_cb
+            (fn [args]
+              (let
+                [ buf args.buf
+                  tbl-has vim.tbl_contains
+                  buftype
+                  (tbl-has
+                    [:help :nofile :prompt :quickfix]
+                    (-> vim.bo (. buf :buftype)))
+                  filetype
+                  (tbl-has [:neo-tree] (-> vim.bo (. buf :buftype)))]
+                (or buftype filetype)))}})
       (set vim.opt.showtabline 2)))
 
   (let
@@ -176,21 +189,7 @@
         : group
         :callback
         #(let [colors (fetch-colors)]
-          (modcall :heirline.utils :on_colorscheme colors))})
-    ; FIXME: When writing an unnamed buffer it doesn't get triggered.
-    (api.nvim_create_autocmd
-      :User
-      { :desc "Sets whether the window bar is enabled."
-        : group
-        :pattern :HeirlineInitWinbar
-        :callback
-        #(when
-          (modcall
-            :heirline.conditions
-            :buffer_matches
-            { :buftype [:nofile :prompt :quickfix]
-              :filetype [:neo-tree :packer]})
-          (set vim.opt_local.winbar nil))})))
+          (modcall :heirline.utils :on_colorscheme colors))})))
 
 { 1 :rebelot/heirline.nvim
   :event "User SoupHasColors"

@@ -50,5 +50,4 @@
     :kyazdani42/nvim-web-devicons
     :nvim-lua/plenary.nvim
     { 1 :s1n7ax/nvim-window-picker
-      :opts {:use_winbar :smart :selection_chars :JKFLAHDSG}
-      :config true}]}
+      :opts {:use_winbar :smart :selection_chars :JKFLAHDSG}}]}

@@ -1,5 +1,7 @@
 local function setup()
   local map = vim.keymap.set
+  map({"n", "v"}, "<Leader>y", "\"+y", {desc = "CTRL-C-like yank to clipboard"})
+  map("x", "<Leader>p", "\"_dP", {desc = "Register-safe paste"})
   map("n", "<Leader>c<CR>", "<Cmd>copen<CR>", {desc = "Open"})
   local function _1_()
     local f = vim.fn
@@ -16,7 +18,7 @@ local function setup()
   map("n", "<Leader>ck", "<Cmd>cabove<CR>", {desc = "Go to next above"})
   map("n", "<Leader>cn", "<Cmd>cnext<CR>", {desc = "Go to next"})
   map("n", "<Leader>cp", "<Cmd>cprevious<CR>", {desc = "Go to previous"})
-  map({"n", "v"}, "<Leader>y", "\"+y", {desc = "CTRL-C-like yank to clipboard"})
-  return map("x", "<Leader>p", "\"_dP", {desc = "Register-safe paste"})
+  map("n", "<Leader>tl", "<Cmd>setl list!<CR>", {desc = "Toggle local 'list'"})
+  return map("n", "<Leader>ts", "<Cmd>setl spell!<CR>", {desc = "Toggle local 'spell'"})
 end
 return {setup = setup}

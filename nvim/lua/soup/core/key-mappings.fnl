@@ -2,6 +2,10 @@
   "Sets up key mappings."
 
   (let [map vim.keymap.set]
+    ; Paste/Yank
+    (map [:n :v] :<Leader>y "\"+y" {:desc "CTRL-C-like yank to clipboard"})
+    (map :x :<Leader>p "\"_dP" {:desc "Register-safe paste"})
+
     ; Quickfix
 	  (map :n :<Leader>c<CR> :<Cmd>copen<CR> {:desc :Open})
 	  (map
@@ -22,8 +26,12 @@
     (map :n :<Leader>cn :<Cmd>cnext<CR> {:desc "Go to next"})
     (map :n :<Leader>cp :<Cmd>cprevious<CR> {:desc "Go to previous"})
 
-    ; Paste/Yank
-    (map [:n :v] :<Leader>y "\"+y" {:desc "CTRL-C-like yank to clipboard"})
-    (map :x :<Leader>p "\"_dP" {:desc "Register-safe paste"})))
+    ; Togglers
+    (map :n :<Leader>tl "<Cmd>setl list!<CR>" {:desc "Toggle local 'list'"})
+    (map
+      :n
+      :<Leader>ts
+      "<Cmd>setl spell!<CR>"
+      {:desc "Toggle local 'spell'"})))
 
 {: setup}

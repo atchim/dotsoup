@@ -4,5 +4,4 @@
       2 :<Cmd>CccHighlighterToggle<CR>
       :desc "Color highlighter"}
     {1 :<Leader># 2 :<Cmd>CccPick<CR> :desc "Color picker"} ]
-  :opts {}
-  :config true}
+  :opts {}}

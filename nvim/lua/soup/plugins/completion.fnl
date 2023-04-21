@@ -43,7 +43,7 @@
         :<C-N> (cmp.mapping.select_next_item)
         :<C-P> (cmp.mapping.select_prev_item)
         :<C-Y> (cmp.mapping (cmp.mapping.scroll_docs -1) [:i :c])
-        :<CR> (cmp.mapping.confirm)
+        :<CR> (cmp.mapping.confirm {:select true})
         :<Down> (cmp.mapping.select_next_item)
         :<S-Tab>
         (cmp.mapping

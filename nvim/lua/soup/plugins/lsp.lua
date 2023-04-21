@@ -74,4 +74,4 @@ local function config()
   end
   return (require("mason-lspconfig")).setup_handlers({_7_, fennel_language_server = _8_, lua_ls = _9_})
 end
-return {{"neovim/nvim-lspconfig", event = "BufRead", config = config, dependencies = {"williamboman/mason-lspconfig.nvim", config = true, dependencies = {"williamboman/mason.nvim", cmd = {"Mason", "MasonInstall", "MasonUninstall", "MasonUninstallAll", "MasonLog"}, config = true}}}, {"j-hui/fidget.nvim", event = "LspAttach", opts = {text = {spinner = "dots"}}, config = true}}
+return {{"neovim/nvim-lspconfig", event = "BufRead", config = config, dependencies = {"williamboman/mason-lspconfig.nvim", config = true, dependencies = {"williamboman/mason.nvim", cmd = {"Mason", "MasonInstall", "MasonUninstall", "MasonUninstallAll", "MasonLog"}, config = true}}}, {"j-hui/fidget.nvim", event = "LspAttach", opts = {text = {spinner = "dots"}}}}

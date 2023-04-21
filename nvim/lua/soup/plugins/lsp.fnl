@@ -119,7 +119,4 @@
         :cmd
         [:Mason :MasonInstall :MasonUninstall :MasonUninstallAll :MasonLog]
         :config true}}}
-  { 1 :j-hui/fidget.nvim
-    :event :LspAttach
-    :opts {:text {:spinner :dots}}
-    :config true}]
+  {1 :j-hui/fidget.nvim :event :LspAttach :opts {:text {:spinner :dots}}}]

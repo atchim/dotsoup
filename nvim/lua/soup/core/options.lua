@@ -13,7 +13,6 @@ local function setup()
   o.shiftwidth = 0
   o.smartindent = true
   o.tabstop = 2
-  o.lazyredraw = true
   o.ttimeoutlen = 0
   o.updatetime = 250
   o.cmdheight = 0

@@ -782,7 +782,14 @@ local function config()
       end
       return heirline_utils.insert(proto_90_auto, space, nr_95_auto, space, _119_, _126_, space)
     end
-    do end (require("heirline")).setup({statusline = heirline_utils.insert({hl = {bg = "statuslinebg", bold = true, fg = "statuslinefg"}}, {hl = _11_, init = _12_, provider = _14_, static = {aliases = {["\19"] = "^S", ["\22"] = "^V", ["\22s"] = "^Vs", ["no\22"] = "no^V"}}, update = "ModeChanged"}, space, _18_, _23_, {provider = "%="}, {{hl = {fg = "fileenc", reverse = true}, init = _65_, provider = _68_}, {hl = {bg = "fileenc", fg = "filefmt"}, provider = "\226\150\146"}, {hl = {fg = "filefmt", reverse = true}, init = _69_, provider = _70_}, {hl = {bg = "filefmt", fg = "fileln"}, provider = "\226\150\146"}, _75_()}, space, {hl = {fg = "scroll"}, provider = _76_, static = {bar = {"\226\150\136", "\226\150\135", "\226\150\134", "\226\150\133", "\226\150\132", "\226\150\131", "\226\150\130", "\226\150\129"}}}), winbar = _77_, tabline = heirline_utils.make_buflist(_118_())})
+    local function _153_(args)
+      local buf = args.buf
+      local tbl_has = vim.tbl_contains
+      local buftype = tbl_has({"help", "nofile", "prompt", "quickfix"}, vim.bo[buf].buftype)
+      local filetype = tbl_has({"neo-tree"}, vim.bo[buf].buftype)
+      return (buftype or filetype)
+    end
+    do end (require("heirline")).setup({statusline = heirline_utils.insert({hl = {bg = "statuslinebg", bold = true, fg = "statuslinefg"}}, {hl = _11_, init = _12_, provider = _14_, static = {aliases = {["\19"] = "^S", ["\22"] = "^V", ["\22s"] = "^Vs", ["no\22"] = "no^V"}}, update = "ModeChanged"}, space, _18_, _23_, {provider = "%="}, {{hl = {fg = "fileenc", reverse = true}, init = _65_, provider = _68_}, {hl = {bg = "fileenc", fg = "filefmt"}, provider = "\226\150\146"}, {hl = {fg = "filefmt", reverse = true}, init = _69_, provider = _70_}, {hl = {bg = "filefmt", fg = "fileln"}, provider = "\226\150\146"}, _75_()}, space, {hl = {fg = "scroll"}, provider = _76_, static = {bar = {"\226\150\136", "\226\150\135", "\226\150\134", "\226\150\133", "\226\150\132", "\226\150\131", "\226\150\130", "\226\150\129"}}}), winbar = _77_, tabline = heirline_utils.make_buflist(_118_()), opts = {disable_winbar_cb = _153_}})
     vim.opt.showtabline = 2
     return nil
   end
@@ -791,19 +798,10 @@ local function config()
   local group = api.nvim_create_augroup("soup.plugins.ui.heirline.def-hl", {clear = true})
   do end (require("heirline")).load_colors(colors)
   setup_lines()
-  local function _153_()
+  local function _154_()
     local colors0 = fetch_colors()
     return (require("heirline.utils")).on_colorscheme(colors0)
   end
-  api.nvim_create_autocmd("ColorScheme", {desc = "Defines highlight colors for Heirline.", group = group, callback = _153_})
-  local function _154_()
-    if (require("heirline.conditions")).buffer_matches({buftype = {"nofile", "prompt", "quickfix"}, filetype = {"neo-tree", "packer"}}) then
-      vim.opt_local.winbar = nil
-      return nil
-    else
-      return nil
-    end
-  end
-  return api.nvim_create_autocmd("User", {desc = "Sets whether the window bar is enabled.", group = group, pattern = "HeirlineInitWinbar", callback = _154_})
+  return api.nvim_create_autocmd("ColorScheme", {desc = "Defines highlight colors for Heirline.", group = group, callback = _154_})
 end
 return {"rebelot/heirline.nvim", event = "User SoupHasColors", config = config, dependencies = {"ccc.nvim", "kyazdani42/nvim-web-devicons"}}
