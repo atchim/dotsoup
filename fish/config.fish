@@ -1,6 +1,13 @@
 status --is-interactive; or exit
 
-# Colors
+########
+# fish #
+########
+
+###########
+## Colors #
+###########
+
 set fish_color_autosuggestion white
 set fish_color_cancel --bold --reverse brred
 set fish_color_command --bold magenta
@@ -29,14 +36,27 @@ set fish_pager_color_description brgreen
 set fish_pager_color_prefix white
 set fish_pager_color_progress --reverse
 
-# Cursor
+###########
+## Cursor #
+###########
+
 set fish_cursor_default block
 set fish_cursor_insert line
 set fish_cursor_replace underscore
 set fish_cursor_replace_one underscore
 set fish_cursor_visual block
 
-# fff
+#########
+## Misc #
+#########
+
+function fish_greeting; end
+function fish_user_key_bindings; fish_vi_key_bindings; end
+
+#######
+# fff #
+#######
+
 type -q fff
 and function f -d 'fff with cd on exit'
   fff $argv
@@ -46,6 +66,8 @@ and function f -d 'fff with cd on exit'
   pushd (cat $cache_dir/fff/.fff_d)
 end
 
-function fish_greeting; end
-function fish_user_key_bindings; fish_vi_key_bindings; end
+############
+# Starship #
+############
+
 type -q starship; and starship init fish | source

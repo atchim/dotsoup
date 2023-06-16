@@ -1,3 +1,6 @@
 [submodule "nvim/soupmacs"]
 	path = nvim/soupmacs
 	url = https://github.com/atchim/soupmacs
+[submodule "uma-dlc"]
+	path = uma-dlc
+	url = https://github.com/atchim/uma-dlc.git

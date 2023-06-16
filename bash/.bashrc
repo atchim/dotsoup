@@ -1,1 +1,1 @@
-if [[ $- == *i* ]]; then eval "$(starship init bash)"; fi
+[[ $- == *i* ]] && eval "$(starship init bash)"

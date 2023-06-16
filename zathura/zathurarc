@@ -22,5 +22,6 @@ set recolor-darkcolor '#959595'
 set recolor-lightcolor '#080808'
 set render-loading-bg '#080808'
 set render-loading-fg '#5a5a5a'
+set selection-clipboard clipboard
 set statusbar-bg '#080808'
 set statusbar-fg '#959595'
