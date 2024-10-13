@@ -160,6 +160,7 @@ start_pages = 'https://www.google.com'
 
 [url.searchengines]
 DEFAULT = 'https://google.com/search?q={}'
+'#name' = 'https://www.color-name.com/hex/{}'
 a = 'https://wiki.archlinux.org/index.php?search={}'
 cor = 'https://rastreamento.correios.com.br/app/index.php?objetos={}'
 d = 'https://duckduckgo.com/?q={}'

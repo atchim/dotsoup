@@ -18,6 +18,7 @@ bspc config presel_feedback_color '#080808'
 
 # Rules
 bspc rule --remove '*:*'
+bspc rule --add Code desktop='^1'
 bspc rule --add Chromium-browser-chromium desktop='^2'
 bspc rule --add Chromium-bin-browser-chromium desktop='^2'
 bspc rule --add firefox desktop='^2'
@@ -30,9 +31,12 @@ bspc rule --add Gimp desktop='^3' follow=on
 bspc rule --add Inkscape desktop='^3' follow=on
 bspc rule --add krita desktop='^3'
 bspc rule --add TelegramDesktop desktop='^4'
+bspc rule --add libreoffice-startcenter desktop='^5'
+bspc rule --add mpv desktop='^5'
 bspc rule --add Zathura desktop='^5' state=tiled
 bspc rule --add Dwarf_Fortress desktop='^6'
 bspc rule --add dwarftherapist desktop='^6'
 bspc rule --add zsnes desktop='^6'
+bspc rule --add FileZilla desktop='^7'
 bspc rule --add '*:popup' state=floating
 bspc rule --add vlc state=floating

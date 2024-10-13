@@ -1,0 +1,62 @@
+[colors.primary]
+foreground = '#e1e0c4'
+background = '#171629'
+dim_foreground = '#a77d72'
+
+[colors.search.matches]
+foreground = 'CellForeground'
+background = '#606c09'
+
+[colors.search.focused_match]
+foreground = 'CellForeground'
+background = '#3e2187'
+
+[colors.hints.start]
+foreground = '#171629'
+background = '#bcec6a'
+
+[colors.hints.end]
+foreground = '#171629'
+background = '#dd9ffe'
+
+[colors.line_indicator]
+foreground = '#e1e0c4'
+background = '#292449'
+
+[colors.footer_bar]
+foreground = '#e1e0c4'
+background = '#292449'
+
+[colors.selection]
+text = 'CellForeground'
+background = '#5f4c73'
+
+[colors.normal]
+black   = '#171629'
+red     = '#aa3c55'
+green   = '#4eb332'
+yellow  = '#bbbd28'
+blue    = '#367ba6'
+magenta = '#b22ab7'
+cyan    = '#2d9f84'
+white   = '#bdab87'
+
+[colors.bright]
+black   = '#5f4c73'
+red     = '#f35e7c'
+green   = '#72db5e'
+yellow  = '#d4e05c'
+blue    = '#54b7e8'
+magenta = '#e557cd'
+cyan    = '#58e9ca'
+white   = '#e1e0c4'
+
+[colors.dim]
+black   = '#171629'
+red     = '#622d2d'
+green   = '#31452b'
+yellow  = '#606c09'
+blue    = '#024c67'
+magenta = '#592a5f'
+cyan    = '#1b5c4d'
+white   = '#a77d72'

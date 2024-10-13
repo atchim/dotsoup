@@ -1,0 +1,35 @@
+import = ['~/.config/alacritty/oil-8.toml']
+
+[cursor]
+thickness = 0.33
+
+[env]
+SHELL = '/bin/fish'
+
+[font]
+size = 8
+
+[font.normal]
+family = 'Hack Nerd Font'
+
+[hints]
+alphabet = 'jkflahdsg'
+
+[[hints.enabled]]
+command = 'xdg-open'
+post_processing = true
+regex = """\
+  (ipfs|ipns|magnet|mailto|gemini|gopher|https|http|news|file|git|ssh|ftp)\
+  :[^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`]+"""
+
+[hints.enabled.binding]
+key = 'U'
+mods = 'Control|Shift'
+
+[hints.enabled.mouse]
+enabled = true
+
+[[keyboard.bindings]]
+action = 'ToggleViMode'
+key = 'Q'
+mode = 'Vi|~Search'

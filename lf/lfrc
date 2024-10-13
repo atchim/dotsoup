@@ -1,2 +1,1 @@
-map b $nvim -c \:Dirbuf
 map ] $dragon $fx
